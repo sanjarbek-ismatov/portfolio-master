@@ -1,0 +1,9 @@
+{
+  "name": "portfolio-master",
+  "version": "1.0.0",
+  "description": "Portfolio joylash uchun MERN loyiha",
+  "main": "index.js",
+  "repository": "https://github.com/sanjarbek-ismatov/portfolio-master.git",
+  "author": "Sanjarbek",
+  "license": "MIT"
+}
