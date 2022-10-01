@@ -5,5 +5,10 @@
   "main": "index.js",
   "repository": "https://github.com/sanjarbek-ismatov/portfolio-master.git",
   "author": "Sanjarbek",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "client": "cd client && yarn dev",
+    "server": "cd server && yarn dev"
+  },
+  "dependencies": {}
 }
