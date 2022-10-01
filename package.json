@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "client": "cd client && yarn dev",
-    "server": "cd server && yarn dev"
+    "start": "cd server && yarn dev",
+    "heroku-postbuild": "cd server && yarn"
   },
   "dependencies": {}
 }
