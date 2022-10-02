@@ -1,0 +1,57 @@
+@import "_colors";
+.icon {
+  color: $color;
+  font-size: 30px;
+  width: 30px;
+}
+.profileImage {
+  width: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(185, 185, 185, 0.89);
+}
+.desc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.postImage {
+  width: 800px;
+  height: auto;
+}
+.post {
+  max-width: 800px;
+  width: 100%;
+  margin: auto;
+  padding: 30px 20px;
+  border: 1px solid rgba(185, 185, 185, 0.89);
+  border-radius: 15px;
+  box-shadow: 1px 13px 37px -6px rgba(130, 129, 129, 0.89);
+  -webkit-box-shadow: 1px 13px 37px -6px rgba(130, 129, 129, 0.89);
+  -moz-box-shadow: 1px 13px 37px -6px rgba(130, 129, 129, 0.89);
+}
+.container {
+  width: 100%;
+  text-align: center;
+  margin: 50px 0;
+}
+.profile {
+  text-align: center;
+  p {
+    width: 80px;
+    font-size: 12px;
+    opacity: 0.75;
+  }
+}
+.input {
+  width: 800px;
+  height: 40px;
+  font-size: 20px;
+  padding: 20px;
+  border: 2px solid $background;
+  outline: none;
+  border-radius: 5px;
+  &:focus {
+    border: 3px solid #2a2aeb;
+  }
+}
