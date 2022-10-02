@@ -13,6 +13,7 @@ const Index = () => {
       <Navbar />
       <main className={s.container}>
         <Input
+          clear={() => setText("")}
           className={s.input}
           handleChange={(e) => setText(e.target.value)}
           value={text}
