@@ -22,7 +22,7 @@
 .post {
   max-width: 800px;
   width: 100%;
-  margin: auto;
+  margin: 15px auto;
   padding: 30px 20px;
   border: 1px solid rgba(185, 185, 185, 0.89);
   border-radius: 15px;
@@ -34,6 +34,7 @@
   width: 100%;
   text-align: center;
   margin: 50px 0;
+  padding: 0 30px;
 }
 .profile {
   text-align: center;
@@ -53,7 +54,7 @@
 
   border-radius: 5px;
   padding: 10px;
-  margin: 20px auto;
+  margin: 40px auto;
   input {
     width: 100%;
     outline: none;

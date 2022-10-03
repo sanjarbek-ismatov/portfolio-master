@@ -10,7 +10,7 @@ const Navbar = () => {
     menu ? setMenu(false) : setMenu(true);
   };
   return (
-    <nav className={s.nav}>
+    <nav id="navbar" className={s.nav}>
       <h1>Portfolio</h1>
       <div className={s.content}>
         <ul
@@ -18,9 +18,11 @@ const Navbar = () => {
           style={
             menu
               ? {
+                  // transform: "translateX(0)",
                   right: "0",
                 }
               : {
+                  // transform: "translateX(300px)",
                   right: "-300px",
                 }
           }
