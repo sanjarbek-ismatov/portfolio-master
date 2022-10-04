@@ -4,11 +4,15 @@ import {
   faTelegram,
   faVk,
 } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelopeOpen } from "@fortawesome/free-regular-svg-icons";
 import {
-  faChevronLeft,
   faChevronRight,
+  faCircleInfo,
+  faLocationPin,
+  faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import s from "styles/F.module.scss";
 const Footer = () => {
   return (
@@ -17,37 +21,49 @@ const Footer = () => {
         <div>
           <h1>Kontakt</h1>
           <p>
-            Pochta:{" "}
+            <FontAwesomeIcon icon={faEnvelopeOpen} /> Pochta:{" "}
             <a href="mailto:ismatovsanjarbek@yandex.ru">
               ismatovsanjarbek@yandex.ru
             </a>
           </p>
           <p>
-            Telefon: <a href="tel:+998902455060">+998902455060</a>
+            <FontAwesomeIcon icon={faPhone} /> Telefon:{" "}
+            <a href="tel:+998902455060">+998902455060</a>
           </p>
-          <p>Surxondaryo viloyati, Muzrabot tumani</p>
+          <p>
+            <FontAwesomeIcon icon={faLocationPin} /> Surxondaryo viloyati,
+            Muzrabot tumani
+          </p>
         </div>
         <div>
           <h1>Menyu</h1>
           <p>
-            <a href="/register">
-              <FontAwesomeIcon icon={faChevronRight} /> Ro'yhatdan o'tish
-            </a>
+            <Link href="/auth/register">
+              <a>
+                <FontAwesomeIcon icon={faChevronRight} /> Ro`yhatdan o`tish
+              </a>
+            </Link>
           </p>
           <p>
-            <a href="/login">
-              <FontAwesomeIcon icon={faChevronRight} /> Tizimga kirish
-            </a>
+            <Link href="/auth/login">
+              <a>
+                <FontAwesomeIcon icon={faChevronRight} /> Tizimga kirish
+              </a>
+            </Link>
           </p>
           <p>
-            <a href="/create">
-              <FontAwesomeIcon icon={faChevronRight} /> Portfoli joylash
-            </a>
+            <Link href="/create">
+              <a>
+                <FontAwesomeIcon icon={faChevronRight} /> Portfolio joylash
+              </a>
+            </Link>
           </p>
           <p>
-            <a href="/about">
-              <FontAwesomeIcon icon={faChevronRight} /> Loyiha haqida
-            </a>
+            <Link href="/about">
+              <a>
+                <FontAwesomeIcon icon={faChevronRight} /> Loyiha haqida
+              </a>
+            </Link>
           </p>
         </div>
         <div>
@@ -76,10 +92,9 @@ const Footer = () => {
         <div>
           <h1>Loyiha haqida</h1>
           <p>
-            Pochta:{" "}
-            <a href="mailto:ismatovsanjarbek@yandex.ru">
-              ismatovsanjarbek@yandex.ru
-            </a>
+            <FontAwesomeIcon icon={faCircleInfo} /> Ushbu Loyiha portfolio
+            joylash uchun yaratilgan sayt. Umid qilamanki undan ajoyib
+            foydalanasiz!
           </p>
         </div>
       </div>

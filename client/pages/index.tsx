@@ -8,12 +8,15 @@ import Input from "components/Input";
 import Head from "next/head";
 
 import { useState } from "react";
-import Script from "next/script";
+
 import Footer from "components/Footer";
 const Index = () => {
   const [text, setText] = useState("");
   return (
     <div>
+      <Head>
+        <title>Portfolio Master</title>
+      </Head>
       <Navbar />
       <main className={s.container}>
         <Input
