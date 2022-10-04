@@ -4,6 +4,10 @@ import {
   faTelegram,
   faVk,
 } from "@fortawesome/free-brands-svg-icons";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import s from "styles/F.module.scss";
 const Footer = () => {
@@ -26,16 +30,24 @@ const Footer = () => {
         <div>
           <h1>Menyu</h1>
           <p>
-            <a href="/register">Ro'yhatdan o'tish</a>
+            <a href="/register">
+              <FontAwesomeIcon icon={faChevronRight} /> Ro'yhatdan o'tish
+            </a>
           </p>
           <p>
-            <a href="/login">Tizimga kirish</a>
+            <a href="/login">
+              <FontAwesomeIcon icon={faChevronRight} /> Tizimga kirish
+            </a>
           </p>
           <p>
-            <a href="/create">Portfoli joylash</a>
+            <a href="/create">
+              <FontAwesomeIcon icon={faChevronRight} /> Portfoli joylash
+            </a>
           </p>
           <p>
-            <a href="/about">Loyiha haqida</a>
+            <a href="/about">
+              <FontAwesomeIcon icon={faChevronRight} /> Loyiha haqida
+            </a>
           </p>
         </div>
         <div>
@@ -70,6 +82,12 @@ const Footer = () => {
             </a>
           </p>
         </div>
+      </div>
+      <div className={s.copyright}>
+        <p>
+          Barcha huquqlar himoyalangan! <br /> Sanjarbek Ismatov{" "}
+          {new Date().getFullYear()}
+        </p>
       </div>
     </footer>
   );

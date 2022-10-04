@@ -1,8 +1,44 @@
+@import "_colors";
 .container {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
-  padding: 10px;
+  padding: 30px 20px;
+  background-color: $background;
+  color: $lightColor;
+  div {
+    width: 250px;
+    h1 {
+      font-size: 25px;
+      padding: 10px 0;
+    }
+    p {
+      font-size: 14px;
+      line-height: 30px;
+      transition: all 0.2s ease;
+      &:hover {
+        transform: translate3d(1px, 1px, 1px);
+        position: relative;
+      }
+      a {
+        text-decoration: none;
+        color: $color;
+      }
+    }
+  }
+}
+.copyright {
+  width: 100%;
+  text-align: center;
+  background-color: #372f7e;
+  color: $lightColor;
+
+  padding: 20px 0;
+  font-size: 14px;
+  P {
+    opacity: 0.9;
+    line-height: 20px;
+  }
 }
