@@ -1,9 +1,15 @@
-import { faBars, faX } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faCircleInfo,
+  faPlus,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useState } from "react";
 import cn from "classnames";
 import s from "styles/N.module.scss";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
 const Navbar = () => {
   const [menu, setMenu] = useState<boolean>();
   const visibleContent = () => {
@@ -29,17 +35,23 @@ const Navbar = () => {
         >
           <li>
             <Link href="/create">
-              <a>Portfolio joylash</a>
+              <a>
+                <FontAwesomeIcon icon={faPlus} /> Portfolio joylash
+              </a>
             </Link>
           </li>
           <li>
             <Link href="/about">
-              <a>Loyiha haqida</a>
+              <a>
+                <FontAwesomeIcon icon={faCircleInfo} /> Loyiha haqida
+              </a>
             </Link>
           </li>
           <li>
             <Link href="/profile">
-              <a>Profil</a>
+              <a>
+                <FontAwesomeIcon icon={faUser} /> Profil
+              </a>
             </Link>
           </li>
         </ul>
