@@ -1,0 +1,32 @@
+@import "_colors";
+.container {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.527);
+}
+.dialog {
+  width: 600px;
+  padding: 25px;
+  background-color: #fff;
+  line-height: 50px;
+}
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  button {
+    padding: 10px 15px;
+    background-color: $background;
+    border: none;
+    color: $lightColor;
+    border-radius: 10px;
+    margin: 7px;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

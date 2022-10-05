@@ -3,39 +3,11 @@ import s from "styles/L.module.scss";
 import { signIn, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
-const Register = () => {
+const Login = () => {
   return (
     <div className={s.container}>
-      <h1>Ro`yhatdan o`tish</h1>
+      <h1>Kirish</h1>
       <form>
-        <input
-          className={s.input}
-          type="file"
-          name="file"
-          placeholder="Profile uchun rasm"
-          required
-        />
-        <input
-          className={s.input}
-          type="text"
-          name="firstname"
-          placeholder="Ismingiz"
-          required
-        />
-        <input
-          className={s.input}
-          type="text"
-          name="lastname"
-          placeholder="Familyangiz"
-          required
-        />
-        <input
-          className={s.input}
-          type="text"
-          name="username"
-          placeholder="Foydalanuvchi nomi"
-          required
-        />
         <input
           className={s.input}
           type="email"
@@ -50,15 +22,8 @@ const Register = () => {
           placeholder="Parolni o'rnating"
           required
         />
-        <input
-          className={s.input}
-          type="password"
-          name="password"
-          placeholder="Qayta takrorlang"
-          required
-        />
         <button className={s.button} type={"submit"}>
-          Ro`yhatdan o`tish
+          Kirish
         </button>
       </form>
       <div className={s.other}>
@@ -73,4 +38,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
