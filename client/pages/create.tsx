@@ -4,10 +4,21 @@ import s from "styles/L.module.scss";
 
 const Login = () => {
   const [dialog, setDialog] = useState(false);
+  const [form, setForm] = useState<any>();
+  function handleSubmit() {
+    console.log(form["1"].value);
+    setDialog(false);
+  }
   return (
     <div className={s.container}>
       <h1>Portfolio joylash</h1>
-      <form>
+      <form
+        onSubmit={(e) => {
+          setDialog(true);
+          e.preventDefault();
+          setForm(e.target);
+        }}
+      >
         <input
           className={s.input}
           type="file"
@@ -23,13 +34,14 @@ const Login = () => {
           required
         />
         <textarea className={s.area} />
-        <button onClick={() => setDialog(true)} className={s.button}>
+        <button type="submit" className={s.button}>
           Joylash
         </button>
       </form>
+
       {dialog && (
         <Dialog
-          post={(e) => console.log("ok")}
+          post={handleSubmit}
           cancel={() => {
             setDialog(false);
           }}
