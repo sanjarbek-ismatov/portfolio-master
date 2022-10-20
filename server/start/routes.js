@@ -4,7 +4,14 @@ const portfolio = require("../routes/portfolio");
 const register = require("../routes/register");
 const files = require("../routes/files");
 const error = require("../middleware/error");
+const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
+const morgan = require("morgan");
 module.exports = (app) => {
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(morgan("tiny"));
+  app.use(methodOverride("_method"));
   app.use(helmet());
   app.use(compression());
   app.use("/api/get", portfolio);
