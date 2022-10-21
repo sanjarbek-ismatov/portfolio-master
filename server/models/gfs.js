@@ -4,16 +4,17 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const { GridFsStorage } = require("multer-gridfs-storage");
 const path = require("path");
-const connect = mongoose.createConnection(process.env.MONGOURL);
+const db = mongoose.connection;
 var gfs, gfsb;
-connect.once("open", () => {
-  gfs = grid(connect.db, mongoose.mongo);
-  gfsb = new mongoose.mongo.GridFSBucket(connect.db, {
+
+db.once("open", () => {
+  gfs = grid(db.db, mongoose.mongo);
+  gfsb = new mongoose.mongo.GridFSBucket(db.db, {
     bucketName: "uploads",
   });
 });
 const storage = new GridFsStorage({
-  url: process.env.MONGOURL,
+  url: process.env.MONGO_URL,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buff) => {
