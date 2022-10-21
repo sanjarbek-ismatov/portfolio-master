@@ -9,4 +9,5 @@ function registerValidator(body) {
   });
   return valid.validate(body);
 }
+
 module.exports.registerValidator = registerValidator;

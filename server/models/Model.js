@@ -27,3 +27,4 @@ async function createUser(body, id) {
   }).save();
 }
 module.exports.createUser = createUser;
+module.exports.User = User;
