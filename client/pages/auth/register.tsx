@@ -1,24 +1,36 @@
-import Link from "next/link";
 import s from "styles/L.module.scss";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
-import { FormEventHandler } from "react";
-import { useDispatch } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import { registerThunk } from "state/thunks";
+import { useState } from "react";
+import ErrorDialog from "components/Error";
+import { registerSliceInitialStateType } from "types/reducer";
+
 const Register = () => {
+  const [error, setError] = useState("");
   const dispatch: any = useDispatch();
+  const state = useSelector(
+    (state: { register: registerSliceInitialStateType }) => state.register
+  );
   function formik(e: any) {
     e.preventDefault();
-    dispatch(
-      registerThunk({
-        firstname: e.target["0"].value,
-        lastname: e.target["1"].value,
-        username: e.target["2"].value,
-        email: e.target["3"].value,
-        password: e.target["4"].value,
-      })
-    );
+    if (e.target["5"].value !== e.target["6"].value) {
+      setError("Parolni to'g'ri kiriting");
+      return;
+    }
+
+    const data = new FormData();
+    data.append("image", e.target["0"].files[0]);
+    data.append("firstname", e.target["1"].value);
+    data.append("lastname", e.target["2"].value);
+    data.append("username", e.target["3"].value);
+    data.append("email", e.target["4"].value);
+    data.append("password", e.target["5"].value);
+
+    dispatch(registerThunk(data));
   }
   return (
     <div className={s.container}>
@@ -28,6 +40,7 @@ const Register = () => {
           className={s.input}
           type="file"
           name="file"
+          accept="image/*"
           placeholder="Profile uchun rasm"
           required
         />
@@ -85,6 +98,22 @@ const Register = () => {
           <FontAwesomeIcon icon={faFacebook} /> Facebook orqali davom etish
         </button>
       </div>
+      {state && state.error && (
+        <ErrorDialog
+          show={() => {
+            setError("");
+          }}
+          message={"Nimadir xato ketdi!"}
+        />
+      )}
+      {error && (
+        <ErrorDialog
+          show={() => {
+            setError("");
+          }}
+          message={error}
+        />
+      )}
     </div>
   );
 };
