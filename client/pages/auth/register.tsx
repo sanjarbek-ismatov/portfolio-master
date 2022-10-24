@@ -3,11 +3,27 @@ import s from "styles/L.module.scss";
 import { signIn, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
+import { FormEventHandler } from "react";
+import { useDispatch } from "react-redux";
+import { registerThunk } from "state/thunks";
 const Register = () => {
+  const dispatch: any = useDispatch();
+  function formik(e: any) {
+    e.preventDefault();
+    dispatch(
+      registerThunk({
+        firstname: e.target["0"].value,
+        lastname: e.target["1"].value,
+        username: e.target["2"].value,
+        email: e.target["3"].value,
+        password: e.target["4"].value,
+      })
+    );
+  }
   return (
     <div className={s.container}>
       <h1>Ro`yhatdan o`tish</h1>
-      <form>
+      <form onSubmit={formik}>
         <input
           className={s.input}
           type="file"
