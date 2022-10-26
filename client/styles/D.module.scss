@@ -10,13 +10,30 @@
 }
 @keyframes dialog {
   0% {
-    transform: scale(0);
+    transform: scale(0.5) translateY(30px);
+    opacity: 0;
   }
   100% {
-    transform: scale(1);
+    transform: scale(1) translateY(0px);
+
+    opacity: 1;
   }
 }
-
+.spinner {
+  width: 20px;
+  height: 20px;
+  border-top: 2px solid $background;
+  border-bottom: 2px solid $background;
+  border-left-width: 2px;
+  border-right-width: 2px;
+  border-radius: 50%;
+  animation: spinner 1s infinite ease;
+}
+@keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .dialog {
   width: 600px;
   padding: 25px;

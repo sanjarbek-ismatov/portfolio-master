@@ -11,7 +11,7 @@ router.post("/", upload.single("image"), async (req, res) => {
   const email = await User.findOne({ email: req.body.email });
   const username = await User.findOne({ username: req.body.username });
   if (email || username) {
-    return res.status(400).send(false);
+    return res.status(400).send("email yoki username allaqachon mavjud");
   }
   const password = await bcrypt.hash(req.body.password, salt);
   req.body.password = password;

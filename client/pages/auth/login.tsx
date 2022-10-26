@@ -3,9 +3,13 @@ import s from "styles/L.module.scss";
 import { signIn, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
+import Head from "next/head";
 const Login = () => {
   return (
     <div className={s.container}>
+      <Head>
+        <title>Tizimga kirish</title>
+      </Head>
       <h1>Kirish</h1>
       <form>
         <input

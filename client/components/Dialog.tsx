@@ -1,15 +1,20 @@
 import React from "react";
 import s from "styles/D.module.scss";
 import { dialogButtonType } from "types/dialog";
-const Dialog = ({ post, cancel }: dialogButtonType) => {
+const Dialog = ({ ok, cancel, message, isPending }: dialogButtonType) => {
   return (
     <div className={s.container}>
       <div className={s.dialog}>
         <h2>Diqqat!</h2>
-        <p>Siz portfolioni joylamoqchimisiz?</p>
+        {isPending && (
+          <div className={s.spinner}>
+            <span></span>
+          </div>
+        )}
+        <p>{message}</p>
         <div className={s.buttons}>
-          <button onClick={post}>Ha</button>
-          <button onClick={cancel}>Bekor qilish</button>
+          {ok && <button onClick={ok}>Ha</button>}
+          {cancel && <button onClick={cancel}>Bekor qilish</button>}
         </div>
       </div>
     </div>

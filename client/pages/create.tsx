@@ -41,7 +41,8 @@ const Login = () => {
 
       {dialog && (
         <Dialog
-          post={handleSubmit}
+          ok={handleSubmit}
+          message={"Siz portfolioni joylamoqchimisiz?"}
           cancel={() => {
             setDialog(false);
           }}

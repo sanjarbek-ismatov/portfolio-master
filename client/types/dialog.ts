@@ -1,4 +1,6 @@
 export type dialogButtonType = {
-  post: (body: {}) => void;
-  cancel: () => void;
+  ok?: (body?: {}) => void;
+  cancel?: () => void;
+  message: string;
+  isPending?: boolean;
 };
