@@ -1,9 +1,21 @@
 # portfolio-master
 # USED
- - MERN
+ - React
+ - Redux
+ - Typescript
+ - Nextjs
+ - Nodejs
+ - Expressjs
+ - Mongoose
+ - Multer
+ - Gridfs
+ - FontAwesome
 # SETUP
-```
-ok
+```shell
+git clone https://github.com/sanjarbek-ismatov/portfolio-master.git
+cd portfolio-master
+cd client && yarn dev
+cd server && yarn dev
 ```
 
 Coding time:
