@@ -22,8 +22,10 @@ const Register = () => {
   function formik(e: any) {
     e.preventDefault();
     setMessage("Yuklanmoqda!");
+    setIsPending(true);
     if (e.target["5"].value !== e.target["6"].value) {
       setMessage("Parolni to'g'ri kiriting");
+      setIsPending(false);
       return;
     }
 
@@ -34,8 +36,8 @@ const Register = () => {
     data.append("username", e.target["3"].value);
     data.append("email", e.target["4"].value);
     data.append("password", e.target["5"].value);
+    setTimeout(() => dispatch(registerThunk(data)), 2000);
 
-    dispatch(registerThunk(data));
     // state.status
     //   ? setIsPending(false) &&
     //   setMessage("Ro`yhatdan muvaffiqiyatli o `tdingiz!"))
@@ -51,85 +53,86 @@ const Register = () => {
       setMessage("Ro`yhatdan muvaffiqiyatli o`tdingiz!");
     }
   }, [state]);
-  useEffect(() => {
-    setIsPending(true);
-    setMessage("Yuklanmoqda!");
-  }, []);
+  // useEffect(() => {
+  //   setIsPending(true);
+  //   setMessage("Yuklanmoqda!");
+  // }, []);
   return (
     <div className={s.container}>
       <Head>
         <title>Ro`yhatdan o`tish</title>
       </Head>
-      <h1>Ro`yhatdan o`tish</h1>
-      <form onSubmit={formik}>
-        <input
-          className={s.input}
-          type="file"
-          name="file"
-          accept="image/*"
-          placeholder="Profile uchun rasm"
-          required
-        />
-        <input
-          className={s.input}
-          type="text"
-          name="firstname"
-          placeholder="Ismingiz"
-          required
-        />
-        <input
-          className={s.input}
-          type="text"
-          name="lastname"
-          placeholder="Familyangiz"
-          required
-        />
-        <input
-          className={s.input}
-          type="text"
-          name="username"
-          placeholder="Foydalanuvchi nomi"
-          required
-        />
-        <input
-          className={s.input}
-          type="email"
-          name="email"
-          placeholder="Pochta"
-          required
-        />
-        <input
-          className={s.input}
-          type="password"
-          name="password"
-          placeholder="Parolni o'rnating"
-          required
-        />
-        <input
-          className={s.input}
-          type="password"
-          name="password"
-          placeholder="Qayta takrorlang"
-          required
-        />
-        <button className={s.button} type={"submit"}>
-          Ro`yhatdan o`tish
-        </button>
-      </form>
-      <div className={s.other}>
-        <button className={s.button} onClick={() => signIn("github")}>
-          <FontAwesomeIcon icon={faGithub} /> Github orqali davom etish
-        </button>
-        <button className={s.button} onClick={() => signIn("facebook")}>
-          <FontAwesomeIcon icon={faFacebook} /> Facebook orqali davom etish
-        </button>
+      <div className={s.form}>
+        <h1>Ro`yhatdan o`tish</h1>
+        <form onSubmit={formik}>
+          <input
+            className={s.input}
+            type="file"
+            name="file"
+            accept="image/*"
+            placeholder="Profile uchun rasm"
+            required
+          />
+          <input
+            className={s.input}
+            type="text"
+            name="firstname"
+            placeholder="Ismingiz"
+            required
+          />
+          <input
+            className={s.input}
+            type="text"
+            name="lastname"
+            placeholder="Familyangiz"
+            required
+          />
+          <input
+            className={s.input}
+            type="text"
+            name="username"
+            placeholder="Foydalanuvchi nomi"
+            required
+          />
+          <input
+            className={s.input}
+            type="email"
+            name="email"
+            placeholder="Pochta"
+            required
+          />
+          <input
+            className={s.input}
+            type="password"
+            name="password"
+            placeholder="Parolni o'rnating"
+            required
+          />
+          <input
+            className={s.input}
+            type="password"
+            name="password"
+            placeholder="Qayta takrorlang"
+            required
+          />
+          <button className={s.button} type={"submit"}>
+            Ro`yhatdan o`tish
+          </button>
+        </form>
+        <div className={s.other}>
+          <button className={s.button} onClick={() => signIn("github")}>
+            <FontAwesomeIcon icon={faGithub} /> Github orqali davom etish
+          </button>
+          <button className={s.button} onClick={() => signIn("facebook")}>
+            <FontAwesomeIcon icon={faFacebook} /> Facebook orqali davom etish
+          </button>
+        </div>
       </div>
-
       {message && (
         <Dialog
           ok={() => {
             setMessage("");
-            !state.error && router.replace("/auth/login");
+            !state.error && state.status && router.replace("/auth/login");
           }}
           isPending={isPending}
           message={message}

@@ -22,12 +22,16 @@
 .spinner {
   width: 20px;
   height: 20px;
-  border-top: 2px solid $background;
-  border-bottom: 2px solid $background;
-  border-left-width: 2px;
-  border-right-width: 2px;
+  border: 2px solid transparent;
+  border-top-color: $background;
+  border-bottom-color: $background;
   border-radius: 50%;
   animation: spinner 1s infinite ease;
+  margin-right: 20px;
+}
+.message {
+  display: flex;
+  align-items: center;
 }
 @keyframes spinner {
   100% {
