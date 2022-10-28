@@ -1,7 +1,7 @@
 const express = require("express");
 const { createUser, User } = require("../models/Model");
 const { registerValidator } = require("../utils/validator");
-const { gfs, upload } = require("../models/gfs");
+const { upload } = require("../models/gfs");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 router.post("/", upload.single("image"), async (req, res) => {

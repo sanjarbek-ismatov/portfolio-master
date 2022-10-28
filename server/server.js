@@ -1,6 +1,6 @@
 // packages
 const express = require("express");
-const bodyParser = require("body-parser");
+
 const methodOverride = require("method-override");
 const morgan = require("morgan");
 const helmet = require("helmet");
@@ -21,13 +21,21 @@ app.use(
   })
 );
 // middlewares
+// body to json
 app.use(express.json());
+// body to form data
 app.use(express.urlencoded({ extended: true }));
+// logger for request
 app.use(morgan("tiny"));
+// idk, for gfs
 app.use(methodOverride("_method"));
+// idk
 app.use(helmet());
+// for deployment
 app.use(compression());
+// routes booting
 require("./start/routes")(app);
+// listening PORT
 app.listen(process.env.PORT, () => {
   console.log("Server working");
 });
