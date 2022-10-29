@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { registerSliceInitialStateType } from "types/reducer";
-import { registerThunk } from "./thunks";
+import { loginThunk, registerThunk } from "./thunks";
 const initialState: registerSliceInitialStateType = {
   status: false,
   error: "",
@@ -19,6 +19,25 @@ export const registerSlice = createSlice({
         state.error = "";
       });
     builder.addCase(registerThunk.rejected, (state, action: any) => {
+      state.status = true;
+      state.error = action.error.message;
+    });
+  },
+});
+export const loginSlice = createSlice({
+  name: "login",
+  initialState: initialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder.addCase(loginThunk.pending, (state) => {
+      state.status = false;
+      state.error = "";
+    }),
+      builder.addCase(loginThunk.fulfilled, (state, action) => {
+        state.status = true;
+        state.error = "";
+      });
+    builder.addCase(loginThunk.rejected, (state, action: any) => {
       state.status = true;
       state.error = action.error.message;
     });

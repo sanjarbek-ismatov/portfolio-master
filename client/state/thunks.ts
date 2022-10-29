@@ -8,3 +8,6 @@ if (process.env.NODE_ENV === "development") {
 export const registerThunk = createAsyncThunk("register", (body: form) => {
   return Axios.post(`${url}/api/register`, body);
 });
+export const loginThunk = createAsyncThunk("login", (body: form) => {
+  return Axios.post(`${url}/api/login`, body);
+});

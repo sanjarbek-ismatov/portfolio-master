@@ -4,7 +4,28 @@ import { signIn, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Head from "next/head";
+import { useDispatch, useSelector } from "react-redux";
+import { registerSliceInitialStateType } from "types/reducer";
+import { FormEvent, useState } from "react";
+import Dialog from "components/Dialog";
+import { useRouter } from "next/router";
+import { loginThunk } from "state/thunks";
 const Login = () => {
+  const dispatch: any = useDispatch();
+  const state = useSelector(
+    (state: { login: registerSliceInitialStateType }) => state.login
+  );
+  const [message, setMessage] = useState("");
+  const [isPending, setIsPending] = useState(false);
+  const router = useRouter();
+  function formik(e: any) {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("email", e.target["0"].value);
+    data.append("password", e.target["1"].value);
+
+    dispatch(loginThunk(data));
+  }
   return (
     <div className={s.container}>
       <Head>
@@ -13,7 +34,7 @@ const Login = () => {
 
       <div className={s.form}>
         <h1>Kirish</h1>
-        <form>
+        <form onSubmit={formik}>
           <input
             className={s.input}
             type="email"
@@ -41,6 +62,16 @@ const Login = () => {
           </button>
         </div>
       </div>
+      {message && (
+        <Dialog
+          ok={() => {
+            setMessage("");
+            !state.error && state.status && router.replace("/");
+          }}
+          isPending={isPending}
+          message={message}
+        />
+      )}
     </div>
   );
 };
