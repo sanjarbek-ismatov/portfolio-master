@@ -36,6 +36,7 @@ const Register = () => {
     data.append("username", e.target["3"].value);
     data.append("email", e.target["4"].value);
     data.append("password", e.target["5"].value);
+    console.log(data);
     setTimeout(() => dispatch(registerThunk(data)), 2000);
 
     // state.status

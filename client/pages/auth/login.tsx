@@ -20,11 +20,11 @@ const Login = () => {
   const router = useRouter();
   function formik(e: any) {
     e.preventDefault();
-    const data = new FormData();
-    data.append("email", e.target["0"].value);
-    data.append("password", e.target["1"].value);
-
-    dispatch(loginThunk(data));
+    const form = new FormData();
+    form.append("email", e.target["0"].value);
+    form.append("password", e.target["1"].value);
+    console.log(form);
+    setTimeout(() => dispatch(loginThunk(form)), 2000);
   }
   return (
     <div className={s.container}>

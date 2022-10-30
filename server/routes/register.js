@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 router.post("/", upload.single("image"), async (req, res) => {
   const salt = await bcrypt.genSalt();
+
   const { error } = registerValidator(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   const email = await User.findOne({ email: req.body.email });

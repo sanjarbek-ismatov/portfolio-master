@@ -4,9 +4,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 router.post("/", async (req, res) => {
+  console.log(req.body);
   const user = await User.findOne({ email: req.body.email });
 
-  if (!user || user.length == 0) {
+  if (!user) {
     return res.status(401).send("Foydalanuvchi topilmadi");
   }
   const checkedPassword = bcrypt.compare(req.body.password, user.password);
