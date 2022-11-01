@@ -6,7 +6,6 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 // dotenv booting
 require("dotenv").config();
 // db connection
@@ -23,9 +22,9 @@ app.use(
 );
 // middlewares
 // body to json
-app.use(bodyParser.json());
+app.use(express.json());
 // body to form data
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 // logger for request
 app.use(morgan("tiny"));
 // idk, for gfs

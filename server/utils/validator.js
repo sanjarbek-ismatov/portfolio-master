@@ -9,5 +9,12 @@ function registerValidator(body) {
   });
   return valid.validate(body);
 }
-
+function loginValidator(body) {
+  const valid = Joi.object({
+    email: Joi.string().required().min(3),
+    password: Joi.string().required().min(8),
+  });
+  return valid.validate(body);
+}
 module.exports.registerValidator = registerValidator;
+module.exports.loginValidator = loginValidator;
