@@ -5,27 +5,43 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
-import { registerSliceInitialStateType } from "types/reducer";
-import { FormEvent, useState } from "react";
+import {
+  loginInitialStateType,
+  registerSliceInitialStateType,
+} from "types/reducer";
+import { FormEvent, useEffect, useState } from "react";
 import Dialog from "components/Dialog";
 import { useRouter } from "next/router";
 import { loginThunk } from "state/thunks";
 const Login = () => {
   const dispatch: any = useDispatch();
   const state = useSelector(
-    (state: { login: registerSliceInitialStateType }) => state.login
+    (state: { login: loginInitialStateType }) => state.login
   );
   const [message, setMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
   const router = useRouter();
   function formik(e: any) {
+    setMessage("Yuklanmoqda...");
+
     e.preventDefault();
     const form = new FormData();
     form.append("email", e.target["0"].value);
     form.append("password", e.target["1"].value);
-    console.log(form);
+
     setTimeout(() => dispatch(loginThunk(form)), 2000);
   }
+  useEffect(() => {
+    setIsPending(true);
+    if (state.error) {
+      setIsPending(false);
+      setMessage("Nimadir xato!");
+    } else if (!state.error && state.status) {
+      setIsPending(false);
+      setMessage("Login bajarildi!");
+      localStorage.setItem("token", state.token);
+    }
+  }, [state]);
   return (
     <div className={s.container}>
       <Head>

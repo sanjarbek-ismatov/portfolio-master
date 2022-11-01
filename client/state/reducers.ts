@@ -1,13 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerSliceInitialStateType } from "types/reducer";
+import {
+  loginInitialStateType,
+  registerSliceInitialStateType,
+} from "types/reducer";
 import { loginThunk, registerThunk } from "./thunks";
 const initialStateRegister: registerSliceInitialStateType = {
   status: false,
   error: "",
 };
-const initialStateLogin: registerSliceInitialStateType = {
+const initialStateLogin: loginInitialStateType = {
   status: false,
   error: "",
+  token: "",
 };
 export const registerSlice = createSlice({
   name: "register",
@@ -37,9 +41,10 @@ export const loginSlice = createSlice({
       state.status = false;
       state.error = "";
     }),
-      builder.addCase(loginThunk.fulfilled, (state) => {
+      builder.addCase(loginThunk.fulfilled, (state, action: any) => {
         state.status = true;
         state.error = "";
+        state.token = action.payload.headers["x-token"];
       });
     builder.addCase(loginThunk.rejected, (state, action: any) => {
       state.status = true;

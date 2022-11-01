@@ -13,7 +13,11 @@ router.post("/", multer().any(), async (req, res) => {
   if (!user) {
     return res.status(401).send("Foydalanuvchi topilmadi");
   }
-  const checkedPassword = bcrypt.compare(req.body.password, user.password);
+  const checkedPassword = await bcrypt.compare(
+    req.body.password,
+    user.password
+  );
+
   if (!checkedPassword) {
     return res.status(401).send("Xato parol!");
   }

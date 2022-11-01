@@ -10,8 +10,9 @@ import Dialog from "components/Dialog";
 import { registerSliceInitialStateType } from "types/reducer";
 import Head from "next/head";
 import { useRouter } from "next/router";
-
+import { useSession } from "next-auth/react";
 const Register = () => {
+  const { data, status } = useSession();
   const [message, setMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
   const dispatch: any = useDispatch();
@@ -19,6 +20,9 @@ const Register = () => {
   const state = useSelector(
     (state: { register: registerSliceInitialStateType }) => state.register
   );
+  function authForm() {
+    setTimeout(() => console.log(data), 2000);
+  }
   function formik(e: any) {
     e.preventDefault();
     setMessage("Yuklanmoqda!");
@@ -36,13 +40,8 @@ const Register = () => {
     data.append("username", e.target["3"].value);
     data.append("email", e.target["4"].value);
     data.append("password", e.target["5"].value);
-    console.log(data);
-    setTimeout(() => dispatch(registerThunk(data)), 2000);
 
-    // state.status
-    //   ? setIsPending(false) &&
-    //   setMessage("Ro`yhatdan muvaffiqiyatli o `tdingiz!"))
-    //   : setIsPending(true)
+    setTimeout(() => dispatch(registerThunk(data)), 2000);
   }
   useEffect(() => {
     setIsPending(true);
@@ -54,10 +53,6 @@ const Register = () => {
       setMessage("Ro`yhatdan muvaffiqiyatli o`tdingiz!");
     }
   }, [state]);
-  // useEffect(() => {
-  //   setIsPending(true);
-  //   setMessage("Yuklanmoqda!");
-  // }, []);
   return (
     <div className={s.container}>
       <Head>
@@ -121,7 +116,13 @@ const Register = () => {
           </button>
         </form>
         <div className={s.other}>
-          <button className={s.button} onClick={() => signIn("github")}>
+          <button
+            className={s.button}
+            onClick={() => {
+              signIn("github");
+              authForm();
+            }}
+          >
             <FontAwesomeIcon icon={faGithub} /> Github orqali davom etish
           </button>
           <button className={s.button} onClick={() => signIn("facebook")}>
