@@ -3,8 +3,7 @@ const express = require("express");
 
 const methodOverride = require("method-override");
 const morgan = require("morgan");
-const helmet = require("helmet");
-const compression = require("compression");
+
 const cors = require("cors");
 // dotenv booting
 require("dotenv").config();
@@ -24,15 +23,15 @@ app.use(
 // body to json
 app.use(express.json());
 // body to form data
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false, type: "form-data" }));
 // logger for request
 app.use(morgan("tiny"));
 // idk, for gfs
 app.use(methodOverride("_method"));
 // idk
-app.use(helmet());
-// for deployment
-app.use(compression());
+// app.use(helmet());
+// // for deployment
+// app.use(compression());
 // routes booting
 require("./start/routes")(app);
 // listening PORT
