@@ -7,4 +7,4 @@ export type loginInitialStateType = {
   error: string;
   token: string;
 };
-export type form = FormData;
+export type form = FormData | { email: string };

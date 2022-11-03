@@ -1,5 +1,5 @@
 import s from "styles/L.module.scss";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
 
@@ -20,9 +20,6 @@ const Register = () => {
   const state = useSelector(
     (state: { register: registerSliceInitialStateType }) => state.register
   );
-  function authForm() {
-    setTimeout(() => console.log(data), 2000);
-  }
   function formik(e: any) {
     e.preventDefault();
     setMessage("Yuklanmoqda!");
@@ -32,7 +29,6 @@ const Register = () => {
       setIsPending(false);
       return;
     }
-
     const data = new FormData();
     data.append("image", e.target["0"].files[0]);
     data.append("firstname", e.target["1"].value);
@@ -40,7 +36,6 @@ const Register = () => {
     data.append("username", e.target["3"].value);
     data.append("email", e.target["4"].value);
     data.append("password", e.target["5"].value);
-
     setTimeout(() => dispatch(registerThunk(data)), 2000);
   }
   useEffect(() => {
@@ -53,6 +48,17 @@ const Register = () => {
       setMessage("Ro`yhatdan muvaffiqiyatli o`tdingiz!");
     }
   }, [state]);
+  useEffect(() => {
+    if (data) {
+      setIsPending(true);
+      setMessage("Yuklanmoqda...");
+      dispatch(
+        registerThunk({
+          email: data.user?.email || "",
+        })
+      );
+    }
+  }, [data]);
   return (
     <div className={s.container}>
       <Head>
@@ -120,7 +126,6 @@ const Register = () => {
             className={s.button}
             onClick={() => {
               signIn("github");
-              authForm();
             }}
           >
             <FontAwesomeIcon icon={faGithub} /> Github orqali davom etish
@@ -134,6 +139,7 @@ const Register = () => {
         <Dialog
           ok={() => {
             setMessage("");
+            signOut();
             !state.error && state.status && router.replace("/auth/login");
           }}
           isPending={isPending}

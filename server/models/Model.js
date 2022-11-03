@@ -17,14 +17,15 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("user", userSchema);
 
 async function createUser(body, id) {
-  await new User({
-    image: id,
+  const user = await new User({
     firstname: body.firstname,
     lastname: body.lastname,
     username: body.username,
     email: body.email,
     password: body.password,
-  }).save();
+  });
+  if (id) user.image = id;
+  await user.save();
 }
 module.exports.createUser = createUser;
 module.exports.User = User;

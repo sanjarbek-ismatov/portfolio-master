@@ -1,15 +1,12 @@
 import Link from "next/link";
 import s from "styles/L.module.scss";
-import { signIn, signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loginInitialStateType,
-  registerSliceInitialStateType,
-} from "types/reducer";
-import { FormEvent, useEffect, useState } from "react";
+import { loginInitialStateType } from "types/reducer";
+import { useEffect, useState } from "react";
 import Dialog from "components/Dialog";
 import { useRouter } from "next/router";
 import { loginThunk } from "state/thunks";
@@ -18,6 +15,7 @@ const Login = () => {
   const state = useSelector(
     (state: { login: loginInitialStateType }) => state.login
   );
+  const { data, status } = useSession();
   const [message, setMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
   const router = useRouter();
@@ -42,6 +40,13 @@ const Login = () => {
       localStorage.setItem("token", state.token);
     }
   }, [state]);
+  useEffect(() => {
+    if (data) {
+      setIsPending(true);
+      setMessage("Yuklanmoqda...");
+      dispatch(loginThunk({ email: data?.user?.email || "" }));
+    }
+  }, [data]);
   return (
     <div className={s.container}>
       <Head>

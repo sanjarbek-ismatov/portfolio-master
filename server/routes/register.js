@@ -14,9 +14,11 @@ router.post("/", upload.single("image"), async (req, res) => {
   if (email || username) {
     return res.status(400).send("email yoki username allaqachon mavjud");
   }
-  const password = await bcrypt.hash(req.body.password, salt);
-  req.body.password = password;
-  await createUser(req.body, req.file.id);
+  if (req.body.password)
+    req.body.password = await bcrypt.hash(req.body.password, salt);
+
+  if (req.file) await createUser(req.body, req.file.id);
+  else await createUser(req.body, null);
   res.send(true);
 });
 module.exports = router;
