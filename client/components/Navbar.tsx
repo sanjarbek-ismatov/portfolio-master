@@ -1,7 +1,10 @@
 import {
   faBars,
   faCircleInfo,
+  faLock,
+  faLockOpen,
   faPlus,
+  faRightFromBracket,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +13,11 @@ import { useState } from "react";
 import cn from "classnames";
 import s from "styles/N.module.scss";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 const Navbar = () => {
+  const { data, status } = useSession();
+  const router = useRouter();
   const [menu, setMenu] = useState<boolean>();
   const visibleContent = () => {
     menu ? setMenu(false) : setMenu(true);
@@ -24,11 +31,9 @@ const Navbar = () => {
           style={
             menu
               ? {
-                  // transform: "translateX(0)",
                   right: "0",
                 }
               : {
-                  // transform: "translateX(300px)",
                   right: "-300px",
                 }
           }
@@ -40,20 +45,39 @@ const Navbar = () => {
               </a>
             </Link>
           </li>
-          <li>
-            <Link href="/about">
-              <a>
-                <FontAwesomeIcon icon={faCircleInfo} /> Loyiha haqida
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/profile">
-              <a>
-                <FontAwesomeIcon icon={faUser} /> Profil
-              </a>
-            </Link>
-          </li>
+          {!data && (
+            <li>
+              <Link href="/auth/login">
+                <a>
+                  <FontAwesomeIcon icon={faLock} /> Kirish
+                </a>
+              </Link>
+            </li>
+          )}
+          {data && (
+            <>
+              <li>
+                <Link href="/">
+                  <a
+                    onClick={() => {
+                      signOut();
+                      localStorage.removeItem("token");
+                      router.replace("/");
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faRightFromBracket} /> Chiqish
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/profile">
+                  <a>
+                    <FontAwesomeIcon icon={faUser} /> Profil
+                  </a>
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
         <FontAwesomeIcon
           onClick={visibleContent}
