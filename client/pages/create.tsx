@@ -11,34 +11,42 @@ const Login = () => {
   }
   return (
     <div className={s.container}>
-      <h1>Portfolio joylash</h1>
-      <form
-        onSubmit={(e) => {
-          setDialog(true);
-          e.preventDefault();
-          setForm(e.target);
-        }}
-      >
-        <input
-          className={s.input}
-          type="file"
-          name="file"
-          placeholder="Profile uchun rasm"
-          required
-        />
-        <input
-          className={s.input}
-          type="text"
-          name="title"
-          placeholder="Loyiha nomi"
-          required
-        />
-        <textarea className={s.area} />
-        <button type="submit" className={s.button}>
-          Joylash
-        </button>
-      </form>
-
+      <div className={s.form}>
+        <h1>Portfolio joylash</h1>
+        <p>Skrinshotlarni yuklang</p>
+        <form
+          onSubmit={(e) => {
+            setDialog(true);
+            e.preventDefault();
+            setForm(e.target);
+          }}
+        >
+          <input
+            className={s.input}
+            type="file"
+            name="file"
+            placeholder="Profile uchun rasm"
+            accept="image/*"
+            multiple
+            required
+          />
+          <input
+            className={s.input}
+            type="text"
+            name="title"
+            placeholder="Loyiha nomi"
+            required
+          />
+          <textarea
+            className={s.area}
+            name="description"
+            placeholder="Loyiha haqida batafsil"
+          />
+          <button type="submit" className={s.button}>
+            Joylash
+          </button>
+        </form>
+      </div>
       {dialog && (
         <Dialog
           ok={handleSubmit}
