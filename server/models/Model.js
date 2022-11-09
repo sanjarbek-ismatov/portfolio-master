@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { portfolioValidator } = require("../utils/validator");
 const userSchema = new mongoose.Schema({
   image: mongoose.SchemaTypes.ObjectId,
   firstname: String,
@@ -26,6 +26,32 @@ async function createUser(body, id) {
   });
   if (id) user.image = id;
   await user.save();
+}
+const portfolioSchema = new mongoose.Schema({
+  title: String,
+  images: [mongoose.SchemaTypes.ObjectId],
+  description: String,
+  author: mongoose.SchemaTypes.ObjectId,
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
+  likes: [mongoose.SchemaTypes.ObjectId],
+  comments: [
+    {
+      commentAuthor: mongoose.SchemaTypes.ObjectId,
+      body: String,
+      date: {
+        type: Date,
+        default: Date.now(),
+      },
+    },
+  ],
+  url: String,
+});
+async function createPortfolio(body) {
+  const { error } = portfolioValidator();
+  if (error) return;
 }
 module.exports.createUser = createUser;
 module.exports.User = User;

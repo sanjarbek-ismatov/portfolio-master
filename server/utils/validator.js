@@ -16,5 +16,15 @@ function loginValidator(body) {
   });
   return valid.validate(body);
 }
+function portfolioValidator(body) {
+  const valid = Joi.object({
+    title: Joi.string().required(),
+    images: Joi.array().items(Joi.binary()),
+    description: Joi.string(),
+    url: Joi.string(),
+  });
+  return valid.validate(body);
+}
+module.exports.portfolioValidator = portfolioValidator;
 module.exports.registerValidator = registerValidator;
 module.exports.loginValidator = loginValidator;
