@@ -13,16 +13,14 @@ router.post("/", multer().any(), async (req, res) => {
   if (!user) {
     return res.status(401).send("Foydalanuvchi topilmadi");
   }
-  if (req.body.password) {
-    const checkedPassword = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
+  if (req.body.password && user.password) {
+    const checkedPassword = bcrypt.compare(req.body.password, user.password);
 
     if (!checkedPassword) {
       return res.status(401).send("Xato parol!");
     }
   }
+
   const token = jwt.sign({ _id: user._id }, process.env.SECRET);
   res.setHeader("x-token", token).send("Login bajarildi!");
 });

@@ -52,7 +52,9 @@ const portfolioSchema = new mongoose.Schema({
 const Portfolio = mongoose.model("portfolio", portfolioSchema);
 async function createPortfolio(body) {
   const { error } = portfolioValidator();
-  if (error) return;
+  if (error) return false;
+  await new Portfolio(body).save();
+  return true;
 }
 module.exports.createUser = createUser;
 module.exports.User = User;
