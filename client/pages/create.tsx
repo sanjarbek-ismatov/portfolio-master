@@ -1,12 +1,18 @@
 import Dialog from "components/Dialog";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import s from "styles/L.module.scss";
 
 const Login = () => {
   const [dialog, setDialog] = useState(false);
   const [form, setForm] = useState<any>();
   function handleSubmit() {
-    console.log(form["1"].value);
+    console.log(form);
+    const data = new FormData();
+    data.append("images", form["0"].files);
+    data.append("title", form["1"].value);
+    data.append("url", form["2"].value);
+    data.append("description", form["3"].value);
+    console.log(data);
     setDialog(false);
   }
   return (
@@ -20,21 +26,29 @@ const Login = () => {
             e.preventDefault();
             setForm(e.target);
           }}
+          encType="multipart/form-data"
         >
           <input
             className={s.input}
             type="file"
-            name="file"
+            name="images"
             placeholder="Profile uchun rasm"
             accept="image/*"
             multiple
-            required
           />
+
           <input
             className={s.input}
             type="text"
             name="title"
             placeholder="Loyiha nomi"
+            required
+          />
+          <input
+            className={s.input}
+            type="url"
+            name="url"
+            placeholder="Loyihangizga havola"
             required
           />
           <textarea

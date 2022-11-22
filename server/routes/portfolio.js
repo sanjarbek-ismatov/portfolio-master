@@ -8,16 +8,17 @@ router.get("/all", async (req, res) => {
   const portfolio = await Portfolio.find();
   res.status(200).send(portfolio);
 });
-router.post("/create", upload.array('images'), auth, (req, res) => {
-  const {error} = portfolioValidator(req.body)
-  if(error) return res.status(400).send(error.details[0].message)
-  // const newPortfolio = new Portfolio({
-  //   title: req.body.title,
-  //   description: req.body.description,
-  //   images: [req.files.map((e, i) => e.id)]
-  // })
-  // newPortfolio.author = req.id
-  console.log(req.files)
-  res.send(true)
+router.post("/create", auth, upload.array("images"), async (req, res) => {
+  const { error } = portfolioValidator(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+  const images = req.files.map((e, i) => e.id);
+  const newPortfolio = new Portfolio({
+    title: req.body.title,
+    description: req.body.description,
+    images: images,
+  });
+  newPortfolio.author = req.id;
+  await newPortfolio.save();
+  res.status(201).send("Success");
 });
 module.exports = router;

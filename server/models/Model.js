@@ -36,6 +36,10 @@ const portfolioSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  isDirect: {
+    default: false,
+    type: Boolean,
+  },
   likes: [mongoose.SchemaTypes.ObjectId],
   comments: [
     {

@@ -21,7 +21,7 @@ function portfolioValidator(body) {
     title: Joi.string().required(),
     images: Joi.array().items(Joi.binary()),
     description: Joi.string(),
-    url: Joi.string(),
+    url: Joi.string().required(),
   });
   return valid.validate(body);
 }
