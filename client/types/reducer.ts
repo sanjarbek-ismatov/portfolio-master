@@ -8,3 +8,7 @@ export type loginInitialStateType = {
   token: string;
 };
 export type form = FormData | { email: string };
+export type portfolioSliceInitialStateType = {
+  status: boolean | string;
+  error: string;
+};

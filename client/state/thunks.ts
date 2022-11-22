@@ -14,3 +14,11 @@ export const registerThunk = createAsyncThunk(
 export const loginThunk = createAsyncThunk("login", async (body: form) => {
   return await Axios.post(`${url}/api/login`, body);
 });
+export const portfolioThunk = createAsyncThunk(
+  "portfolio",
+  async (body: FormData, token: any) => {
+    return await Axios.post(`${url}/api/portfolio/create`, body, {
+      headers: { ["x-token"]: token },
+    });
+  }
+);

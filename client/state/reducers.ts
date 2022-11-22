@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   loginInitialStateType,
+  portfolioSliceInitialStateType,
   registerSliceInitialStateType,
 } from "types/reducer";
-import { loginThunk, registerThunk } from "./thunks";
+import { loginThunk, portfolioThunk, registerThunk } from "./thunks";
 const initialStateRegister: registerSliceInitialStateType = {
   status: false,
   error: "",
@@ -49,6 +50,29 @@ export const loginSlice = createSlice({
     builder.addCase(loginThunk.rejected, (state, action: any) => {
       state.status = true;
       state.error = action.error.message;
+    });
+  },
+});
+const portfolioSliceInitialState: portfolioSliceInitialStateType = {
+  status: false,
+  error: "",
+};
+export const portfolioSlice = createSlice({
+  name: "portfolio",
+  initialState: portfolioSliceInitialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder.addCase(portfolioThunk.pending, (state) => {
+      state.status = false;
+      state.error = "";
+    });
+    builder.addCase(portfolioThunk.fulfilled, (state: any, action) => {
+      state.error = "";
+      state.status = action.payload;
+    });
+    builder.addCase(portfolioThunk.rejected, (state: any, action) => {
+      state.status = true;
+      state.error = action.payload;
     });
   },
 });
