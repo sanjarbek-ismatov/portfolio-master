@@ -13,12 +13,19 @@ const Login = () => {
   );
   const dispatch: any = useDispatch();
   function handleSubmit() {
+    const files = form["0"].files;
+    const converted: any = [];
+    for (let i = 0; i < files.length; i++) {
+      console.log(files[i]);
+      converted.push(files[i]);
+    }
     const data = new FormData();
-    data.append("images", form["0"].files);
+    data.append("images", converted);
     data.append("title", form["1"].value);
     data.append("url", form["2"].value);
     data.append("description", form["3"].value);
     dispatch(portfolioThunk(data));
+    console.log(converted);
     setDialog(false);
   }
   return (
