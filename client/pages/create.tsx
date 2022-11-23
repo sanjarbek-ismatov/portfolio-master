@@ -1,18 +1,24 @@
 import Dialog from "components/Dialog";
 import { FormEvent, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { portfolioThunk } from "state/thunks";
 import s from "styles/L.module.scss";
+import { portfolioSliceInitialStateType } from "types/reducer";
 
 const Login = () => {
   const [dialog, setDialog] = useState(false);
   const [form, setForm] = useState<any>();
+  const state = useSelector(
+    (state: { portfolio: portfolioSliceInitialStateType }) => state.portfolio
+  );
+  const dispatch: any = useDispatch();
   function handleSubmit() {
-    console.log(form);
     const data = new FormData();
     data.append("images", form["0"].files);
     data.append("title", form["1"].value);
     data.append("url", form["2"].value);
     data.append("description", form["3"].value);
-    console.log(data);
+    dispatch(portfolioThunk(data));
     setDialog(false);
   }
   return (

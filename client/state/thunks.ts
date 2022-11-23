@@ -16,9 +16,9 @@ export const loginThunk = createAsyncThunk("login", async (body: form) => {
 });
 export const portfolioThunk = createAsyncThunk(
   "portfolio",
-  async (body: FormData, token: any) => {
+  async (body: FormData) => {
     return await Axios.post(`${url}/api/portfolio/create`, body, {
-      headers: { ["x-token"]: token },
+      headers: { ["x-token"]: localStorage.token },
     });
   }
 );

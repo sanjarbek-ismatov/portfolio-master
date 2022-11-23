@@ -8,7 +8,7 @@ router.get("/all", async (req, res) => {
   const portfolio = await Portfolio.find();
   res.status(200).send(portfolio);
 });
-router.post("/create", auth, upload.array("images"), async (req, res) => {
+router.post("/create", upload.array("images"), auth, async (req, res) => {
   const { error } = portfolioValidator(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   const images = req.files.map((e, i) => e.id);
