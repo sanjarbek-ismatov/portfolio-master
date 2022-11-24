@@ -4,6 +4,6 @@
 
 tasks:
   - init: yarn install
-    command: yarn run start
+    command: cd client && yarn dev
 
 
