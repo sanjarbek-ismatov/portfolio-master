@@ -18,18 +18,18 @@ const Dialog = ({
       <div className={s.dialog}>
         <h2>Diqqat!</h2>
         <div className={s.message}>
-          {isPending && (
+          {isPending && !isError && !isSuccess && (
             <div className={s.spinner}>
               <span></span>
             </div>
           )}
-          {isError && (
-            <div className={s.spinner}>
+          {isSuccess && (
+            <div className={s.icon}>
               <FontAwesomeIcon icon={faCheck} />
             </div>
           )}
-          {isSuccess && (
-            <div className={s.spinner}>
+          {isError && (
+            <div className={s.icon}>
               <FontAwesomeIcon icon={faX} />
             </div>
           )}

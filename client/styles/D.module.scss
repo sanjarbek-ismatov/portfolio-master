@@ -38,6 +38,10 @@
     transform: rotate(360deg);
   }
 }
+.icon {
+  padding: 0 10px;
+  color: $background;
+}
 .dialog {
   width: 600px;
   padding: 25px;

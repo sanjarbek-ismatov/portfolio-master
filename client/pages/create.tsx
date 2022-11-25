@@ -1,4 +1,5 @@
 import Dialog from "components/Dialog";
+import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { portfolioThunk } from "state/thunks";
@@ -10,6 +11,9 @@ const Login = () => {
   const [isPending, setIsPending] = useState(false);
   const [message, setMessage] = useState("Siz portfolioni joylamoqchimisiz?");
   const [form, setForm] = useState<any>();
+  const router = useRouter();
+  const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const state = useSelector(
     (state: { portfolio: portfolioSliceInitialStateType }) => state.portfolio
   );
@@ -24,18 +28,25 @@ const Login = () => {
     data.append("title", form["1"].value);
     data.append("url", form["2"].value);
     data.append("description", form["3"].value);
-    data.append("f", "f");
+
     for (const file of files) {
       data.append("images", file);
     }
     dispatch(portfolioThunk(data));
   }
+
   useEffect(() => {
     setTimeout(() => {
       setIsPending(false);
-      if (state.error) setMessage(state.error);
-      else if (state.status && !state.error)
+      if (state.error) {
+        setMessage(state.error);
+        setIsSuccess(false);
+        setIsError(true);
+      } else if (state.status && !state.error) {
+        setIsError(false);
+        setIsSuccess(true);
         setMessage("Muvaffaqiyatli joylandi!");
+      }
     }, 2000);
   }, [state]);
   return (
@@ -84,14 +95,23 @@ const Login = () => {
           </button>
         </form>
       </div>
-      {dialog && (
+      {dialog && state.status && (
         <Dialog
-          ok={handleSubmit}
+          isError={isError}
+          isSuccess={isSuccess}
           isPending={isPending}
           message={message}
-          cancel={() => {
-            setDialog(false);
-          }}
+          ok={() => (isSuccess && router.replace("/")) || router.reload()}
+        />
+      )}
+      {dialog && !state.status && (
+        <Dialog
+          isPending={isPending}
+          isError={false}
+          isSuccess={false}
+          message={message}
+          ok={handleSubmit}
+          cancel={() => setDialog(false)}
         />
       )}
     </div>
