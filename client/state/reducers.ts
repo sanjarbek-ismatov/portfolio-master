@@ -72,7 +72,7 @@ export const portfolioSlice = createSlice({
     });
     builder.addCase(portfolioThunk.rejected, (state: any, action) => {
       state.status = true;
-      state.error = action.payload;
+      state.error = action.error.message;
     });
   },
 });
