@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
   image: mongoose.SchemaTypes.ObjectId,
   firstname: String,
   lastname: String,
+  isAdmin: Boolean,
   username: {
     type: String,
     unique: true,
@@ -11,6 +12,10 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
+  },
+  isDirect: {
+    default: false,
+    type: Boolean,
   },
   password: String,
 });
@@ -36,10 +41,7 @@ const portfolioSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  isDirect: {
-    default: false,
-    type: Boolean,
-  },
+
   likes: [mongoose.SchemaTypes.ObjectId],
   comments: [
     {

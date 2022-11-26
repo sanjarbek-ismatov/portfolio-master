@@ -7,7 +7,7 @@ export type loginInitialStateType = {
   error: string;
   token: string;
 };
-export type form = FormData | { email: string };
+export type form = FormData | { email: string; isDirect: boolean };
 export type portfolioSliceInitialStateType = {
   status: boolean | string;
   error: string;

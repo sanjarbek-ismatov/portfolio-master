@@ -55,6 +55,7 @@ const Register = () => {
       dispatch(
         registerThunk({
           email: data.user?.email || "",
+          isDirect: true,
         })
       );
     }
@@ -144,6 +145,8 @@ const Register = () => {
           }}
           isPending={isPending}
           message={message}
+          isError={false}
+          isSuccess={false}
         />
       )}
     </div>

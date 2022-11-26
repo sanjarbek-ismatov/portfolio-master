@@ -16,8 +16,14 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 const Navbar = () => {
+  const getToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.token;
+    }
+  };
   const { data, status } = useSession();
   const router = useRouter();
+  const token = getToken();
   const [menu, setMenu] = useState<boolean>();
   const visibleContent = () => {
     menu ? setMenu(false) : setMenu(true);
@@ -45,7 +51,7 @@ const Navbar = () => {
               </a>
             </Link>
           </li>
-          {!data && (
+          {(!data || !token) && (
             <li>
               <Link href="/auth/login">
                 <a>
@@ -54,7 +60,7 @@ const Navbar = () => {
               </Link>
             </li>
           )}
-          {data && (
+          {(data || token) && (
             <>
               <li>
                 <Link href="/">
