@@ -143,6 +143,8 @@ const Register = () => {
             signOut();
             !state.error && state.status && router.replace("/auth/login");
           }}
+          isSuccess={false}
+          isError={false}
           isPending={isPending}
           message={message}
           isError={false}

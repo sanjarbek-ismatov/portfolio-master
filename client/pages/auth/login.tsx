@@ -85,6 +85,8 @@ const Login = () => {
       </div>
       {message && (
         <Dialog
+          isError={false}
+          isSuccess={false}
           ok={() => {
             setMessage("");
             !state.error && state.status && router.replace("/");
