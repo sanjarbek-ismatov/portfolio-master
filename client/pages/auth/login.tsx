@@ -44,7 +44,7 @@ const Login = () => {
     if (data) {
       setIsPending(true);
       setMessage("Yuklanmoqda...");
-      dispatch(loginThunk({ email: data?.user?.email || "" }));
+      dispatch(loginThunk({ email: data?.user?.email || "", isDirect: true }));
     }
   }, [data]);
   return (
