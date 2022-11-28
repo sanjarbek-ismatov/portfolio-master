@@ -18,7 +18,23 @@ const Register = () => {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [state, setState] = useState<AxiosResponse<any, any>>();
-  const [error, setError] = useState<AxiosError>();
+  const [error, setError] = useState<
+    AxiosError & { response: { data: string } }
+  >();
+  function success() {
+    if (state?.data) {
+      setIsPending(false);
+      setIsSuccess(true);
+      setIsError(false);
+      setMessage(state.data);
+    }
+  }
+  function handleError() {
+    setIsPending(false);
+    setIsSuccess(false);
+    setIsError(true);
+    setMessage(error?.response?.data || "Nimadir xato!");
+  }
   function formik(e: any) {
     e.preventDefault();
     setMessage("Yuklanmoqda!");
@@ -37,24 +53,31 @@ const Register = () => {
     data.append("password", e.target["5"].value);
     data.append("ss", "ss");
     register(data)
-      .then((data) => setState(data))
-      .catch((err) => setError(err));
+      .then((data) => {
+        setState(data);
+        success();
+      })
+      .catch((err) => {
+        setError(err);
+        handleError();
+      });
   }
   useEffect(() => console.log(state, error), [state, error]);
-  function success() {
-    if (state?.data) {
-      setIsPending(false);
-      setMessage(state.data);
-    }
-  }
+
   useEffect(() => {}, [state]);
   useEffect(() => {
     if (data) {
       setIsPending(true);
       setMessage("Yuklanmoqda...");
       register({ email: data.user?.email || "", isDirect: true })
-        .then((data) => setState(data))
-        .catch((err) => setError(err));
+        .then((data) => {
+          setState(data);
+          success();
+        })
+        .catch((err) => {
+          setError(err);
+          handleError();
+        });
     }
   }, [data]);
   return (
