@@ -11,6 +11,7 @@ export const registerThunk = createAsyncThunk(
     return await Axios.post(`${url}/api/register`, body);
   }
 );
+0;
 export const loginThunk = createAsyncThunk("login", async (body: form) => {
   return await Axios.post(`${url}/api/login`, body);
 });

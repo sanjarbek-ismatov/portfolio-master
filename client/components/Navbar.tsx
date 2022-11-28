@@ -51,7 +51,7 @@ const Navbar = () => {
               </a>
             </Link>
           </li>
-          {(!data || !token) && (
+          {!data && !token && (
             <li>
               <Link href="/auth/login">
                 <a>

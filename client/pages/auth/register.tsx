@@ -2,24 +2,23 @@ import s from "styles/L.module.scss";
 import { signIn, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
-
-import { useDispatch, useSelector } from "react-redux";
-import { registerThunk } from "state/thunks";
 import { useEffect, useState } from "react";
 import Dialog from "components/Dialog";
-import { registerSliceInitialStateType } from "types/reducer";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { register } from "utils/auth";
+import { AxiosError, AxiosResponse } from "axios";
 const Register = () => {
   const { data, status } = useSession();
   const [message, setMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
-  const dispatch: any = useDispatch();
+  const [dialog, setDialog] = useState(false);
   const router = useRouter();
-  const state = useSelector(
-    (state: { register: registerSliceInitialStateType }) => state.register
-  );
+  const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [state, setState] = useState<AxiosResponse<any, any>>();
+  const [error, setError] = useState<AxiosError>();
   function formik(e: any) {
     e.preventDefault();
     setMessage("Yuklanmoqda!");
@@ -36,28 +35,26 @@ const Register = () => {
     data.append("username", e.target["3"].value);
     data.append("email", e.target["4"].value);
     data.append("password", e.target["5"].value);
-    setTimeout(() => dispatch(registerThunk(data)), 2000);
+    data.append("ss", "ss");
+    register(data)
+      .then((data) => setState(data))
+      .catch((err) => setError(err));
   }
-  useEffect(() => {
-    setIsPending(true);
-    if (state.error) {
+  useEffect(() => console.log(state, error), [state, error]);
+  function success() {
+    if (state?.data) {
       setIsPending(false);
-      setMessage("Foydalanuvchi nomi yoki paroli allaqachon foydalanilgan");
-    } else if (!state.error && state.status) {
-      setIsPending(false);
-      setMessage("Ro`yhatdan muvaffiqiyatli o`tdingiz!");
+      setMessage(state.data);
     }
-  }, [state]);
+  }
+  useEffect(() => {}, [state]);
   useEffect(() => {
     if (data) {
       setIsPending(true);
       setMessage("Yuklanmoqda...");
-      dispatch(
-        registerThunk({
-          email: data.user?.email || "",
-          isDirect: true,
-        })
-      );
+      register({ email: data.user?.email || "", isDirect: true })
+        .then((data) => setState(data))
+        .catch((err) => setError(err));
     }
   }, [data]);
   return (
@@ -136,17 +133,17 @@ const Register = () => {
           </button>
         </div>
       </div>
-      {message && (
+      {dialog && (
         <Dialog
           ok={() => {
             setMessage("");
             signOut();
-            !state.error && state.status && router.replace("/auth/login");
+            state?.data && router.replace("/auth/login");
           }}
           isPending={isPending}
           message={message}
-          isError={false}
-          isSuccess={false}
+          isError={isError}
+          isSuccess={isSuccess}
         />
       )}
     </div>
