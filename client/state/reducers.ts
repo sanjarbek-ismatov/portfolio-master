@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   loginInitialStateType,
   portfolioSliceInitialStateType,
@@ -27,10 +27,13 @@ export const registerSlice = createSlice({
         state.status = true;
         state.error = "";
       });
-    builder.addCase(registerThunk.rejected, (state, action: any) => {
-      state.status = true;
-      state.error = action.error.message;
-    });
+    builder.addCase(
+      registerThunk.rejected,
+      (state, action: PayloadAction<any>) => {
+        state.status = true;
+        state.error = action.payload;
+      }
+    );
   },
 });
 export const loginSlice = createSlice({

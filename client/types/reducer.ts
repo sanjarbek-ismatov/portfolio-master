@@ -12,3 +12,4 @@ export type portfolioSliceInitialStateType = {
   status: boolean | string;
   error: string;
 };
+export type errorType = { response: { data: string } };
