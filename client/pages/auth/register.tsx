@@ -7,16 +7,14 @@ import Dialog from "components/Dialog";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { register } from "utils/auth";
-import { AxiosError, AxiosResponse } from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { registerSliceInitialStateType } from "types/reducer";
 import { registerThunk } from "state/thunks";
 const Register = () => {
-  const { data, status } = useSession();
+  const { data } = useSession();
   const [message, setMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
-  const [dialog, setDialog] = useState(false);
+
   const router = useRouter();
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -32,6 +30,8 @@ const Register = () => {
     if (e.target["5"].value !== e.target["6"].value) {
       setMessage("Parolni to'g'ri kiriting");
       setIsPending(false);
+      setIsError(true);
+      setIsSuccess(false);
       return;
     }
     const data = new FormData();
@@ -47,10 +47,14 @@ const Register = () => {
     setIsPending(true);
     if (state.error) {
       setIsPending(false);
+      setIsError(true);
+      setIsSuccess(false);
       setMessage(state.error);
     } else if (!state.error && state.status) {
       setIsPending(false);
+      setIsSuccess(true);
       setMessage("Ro`yhatdan muvaffiqiyatli o`tdingiz!");
+      setIsError(false);
     }
   }, [state]);
   useEffect(() => {
@@ -146,7 +150,7 @@ const Register = () => {
           ok={() => {
             setMessage("");
             signOut();
-            !state.error && state.status && router.replace("/auth/login");
+            !isError && isSuccess && router.replace("/auth/login");
           }}
           isPending={isPending}
           message={message}

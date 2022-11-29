@@ -16,14 +16,25 @@ export const registerThunk = createAsyncThunk(
   }
 );
 0;
-export const loginThunk = createAsyncThunk("login", async (body: form) => {
-  return await Axios.post(`${url}/api/login`, body);
-});
+export const loginThunk = createAsyncThunk(
+  "login",
+  async (body: form, thunkAPI) => {
+    try {
+      return await Axios.post(`${url}/api/login`, body);
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 export const portfolioThunk = createAsyncThunk(
   "portfolio",
-  async (body: FormData) => {
-    return await Axios.post(`${url}/api/portfolio/create`, body, {
-      headers: { ["x-token"]: localStorage.token },
-    });
+  async (body: FormData, thunkAPI) => {
+    try {
+      return await Axios.post(`${url}/api/portfolio/create`, body, {
+        headers: { ["x-token"]: localStorage.token },
+      });
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
   }
 );
