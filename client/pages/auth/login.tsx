@@ -18,6 +18,8 @@ const Login = () => {
   const { data, status } = useSession();
   const [message, setMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const router = useRouter();
   function formik(e: any) {
     setMessage("Yuklanmoqda...");
@@ -33,10 +35,14 @@ const Login = () => {
     setIsPending(true);
     if (state.error) {
       setIsPending(false);
-      setMessage("Nimadir xato!");
+      setMessage(state.error);
+      setIsSuccess(false);
+      setIsError(true);
     } else if (!state.error && state.status) {
       setIsPending(false);
       setMessage("Login bajarildi!");
+      setIsSuccess(true);
+      setIsError(false);
       localStorage.setItem("token", state.token);
     }
   }, [state]);
@@ -85,8 +91,8 @@ const Login = () => {
       </div>
       {message && (
         <Dialog
-          isError={false}
-          isSuccess={false}
+          isError={isError}
+          isSuccess={isSuccess}
           ok={() => {
             setMessage("");
             !state.error && state.status && router.replace("/");

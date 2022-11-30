@@ -52,7 +52,7 @@ export const loginSlice = createSlice({
       });
     builder.addCase(loginThunk.rejected, (state, action: any) => {
       state.status = true;
-      state.error = action.error.message;
+      state.error = action.payload;
     });
   },
 });

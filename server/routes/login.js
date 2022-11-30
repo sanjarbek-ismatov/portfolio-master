@@ -17,13 +17,17 @@ router.post("/", multer().any(), async (req, res) => {
     return res.status(401).send("Parol kerak");
   }
   if (user.isDirect === false) {
-    const checkedPassword = bcrypt.compare(req.body.password, user.password);
+    console.log(true);
+    const checkedPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
 
     if (!checkedPassword) {
       return res.status(401).send("Xato parol!");
     }
   }
-
+  console.log(user, req.body.password);
   const token = jwt.sign({ _id: user._id }, process.env.SECRET);
   res.setHeader("x-token", token).send("Login bajarildi!");
 });
