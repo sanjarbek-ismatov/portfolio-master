@@ -1,18 +1,8 @@
 const crypto = require("crypto");
-const grid = require("gridfs-stream");
-const mongoose = require("mongoose");
 const multer = require("multer");
 const { GridFsStorage } = require("multer-gridfs-storage");
 const path = require("path");
-const db = mongoose.connection;
-var gfs, gfsb;
 
-db.once("open", () => {
-  gfs = grid(db.db, mongoose.mongo);
-  gfsb = new mongoose.mongo.GridFSBucket(db.db, {
-    bucketName: "uploads",
-  });
-});
 const storage = new GridFsStorage({
   url: process.env.MONGO_URL,
   file: (req, file) => {
