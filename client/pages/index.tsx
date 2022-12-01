@@ -10,7 +10,9 @@ import Head from "next/head";
 import { useState } from "react";
 
 import Footer from "components/Footer";
-const Index = () => {
+import { GetServerSideProps } from "next";
+import { portfolio } from "types/portfolio";
+const Index = ({data}: {data: portfolio[]}) => {
   const [text, setText] = useState("");
   return (
     <div>
@@ -51,6 +53,7 @@ const Index = () => {
             </div>
           </div>
         </div>
+        
         <div className={s.post}>
           <Image
             className={s.postImage}
@@ -150,5 +153,14 @@ const Index = () => {
     </div>
   );
 };
+export const getServerSideProps: GetServerSideProps<{data: portfolio[]}> = async ({params}) => {
+  const res = await fetch(`${process.env.SERVER_URL}/api/portfolio/all`)
+  const data = await res.json()
+  return {
+    props: {
+      data: data
+    }
 
+  }
+}
 export default Index;

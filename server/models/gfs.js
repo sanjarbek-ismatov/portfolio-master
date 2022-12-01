@@ -19,6 +19,5 @@ const storage = new GridFsStorage({
     });
   },
 });
-module.exports.gfs = gfs;
-module.exports.gfsb = gfsb;
+
 module.exports.upload = multer({ storage });
