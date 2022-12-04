@@ -34,7 +34,7 @@ async function createUser(body, id) {
 }
 const portfolioSchema = new mongoose.Schema({
   title: String,
-  images: [mongoose.SchemaTypes.ObjectId],
+  images: [String],
   description: String,
   author: mongoose.SchemaTypes.ObjectId,
   date: {

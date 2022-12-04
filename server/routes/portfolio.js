@@ -11,7 +11,7 @@ router.get("/all", async (req, res) => {
 router.post("/create", upload.array("images"), auth, async (req, res) => {
   const { error } = portfolioValidator(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-  const images = req.files.map((e, i) => e.id);
+  const images = req.files.map((e, i) => e.filename);
   const newPortfolio = new Portfolio({
     title: req.body.title,
     description: req.body.description,

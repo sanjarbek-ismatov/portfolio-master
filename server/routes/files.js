@@ -1,11 +1,12 @@
 const express = require("express");
 const mongoose = require('mongoose')
 const Grid = require("gridfs-stream");
+const fs = require('fs')
 const db = mongoose.connection;
 var gfs, gfsb;
 
 db.once("open", () => {
-  gfs =  Grid(db.db, mongoose.mongo);
+  gfs = Grid(db.db, mongoose.mongo);
   gfs.collection('uploads')
   gfsb = new mongoose.mongo.GridFSBucket(db.db, {
     bucketName: "uploads",
@@ -20,8 +21,8 @@ router.get("/files/:filename", (req, res) => {
     }
   });
 });
-router.get("/files",  (req, res) => {
-    gfs.files.find().toArray((err, files) => {
+router.get("/files", (req, res) => {
+  gfs.files.find().toArray((err, files) => {
     if (err) return res.status(404).send(err);
     else {
       res.status(200).send(files);
@@ -29,12 +30,17 @@ router.get("/files",  (req, res) => {
   });
 });
 router.get("/image/:image", (req, res) => {
+
   gfs.files.findOne({ filename: req.params.image }, (err, file) => {
+    res.contentType(file.contentType);
     if (err) return res.status(404).send('Fayl topilmadi!')
-    else if (file.contentType === "image/png" || file.contentType === "image/jpeg") {
-      console.log(file)
-      const readStream = gfsb.openDownloadStream(file._id);
+    if (file.contentType === "image/png" || file.contentType === "image/jpeg") {
+      const readStream = gfsb.openDownloadStream(file._id)
       readStream.pipe(res);
+
+    }
+    else {
+      res.send('Rasm emas!')
     }
   });
 });
