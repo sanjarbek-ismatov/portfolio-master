@@ -18,7 +18,9 @@ const app = express();
 // using cors for showing x-token
 app.use(
   cors({
+  
     exposedHeaders: "x-token",
+    optionsSuccessStatus: 200
   })
 );
 // middlewares
