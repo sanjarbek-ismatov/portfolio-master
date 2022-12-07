@@ -7,16 +7,30 @@ import s from "styles/M.module.scss";
 import Input from "components/Input";
 import Head from "next/head";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Footer from "components/Footer";
 import { GetServerSideProps } from "next";
 import { portfolio } from "types/portfolio";
-const Index = ({ data }: { data: portfolio[] }) => {
+const Index = ({ data, image }: { data: portfolio[]; image: string }) => {
   var url: string = process.env.SERVER_URL || "";
   if (process.env.NODE_ENV === "development") {
     url = "http://localhost:4000";
   }
+  const [imageFromUrl, setImage] = useState("");
+  useEffect(() => {
+    async function fetcher() {
+      await fetch(`${url}/image/${data[0].images[0]}`)
+        .then((res) => res.blob())
+        .then((image) => {
+          setImage(URL.createObjectURL(image));
+          console.log(image);
+        });
+    }
+    fetcher();
+  }, []);
+  useEffect(() => console.log(imageFromUrl), [imageFromUrl]);
+
   const [text, setText] = useState("");
   return (
     <div>
@@ -33,34 +47,36 @@ const Index = ({ data }: { data: portfolio[] }) => {
         />
         {data.map((e, i) => {
           return (
-            <><div className={s.post}>
-              <Image
-                className={s.postImage}
-                loading="lazy"
-                placeholder="blur"
-                loader={() => `${url}/image/${e.images[0]}`}
-                blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
-                height={450}
-                width={800}
-                src={`${url}/image/${e.images[0]}`} />
-              <div className={s.desc}>
-                <div className={s.profile}>
-                  <img
-                    className={s.profileImage}
-                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" />
-                  <p>Sanjarbek Ismatov</p>
-                </div>
-                <h1>MyBlog</h1>
-                <div>
-                  <FontAwesomeIcon className={s.icon} icon={faHeart} />
-                  <p>10</p>
+            <>
+              <div className={s.post}>
+                <Image
+                  className={s.postImage}
+                  loading="lazy"
+                  placeholder="blur"
+                  loader={() => imageFromUrl}
+                  blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
+                  height={450}
+                  width={800}
+                  src={`${url}/image/${e.images[0]}`}
+                />
+                <div className={s.desc}>
+                  <div className={s.profile}>
+                    <img
+                      className={s.profileImage}
+                      src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    />
+                    <p>Sanjarbek Ismatov</p>
+                  </div>
+                  <h1>MyBlog</h1>
+                  <div>
+                    <FontAwesomeIcon className={s.icon} icon={faHeart} />
+                    <p>10</p>
+                  </div>
                 </div>
               </div>
-            </div></>
-          )
+            </>
+          );
         })}
-
-
       </main>
       {/* <script
         type="text/javascript"
@@ -82,20 +98,21 @@ const Index = ({ data }: { data: portfolio[] }) => {
     </div>
   );
 };
-export const getServerSideProps: GetServerSideProps<{ data: portfolio[] }> = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps<{
+  data: portfolio[];
+}> = async ({ params }) => {
   var url: string = process.env.SERVER_URL || "";
   if (process.env.NODE_ENV === "development") {
     url = "http://localhost:4000";
   }
-  const res = await fetch(`${url}/api/portfolio/all`)
+  const res = await fetch(`${url}/api/portfolio/all`);
 
-  const data = await res.json()
-  console.log(data)
+  const data = await res.json();
+
   return {
     props: {
-      data: data
-    }
-
-  }
-}
+      data: data,
+    },
+  };
+};
 export default Index;
