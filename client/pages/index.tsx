@@ -12,24 +12,32 @@ import { useEffect, useState } from "react";
 import Footer from "components/Footer";
 import { GetServerSideProps } from "next";
 import { portfolio } from "types/portfolio";
+import { serverUrl } from "utils/serverUrl";
+import { fetchAndSendByUrl } from "utils/getImage";
 const Index = ({ data, image }: { data: portfolio[]; image: string }) => {
-  var url: string = process.env.SERVER_URL || "";
-  if (process.env.NODE_ENV === "development") {
-    url = "http://localhost:4000";
-  }
-  const [imageFromUrl, setImage] = useState("");
+  const url = serverUrl();
+  const [imageFromUrl, setImage] = useState<string[][]>();
   useEffect(() => {
-    async function fetcher() {
-      await fetch(`${url}/image/${data[0].images[0]}`)
-        .then((res) => res.blob())
-        .then((image) => {
-          setImage(URL.createObjectURL(image));
-          console.log(image);
-        });
-    }
-    fetcher();
-  }, []);
-  useEffect(() => console.log(imageFromUrl), [imageFromUrl]);
+    fetchAndSendByUrl(data).then((data) => setImage(data));
+  }, [fetchAndSendByUrl]);
+
+  // useEffect(() => {
+  //   async function fetcher() {
+  //     data.map((e, i) => {});
+  //     // await fetch(`${url}/image/`);
+  //     await fetch(`${url}/image/${data[0].images[0]}`)
+  //       .then((res) => res.blob())
+  //       .then((image) => {
+  //         setImage(URL.createObjectURL(image));
+  //         console.log(image);
+  //       });
+  //   }
+  //   fetcher();
+  // }, []);
+  useEffect(
+    () => console.log(imageFromUrl && imageFromUrl[0][0], url),
+    [imageFromUrl]
+  );
 
   const [text, setText] = useState("");
   return (
@@ -45,15 +53,18 @@ const Index = ({ data, image }: { data: portfolio[]; image: string }) => {
           handleChange={(e) => setText(e.target.value)}
           value={text}
         />
-        {data.map((e, i) => {
+        {data.map((e, i: number) => {
           return (
             <>
-              <div className={s.post}>
+              <div key={i} className={s.post}>
                 <Image
                   className={s.postImage}
                   loading="lazy"
                   placeholder="blur"
-                  loader={() => imageFromUrl}
+                  loader={() =>
+                    (imageFromUrl && imageFromUrl[i][0]) ||
+                    "https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
+                  }
                   blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
                   height={450}
                   width={800}

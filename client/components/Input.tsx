@@ -8,6 +8,7 @@ const Input = ({ handleChange, value, clear, ...rest }: inputType) => {
     <div {...rest}>
       <FontAwesomeIcon className="icon" icon={faSearch} />
       <input
+        {...rest}
         placeholder="Kerakli narsani qidiring"
         onChange={handleChange}
         value={value}
