@@ -18,7 +18,7 @@ const Index = ({ data, image }: { data: portfolio[]; image: string }) => {
   const url = serverUrl();
   const [imageFromUrl, setImage] = useState<string[][]>();
   useEffect(() => {
-    fetchAndSendByUrl(data).then((data) => setImage(data));
+    !imageFromUrl && fetchAndSendByUrl(data).then((data) => setImage(data));
   }, [fetchAndSendByUrl]);
 
   // useEffect(() => {
@@ -78,10 +78,10 @@ const Index = ({ data, image }: { data: portfolio[]; image: string }) => {
                     />
                     <p>Sanjarbek Ismatov</p>
                   </div>
-                  <h1>MyBlog</h1>
+                  <h1>{e.title}</h1>
                   <div>
                     <FontAwesomeIcon className={s.icon} icon={faHeart} />
-                    <p>10</p>
+                    <p>{e.likes.length}</p>
                   </div>
                 </div>
               </div>
