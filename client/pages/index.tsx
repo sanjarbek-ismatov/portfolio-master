@@ -6,36 +6,26 @@ import Image from "next/image";
 import s from "styles/M.module.scss";
 import Input from "components/Input";
 import Head from "next/head";
-
 import { useEffect, useState } from "react";
-
 import Footer from "components/Footer";
 import { GetServerSideProps } from "next";
 import { portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import { fetchAndSendByUrl } from "utils/getImage";
-const Index = ({ data, image }: { data: portfolio[]; image: string }) => {
+const Index = ({ data }: { data: portfolio[] }) => {
   const url = serverUrl();
   const [imageFromUrl, setImage] = useState<string[][]>();
+  const [isUsed, setIsUsed] = useState<boolean>(false);
   useEffect(() => {
-    !imageFromUrl && fetchAndSendByUrl(data).then((data) => setImage(data));
+    fetchAndSendByUrl(data).then(
+      (data) => (!imageFromUrl || imageFromUrl.length === 0) && setImage(data)
+    );
+    setTimeout(() => {
+      setIsUsed(true);
+    }, 2000);
   }, [fetchAndSendByUrl]);
-
-  // useEffect(() => {
-  //   async function fetcher() {
-  //     data.map((e, i) => {});
-  //     // await fetch(`${url}/image/`);
-  //     await fetch(`${url}/image/${data[0].images[0]}`)
-  //       .then((res) => res.blob())
-  //       .then((image) => {
-  //         setImage(URL.createObjectURL(image));
-  //         console.log(image);
-  //       });
-  //   }
-  //   fetcher();
-  // }, []);
   useEffect(
-    () => console.log(imageFromUrl && imageFromUrl[0][0], url),
+    () => console.log(imageFromUrl && imageFromUrl, url),
     [imageFromUrl]
   );
 
@@ -57,19 +47,20 @@ const Index = ({ data, image }: { data: portfolio[]; image: string }) => {
           return (
             <>
               <div key={i} className={s.post}>
-                <Image
-                  className={s.postImage}
-                  loading="lazy"
-                  placeholder="blur"
-                  loader={() =>
-                    (imageFromUrl && imageFromUrl[i][0]) ||
-                    "https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
-                  }
-                  blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
-                  height={450}
-                  width={800}
-                  src={`${url}/image/${e.images[0]}`}
-                />
+                {isUsed && imageFromUrl && (
+                  <Image
+                    className={s.postImage}
+                    loading="lazy"
+                    placeholder="blur"
+                    loader={() => imageFromUrl[i][0]}
+                    blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
+                    height={450}
+                    width={800}
+                    src={
+                      "https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
+                    }
+                  />
+                )}
                 <div className={s.desc}>
                   <div className={s.profile}>
                     <img

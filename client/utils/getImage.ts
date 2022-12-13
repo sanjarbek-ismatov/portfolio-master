@@ -12,6 +12,6 @@ export async function fetchAndSendByUrl(data: portfolio[]) {
     });
     array.push(imageArray);
   });
-  console.log(array);
+
   return array;
 }
