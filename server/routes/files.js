@@ -1,8 +1,7 @@
 const express = require("express");
 const mongoose = require('mongoose')
 const Grid = require("gridfs-stream");
-const request = require('request')
-const fs = require('fs')
+
 const db = mongoose.connection;
 var gfs, gfsb;
 
@@ -47,7 +46,5 @@ router.get("/image/:image", async (req, res) => {
     }
   });
 });
-router.get('/ex', (req,res) => {
-  request.get('http://localhost:4000/image/18b0ef8d03e9cd0cf1c2db3385ce334c.jpg').pipe(res)
-})
+
 module.exports = router;

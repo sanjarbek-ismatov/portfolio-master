@@ -12,10 +12,12 @@ import { GetServerSideProps } from "next";
 import { portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import { fetchAndSendByUrl } from "utils/getImage";
+import { getLikeFromPortfolio } from "utils/getDetails";
 const Index = ({ data }: { data: portfolio[] }) => {
   const url = serverUrl();
   const [imageFromUrl, setImage] = useState<string[][]>();
   const [isUsed, setIsUsed] = useState<boolean>(false);
+  // const {} = getLikeFromPortfolio(data, localStorage.)
   useEffect(() => {
     fetchAndSendByUrl(data).then(
       (data) => (!imageFromUrl || imageFromUrl.length === 0) && setImage(data)
