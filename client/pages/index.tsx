@@ -17,19 +17,23 @@ const Index = ({ data }: { data: portfolio[] }) => {
   const url = serverUrl();
   const [imageFromUrl, setImage] = useState<string[][]>();
   const [isUsed, setIsUsed] = useState<boolean>(false);
-  // const {} = getLikeFromPortfolio(data, localStorage.)
+  const [likes, setLikes] = useState<
+    { isLiked: boolean; count: number } | any
+  >();
   useEffect(() => {
     fetchAndSendByUrl(data).then(
       (data) => (!imageFromUrl || imageFromUrl.length === 0) && setImage(data)
     );
     setTimeout(() => {
       setIsUsed(true);
+      console.log(likes);
     }, 2000);
   }, [fetchAndSendByUrl]);
-  useEffect(
-    () => console.log(imageFromUrl && imageFromUrl, url),
-    [imageFromUrl]
-  );
+  useEffect(() => {
+    getLikeFromPortfolio(data)
+      .then((data) => setLikes(data))
+      .catch((err) => console.log(err));
+  }, []);
 
   const [text, setText] = useState("");
   return (
@@ -49,7 +53,7 @@ const Index = ({ data }: { data: portfolio[] }) => {
           return (
             <>
               <div key={i} className={s.post}>
-                {isUsed && imageFromUrl && (
+                {isUsed && imageFromUrl && likes && (
                   <Image
                     className={s.postImage}
                     loading="lazy"
