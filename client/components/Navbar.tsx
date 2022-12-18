@@ -15,12 +15,8 @@ import s from "styles/N.module.scss";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { getToken } from "utils/getDetails";
 const Navbar = () => {
-  const getToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.token;
-    }
-  };
   const { data, status } = useSession();
   const router = useRouter();
   const token = getToken();

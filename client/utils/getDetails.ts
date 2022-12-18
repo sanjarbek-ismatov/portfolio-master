@@ -1,4 +1,4 @@
-import { portfolio } from "types/portfolio";
+import { like, portfolio } from "types/portfolio";
 import { serverUrl } from "./serverUrl";
 import axios from "axios";
 
@@ -10,18 +10,23 @@ export async function getMe() {
   });
   return data;
 }
+export const getToken = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.token;
+  }
+};
 export async function getLikeFromPortfolio(data: portfolio[]) {
   return new Promise(async (resolve, reject) => {
     try {
       const user: any = await getMe();
 
-      const result = data.map((e, i) =>
+      const result: like[] = data.map((e, i) =>
         user._id in e.likes
           ? { isLiked: true, count: e.likes.length }
           : { isLiked: false, count: e.likes.length }
       );
 
-      result && resolve(result);
+      resolve(result);
     } catch (ex) {
       reject(ex);
     }

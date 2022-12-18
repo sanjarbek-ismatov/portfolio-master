@@ -1,6 +1,7 @@
 import { faHeart as liked } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as likedHeart } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "components/Navbar";
 import Image from "next/image";
 import s from "styles/M.module.scss";
@@ -9,31 +10,29 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import Footer from "components/Footer";
 import { GetServerSideProps } from "next";
-import { portfolio } from "types/portfolio";
+import { like, portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import { fetchAndSendByUrl } from "utils/getImage";
-import { getLikeFromPortfolio } from "utils/getDetails";
+import { getLikeFromPortfolio, getToken } from "utils/getDetails";
+import { useSession } from "next-auth/react";
 const Index = ({ data }: { data: portfolio[] }) => {
   const url = serverUrl();
   const [imageFromUrl, setImage] = useState<string[][]>();
   const [isUsed, setIsUsed] = useState<boolean>(false);
-  const [likes, setLikes] = useState<
-    { isLiked: boolean; count: number } | any
-  >();
+  const [likes, setLikes] = useState<like[]>();
+  const token = getToken();
+  const { data: session } = useSession();
   useEffect(() => {
-    fetchAndSendByUrl(data).then(
-      (data) => (!imageFromUrl || imageFromUrl.length === 0) && setImage(data)
-    );
+    fetchAndSendByUrl(data).then((data) => setImage(data));
     setTimeout(() => {
       setIsUsed(true);
-      console.log(likes);
     }, 2000);
-  }, [fetchAndSendByUrl]);
+  }, [data]);
   useEffect(() => {
     getLikeFromPortfolio(data)
-      .then((data) => setLikes(data))
+      .then((likedata: any) => setLikes(likedata))
       .catch((err) => console.log(err));
-  }, []);
+  }, [data]);
 
   const [text, setText] = useState("");
   return (
@@ -62,6 +61,7 @@ const Index = ({ data }: { data: portfolio[] }) => {
                     blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
                     height={450}
                     width={800}
+                    alt="portfolio rasmi"
                     src={
                       "https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
                     }
@@ -71,14 +71,28 @@ const Index = ({ data }: { data: portfolio[] }) => {
                   <div className={s.profile}>
                     <img
                       className={s.profileImage}
+                      alt="profile rasmi"
                       src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                     />
                     <p>Sanjarbek Ismatov</p>
                   </div>
                   <h1>{e.title}</h1>
                   <div>
-                    <FontAwesomeIcon className={s.icon} icon={faHeart} />
-                    <p>{e.likes.length}</p>
+                    {(token || session) && likes && likes[i].isLiked ? (
+                      <>
+                        <FontAwesomeIcon className={s.icon} icon={likedHeart} />
+                        <p>{likes && likes[i].count}</p>
+                      </>
+                    ) : (
+                      <>
+                        <FontAwesomeIcon
+                          onClick={() => alert("You liked")}
+                          className={s.icon}
+                          icon={faHeart}
+                        />
+                        <p>{likes && likes[i].count}</p>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
