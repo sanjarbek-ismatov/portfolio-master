@@ -2,6 +2,7 @@ import Dialog from "components/Dialog";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "state/store";
 import { portfolioThunk } from "state/thunks";
 import s from "styles/L.module.scss";
 import { portfolioSliceInitialStateType } from "types/reducer";
@@ -14,10 +15,10 @@ const Login = () => {
   const router = useRouter();
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const state = useSelector(
+  const state = useAppSelector(
     (state: { portfolio: portfolioSliceInitialStateType }) => state.portfolio
   );
-  const dispatch: any = useDispatch();
+  const dispatch = useAppDispatch();
   function handleSubmit() {
     setIsPending(true);
     setMessage("Yuklanmoqda...");

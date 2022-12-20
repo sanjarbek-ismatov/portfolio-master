@@ -1,3 +1,5 @@
+import { store } from "state/store";
+
 export type registerSliceInitialStateType = {
   status: string | boolean | undefined;
   error: string;
@@ -13,3 +15,5 @@ export type portfolioSliceInitialStateType = {
   error: string;
 };
 export type errorType = { response: { data: string } };
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

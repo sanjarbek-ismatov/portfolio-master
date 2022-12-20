@@ -4,15 +4,15 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Head from "next/head";
-import { useDispatch, useSelector } from "react-redux";
 import { loginInitialStateType } from "types/reducer";
 import { useEffect, useState } from "react";
 import Dialog from "components/Dialog";
 import { useRouter } from "next/router";
 import { loginThunk } from "state/thunks";
+import { useAppDispatch, useAppSelector } from "state/store";
 const Login = () => {
-  const dispatch: any = useDispatch();
-  const state = useSelector(
+  const dispatch = useAppDispatch();
+  const state = useAppSelector(
     (state: { login: loginInitialStateType }) => state.login
   );
   const { data, status } = useSession();

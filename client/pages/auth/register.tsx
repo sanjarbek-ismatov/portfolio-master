@@ -7,9 +7,10 @@ import Dialog from "components/Dialog";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { useDispatch, useSelector } from "react-redux";
+
 import { registerSliceInitialStateType } from "types/reducer";
 import { registerThunk } from "state/thunks";
+import { useAppDispatch, useAppSelector } from "state/store";
 const Register = () => {
   const { data } = useSession();
   const [message, setMessage] = useState("");
@@ -18,8 +19,8 @@ const Register = () => {
   const router = useRouter();
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const dispatch: any = useDispatch();
-  const state = useSelector(
+  const dispatch = useAppDispatch();
+  const state = useAppSelector(
     (state: { register: registerSliceInitialStateType }) => state.register
   );
 
