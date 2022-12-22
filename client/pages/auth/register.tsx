@@ -9,8 +9,8 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 import { registerSliceInitialStateType } from "types/reducer";
-import { registerThunk } from "state/thunks";
-import { useAppDispatch, useAppSelector } from "state/store";
+
+import { register, useAppSelector } from "state/store";
 const Register = () => {
   const { data } = useSession();
   const [message, setMessage] = useState("");
@@ -19,7 +19,6 @@ const Register = () => {
   const router = useRouter();
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const dispatch = useAppDispatch();
   const state = useAppSelector(
     (state: { register: registerSliceInitialStateType }) => state.register
   );
@@ -42,7 +41,7 @@ const Register = () => {
     data.append("username", e.target["3"].value);
     data.append("email", e.target["4"].value);
     data.append("password", e.target["5"].value);
-    setTimeout(() => dispatch(registerThunk(data)), 2000);
+    setTimeout(() => register(data), 2000);
   }
   useEffect(() => {
     setIsPending(true);
@@ -62,12 +61,10 @@ const Register = () => {
     if (data) {
       setIsPending(true);
       setMessage("Yuklanmoqda...");
-      dispatch(
-        registerThunk({
-          email: data.user?.email || "",
-          isDirect: true,
-        })
-      );
+      register({
+        email: data.user?.email || "",
+        isDirect: true,
+      });
     }
   }, [data]);
   return (

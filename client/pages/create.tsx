@@ -2,7 +2,7 @@ import Dialog from "components/Dialog";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useAppDispatch, useAppSelector } from "state/store";
+import { portfolio, useAppDispatch, useAppSelector } from "state/store";
 import { portfolioThunk } from "state/thunks";
 import s from "styles/L.module.scss";
 import { portfolioSliceInitialStateType } from "types/reducer";
@@ -33,7 +33,7 @@ const Login = () => {
     for (const file of files) {
       data.append("images", file);
     }
-    dispatch(portfolioThunk(data));
+    portfolio(data);
   }
 
   useEffect(() => {

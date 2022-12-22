@@ -8,10 +8,8 @@ import { loginInitialStateType } from "types/reducer";
 import { useEffect, useState } from "react";
 import Dialog from "components/Dialog";
 import { useRouter } from "next/router";
-import { loginThunk } from "state/thunks";
-import { useAppDispatch, useAppSelector } from "state/store";
+import { login, useAppSelector } from "state/store";
 const Login = () => {
-  const dispatch = useAppDispatch();
   const state = useAppSelector(
     (state: { login: loginInitialStateType }) => state.login
   );
@@ -29,7 +27,7 @@ const Login = () => {
     form.append("email", e.target["0"].value);
     form.append("password", e.target["1"].value);
 
-    setTimeout(() => dispatch(loginThunk(form)), 2000);
+    setTimeout(() => login(form), 2000);
   }
   useEffect(() => {
     setIsPending(true);
@@ -50,7 +48,7 @@ const Login = () => {
     if (data) {
       setIsPending(true);
       setMessage("Yuklanmoqda...");
-      dispatch(loginThunk({ email: data?.user?.email || "", isDirect: true }));
+      login({ email: data?.user?.email || "", isDirect: true });
     }
   }, [data]);
   return (

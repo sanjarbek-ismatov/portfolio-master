@@ -22,12 +22,12 @@ const Index = ({ data }: { data: portfolio[] }) => {
   const [likes, setLikes] = useState<like[]>();
   const token = getToken();
   const { data: session } = useSession();
-  useEffect(() => {
-    fetchAndSendByUrl(data).then((data) => setImage(data));
-    setTimeout(() => {
-      setIsUsed(true);
-    }, 2000);
-  }, [data]);
+  // useEffect(() => {
+  //   fetchAndSendByUrl(data).then((data) => setImage(data));
+  //   setTimeout(() => {
+  //     setIsUsed(true);
+  //   }, 2000);
+  // }, [data]);
   useEffect(() => {
     getLikeFromPortfolio(data)
       .then((likedata: any) => setLikes(likedata))
@@ -50,53 +50,52 @@ const Index = ({ data }: { data: portfolio[] }) => {
         />
         {data.map((e, i: number) => {
           return (
-            <>
-              <div key={i} className={s.post}>
-                {isUsed && imageFromUrl && likes && (
-                  <Image
-                    className={s.postImage}
-                    loading="lazy"
-                    placeholder="blur"
-                    loader={() => imageFromUrl[i][0]}
-                    blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
-                    height={450}
-                    width={800}
-                    alt="portfolio rasmi"
-                    src={
-                      "https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
-                    }
+            <div key={i} className={s.post}>
+              {/* {isUsed && imageFromUrl && likes && (
+                <Image
+                  className={s.postImage}
+                  loading="lazy"
+                  placeholder="blur"
+                  loader={() => imageFromUrl[i][0]}
+                  blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
+                  height={450}
+                  width={800}
+                  alt="portfolio rasmi"
+                  src={
+                    "https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
+                  }
+                />
+              )} */}
+              {<img src={fetchAndSendByUrl(e)} />}
+              <div className={s.desc}>
+                <div className={s.profile}>
+                  <img
+                    className={s.profileImage}
+                    alt="profile rasmi"
+                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                   />
-                )}
-                <div className={s.desc}>
-                  <div className={s.profile}>
-                    <img
-                      className={s.profileImage}
-                      alt="profile rasmi"
-                      src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                    />
-                    <p>Sanjarbek Ismatov</p>
-                  </div>
-                  <h1>{e.title}</h1>
-                  <div>
-                    {(token || session) && likes && likes[i].isLiked ? (
-                      <>
-                        <FontAwesomeIcon className={s.icon} icon={likedHeart} />
-                        <p>{likes && likes[i].count}</p>
-                      </>
-                    ) : (
-                      <>
-                        <FontAwesomeIcon
-                          onClick={() => alert("You liked")}
-                          className={s.icon}
-                          icon={faHeart}
-                        />
-                        <p>{likes && likes[i].count}</p>
-                      </>
-                    )}
-                  </div>
+                  <p>Sanjarbek Ismatov</p>
+                </div>
+                <h1>{e.title}</h1>
+                <div>
+                  {(token || session) && likes && likes[i].isLiked ? (
+                    <>
+                      <FontAwesomeIcon className={s.icon} icon={likedHeart} />
+                      <p>{likes && likes[i].count}</p>
+                    </>
+                  ) : (
+                    <>
+                      <FontAwesomeIcon
+                        onClick={() => alert("You liked")}
+                        className={s.icon}
+                        icon={faHeart}
+                      />
+                      <p>{likes && likes[i].count}</p>
+                    </>
+                  )}
                 </div>
               </div>
-            </>
+            </div>
           );
         })}
       </main>
@@ -122,11 +121,8 @@ const Index = ({ data }: { data: portfolio[] }) => {
 };
 export const getServerSideProps: GetServerSideProps<{
   data: portfolio[];
-}> = async ({ params }) => {
-  var url: string = process.env.SERVER_URL || "";
-  if (process.env.NODE_ENV === "development") {
-    url = "http://localhost:4000";
-  }
+}> = async () => {
+  const url = serverUrl();
   const res = await fetch(`${url}/api/portfolio/all`);
 
   const data = await res.json();
