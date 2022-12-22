@@ -17,17 +17,17 @@ import { getLikeFromPortfolio, getToken } from "utils/getDetails";
 import { useSession } from "next-auth/react";
 const Index = ({ data }: { data: portfolio[] }) => {
   const url = serverUrl();
-  const [imageFromUrl, setImage] = useState<string[][]>();
+  const [imageFromUrl, setImage] = useState<string[]>();
   const [isUsed, setIsUsed] = useState<boolean>(false);
   const [likes, setLikes] = useState<like[]>();
   const token = getToken();
   const { data: session } = useSession();
-  // useEffect(() => {
-  //   fetchAndSendByUrl(data).then((data) => setImage(data));
-  //   setTimeout(() => {
-  //     setIsUsed(true);
-  //   }, 2000);
-  // }, [data]);
+  useEffect(() => {
+    fetchAndSendByUrl(data).then((data) => setImage(data));
+    // setTimeout(() => {
+    //   setIsUsed(true);
+    // }, 2000);
+  }, [data]);
   useEffect(() => {
     getLikeFromPortfolio(data)
       .then((likedata: any) => setLikes(likedata))
@@ -51,12 +51,12 @@ const Index = ({ data }: { data: portfolio[] }) => {
         {data.map((e, i: number) => {
           return (
             <div key={i} className={s.post}>
-              {/* {isUsed && imageFromUrl && likes && (
+              {process.browser && imageFromUrl && likes && (
                 <Image
                   className={s.postImage}
                   loading="lazy"
                   placeholder="blur"
-                  loader={() => imageFromUrl[i][0]}
+                  loader={() => imageFromUrl[i]}
                   blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
                   height={450}
                   width={800}
@@ -65,8 +65,8 @@ const Index = ({ data }: { data: portfolio[] }) => {
                     "https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
                   }
                 />
-              )} */}
-              {<img src={fetchAndSendByUrl(e)} />}
+              )}
+
               <div className={s.desc}>
                 <div className={s.profile}>
                   <img
