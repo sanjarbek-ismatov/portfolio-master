@@ -8,6 +8,6 @@ export async function fetchAndSendByUrl(data: portfolio[]) {
       .then((res) => res.blob())
       .then((image) => array.push(URL.createObjectURL(image)));
   });
-
+  console.log(array);
   return array;
 }

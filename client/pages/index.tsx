@@ -35,6 +35,13 @@ const Index = ({ data }: { data: portfolio[] }) => {
   }, [data]);
 
   const [text, setText] = useState("");
+  // const fetchImage = async () => {
+  //   const dt = await fetch(`${url}/image/${data[0].images[0]}`);
+  //   console.log(dt);
+  // };
+  // useEffect(() => {
+  //   fetchImage();
+  // }, []);
   return (
     <div>
       <Head>
