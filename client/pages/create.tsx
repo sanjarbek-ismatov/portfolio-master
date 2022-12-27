@@ -102,7 +102,9 @@ const Login = () => {
           isSuccess={isSuccess}
           isPending={isPending}
           message={message}
-          ok={() => (isSuccess && router.replace("/")) || router.reload()}
+          ok={() =>
+            (isSuccess && window.location.replace("/")) || router.reload()
+          }
         />
       )}
       {dialog && !state.status && (
