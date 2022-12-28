@@ -63,14 +63,12 @@ const Index = ({ data }: { data: portfolio[] }) => {
                   className={s.postImage}
                   loading="lazy"
                   placeholder="blur"
-                  loader={() => imageFromUrl[i]}
+                  loader={() => e.images[0]}
                   blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
                   height={450}
                   width={800}
                   alt="portfolio rasmi"
-                  src={
-                    "https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
-                  }
+                  src={e.images[0]}
                 />
               )}
 
