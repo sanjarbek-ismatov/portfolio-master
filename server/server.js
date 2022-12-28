@@ -5,7 +5,7 @@ const methodOverride = require("method-override");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
-// const cors = require("cors");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 // dotenv booting
 require("dotenv").config();
@@ -16,13 +16,12 @@ require("./start/logger")();
 
 const app = express();
 // using cors for showing x-token
-// app.use(
-//   cors({
-
-//     exposedHeaders: "x-token",
-//     optionsSuccessStatus: 200
-//   })
-// );
+app.use(
+  cors({
+    exposedHeaders: "x-token",
+    optionsSuccessStatus: 200,
+  })
+);
 // middlewares
 // body to json
 app.use(bodyParser.json());
