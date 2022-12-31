@@ -15,19 +15,11 @@ import { serverUrl } from "utils/serverUrl";
 import { fetchAndSendByUrl } from "utils/getImage";
 import { getLikeFromPortfolio, getToken } from "utils/getDetails";
 import { useSession } from "next-auth/react";
-const Index = ({ data }: { data: portfolio[] }) => {
-  const url = serverUrl();
-  const [imageFromUrl, setImage] = useState<string[]>();
-  const [isUsed, setIsUsed] = useState<boolean>(false);
+const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
   const [likes, setLikes] = useState<like[]>();
   const token = getToken();
   const { data: session } = useSession();
-  useEffect(() => {
-    fetchAndSendByUrl(data).then((data) => setImage(data));
-    // setTimeout(() => {
-    //   setIsUsed(true);
-    // }, 2000);
-  }, [data]);
+
   useEffect(() => {
     getLikeFromPortfolio(data)
       .then((likedata: any) => setLikes(likedata))
@@ -35,13 +27,7 @@ const Index = ({ data }: { data: portfolio[] }) => {
   }, [data]);
 
   const [text, setText] = useState("");
-  // const fetchImage = async () => {
-  //   const dt = await fetch(`${url}/image/${data[0].images[0]}`);
-  //   console.log(dt);
-  // };
-  // useEffect(() => {
-  //   fetchImage();
-  // }, []);
+
   return (
     <div>
       <Head>
@@ -58,17 +44,17 @@ const Index = ({ data }: { data: portfolio[] }) => {
         {data.map((e, i: number) => {
           return (
             <div key={i} className={s.post}>
-              {process.browser && imageFromUrl && likes && (
+              {likes && (
                 <Image
                   className={s.postImage}
                   loading="lazy"
                   placeholder="blur"
-                  loader={() => e.images[0]}
+                  loader={() => images[i]}
                   blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
                   height={450}
                   width={800}
                   alt="portfolio rasmi"
-                  src={e.images[0]}
+                  src={images[i]}
                 />
               )}
 
@@ -131,10 +117,14 @@ export const getServerSideProps: GetServerSideProps<{
   const res = await fetch(`${url}/api/portfolio/all`);
 
   const data = await res.json();
+  const images = data.map(
+    (e: portfolio, i: number) => `${url}/image/${e.images[0]}`
+  );
 
   return {
     props: {
       data: data,
+      images: images,
     },
   };
 };

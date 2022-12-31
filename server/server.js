@@ -19,7 +19,7 @@ const app = express();
 app.use(
   cors({
     exposedHeaders: "x-token",
-    optionsSuccessStatus: 200
+    optionsSuccessStatus: 200,
   })
 );
 // middlewares
@@ -31,8 +31,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("tiny"));
 // idk, for gfs
 app.use(methodOverride("_method"));
-// idk
-app.use(helmet());
+// For fix streaming
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
 // for deployment
 app.use(compression());
 // routes booting
