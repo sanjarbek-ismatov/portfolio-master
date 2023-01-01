@@ -10,13 +10,13 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import Footer from "components/Footer";
 import { GetServerSideProps } from "next";
-import { like, portfolio } from "types/portfolio";
+import type { likeType, portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
-import { fetchAndSendByUrl } from "utils/getImage";
 import { getLikeFromPortfolio, getToken } from "utils/getDetails";
+import { like } from "state/store";
 import { useSession } from "next-auth/react";
 const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
-  const [likes, setLikes] = useState<like[]>();
+  const [likes, setLikes] = useState<likeType[]>();
   const token = getToken();
   const { data: session } = useSession();
 
@@ -50,6 +50,7 @@ const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
                   loading="lazy"
                   placeholder="blur"
                   loader={() => images[i]}
+                  unoptimized
                   blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
                   height={450}
                   width={800}
@@ -77,7 +78,7 @@ const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
                   ) : (
                     <>
                       <FontAwesomeIcon
-                        onClick={() => alert("You liked")}
+                        onClick={() => like(e._id)}
                         className={s.icon}
                         icon={faHeart}
                       />

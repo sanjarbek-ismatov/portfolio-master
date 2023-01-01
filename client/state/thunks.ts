@@ -38,3 +38,21 @@ export const portfolioThunk = createAsyncThunk(
     }
   }
 );
+export const likeThunk = createAsyncThunk(
+  "like",
+  async (id: string, thunkAPI) => {
+    try {
+      return await Axios.put(
+        `${url}/api/portfolio/like/${id}`,
+        {},
+        {
+          headers: {
+            ["x-token"]: localStorage.token,
+          },
+        }
+      );
+    } catch (ex: any) {
+      return thunkAPI.rejectWithValue(ex.response.data);
+    }
+  }
+);

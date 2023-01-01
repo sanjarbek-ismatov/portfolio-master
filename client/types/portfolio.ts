@@ -1,4 +1,5 @@
 export type portfolio = {
+  _id: string;
   images: string[];
   title: string;
   description: string;
@@ -12,7 +13,7 @@ export type portfolio = {
   };
   url: string;
 };
-export type like = {
+export type likeType = {
   isLiked: boolean;
   count: number;
 };

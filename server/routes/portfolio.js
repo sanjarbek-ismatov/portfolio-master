@@ -21,4 +21,10 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
   await newPortfolio.save();
   res.status(201).send("Success");
 });
+router.put("/like/:id", auth, async (req, res) => {
+  const portfolio = await Portfolio.findOne({ _id: req.params.id });
+  portfolio.likes.push(req.id);
+  await portfolio.save();
+  res.send(true);
+});
 module.exports = router;

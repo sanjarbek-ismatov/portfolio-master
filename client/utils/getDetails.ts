@@ -1,9 +1,9 @@
-import { like, portfolio } from "types/portfolio";
+import { likeType, portfolio } from "types/portfolio";
 import { serverUrl } from "./serverUrl";
 import axios from "axios";
-
+const url = serverUrl();
 export async function getMe() {
-  const data = await axios.get(`${serverUrl()}/api/user/me`, {
+  const data = await axios.get(`${url}/api/user/me`, {
     headers: {
       ["x-token"]: localStorage.token,
     },
@@ -20,13 +20,16 @@ export async function getLikeFromPortfolio(data: portfolio[]) {
     try {
       const user: any = await getMe();
 
-      const result: like[] = data.map((e, i) =>
-        user._id in e.likes
-          ? { isLiked: true, count: e.likes.length }
-          : { isLiked: false, count: e.likes.length }
-      );
+      if (user) {
+        const result: likeType[] = data.map((e, i) => {
+          console.log(user.data._id, e.likes);
+          return user.data._id in e.likes
+            ? { isLiked: true, count: e.likes.length }
+            : { isLiked: false, count: e.likes.length };
+        });
 
-      resolve(result);
+        resolve(result);
+      }
     } catch (ex) {
       reject(ex);
     }
