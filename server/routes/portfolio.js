@@ -23,7 +23,11 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
 });
 router.put("/like/:id", auth, async (req, res) => {
   const portfolio = await Portfolio.findOne({ _id: req.params.id });
-  portfolio.likes.push(req.id);
+  if (portfolio.likes.includes(req.id)) {
+    portfolio.likes.splice(portfolio.likes.indexOf(req.id), 1);
+  } else {
+    portfolio.likes.push(req.id);
+  }
   await portfolio.save();
   res.send(true);
 });

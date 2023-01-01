@@ -13,18 +13,22 @@ import { GetServerSideProps } from "next";
 import type { likeType, portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import { getLikeFromPortfolio, getToken } from "utils/getDetails";
-import { like } from "state/store";
+import { like, useAppSelector } from "state/store";
 import { useSession } from "next-auth/react";
 const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
   const [likes, setLikes] = useState<likeType[]>();
   const token = getToken();
   const { data: session } = useSession();
-
+  const state = useAppSelector((state) => state.like);
   useEffect(() => {
     getLikeFromPortfolio(data)
-      .then((likedata: any) => setLikes(likedata))
+      .then((likedata: any) => {
+        console.log(likedata);
+        setLikes(likedata);
+      })
       .catch((err) => console.log(err));
-  }, [data]);
+    console.log("state yangilandi");
+  }, [data, state.status]);
 
   const [text, setText] = useState("");
 
@@ -70,17 +74,14 @@ const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
                 </div>
                 <h1>{e.title}</h1>
                 <div>
-                  {(token || session) && likes && likes[i].isLiked ? (
-                    <>
-                      <FontAwesomeIcon className={s.icon} icon={likedHeart} />
-                      <p>{likes && likes[i].count}</p>
-                    </>
-                  ) : (
+                  {(token || session) && likes && (
                     <>
                       <FontAwesomeIcon
-                        onClick={() => like(e._id)}
+                        onClick={() => {
+                          like(e._id);
+                        }}
                         className={s.icon}
-                        icon={faHeart}
+                        icon={likes[i].isLiked ? liked : faHeart}
                       />
                       <p>{likes && likes[i].count}</p>
                     </>

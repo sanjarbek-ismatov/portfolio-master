@@ -1,5 +1,10 @@
 import { bindActionCreators, configureStore } from "@reduxjs/toolkit";
-import { loginSlice, portfolioSlice, registerSlice } from "./reducers";
+import {
+  likeSlice,
+  loginSlice,
+  portfolioSlice,
+  registerSlice,
+} from "./reducers";
 import { createLogger } from "redux-logger";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "types/reducer";
@@ -9,6 +14,7 @@ export const store = configureStore({
     register: registerSlice.reducer,
     login: loginSlice.reducer,
     portfolio: portfolioSlice.reducer,
+    like: likeSlice.reducer,
   },
 
   middleware(getDefaultMiddleware) {

@@ -4,7 +4,7 @@ import {
   portfolioSliceInitialStateType,
   registerSliceInitialStateType,
 } from "types/reducer";
-import { loginThunk, portfolioThunk, registerThunk } from "./thunks";
+import { likeThunk, loginThunk, portfolioThunk, registerThunk } from "./thunks";
 const initialStateRegister: registerSliceInitialStateType = {
   status: false,
   error: "",
@@ -13,6 +13,14 @@ const initialStateLogin: loginInitialStateType = {
   status: false,
   error: "",
   token: "",
+};
+type initialStateLikeType = {
+  status: string | boolean;
+  error: string;
+};
+const initialStateLike: initialStateLikeType = {
+  status: false,
+  error: "",
 };
 export const registerSlice = createSlice({
   name: "register",
@@ -77,5 +85,24 @@ export const portfolioSlice = createSlice({
       state.status = true;
       state.error = action.error.message;
     });
+  },
+});
+export const likeSlice = createSlice({
+  name: "like",
+  initialState: initialStateLike,
+  reducers: {},
+  extraReducers(builder) {
+    builder.addCase(likeThunk.fulfilled, (state) => {
+      (state.status = true), (state.error = "");
+    }),
+      builder.addCase(likeThunk.pending, (state) => {
+        (state.status = false), (state.error = "");
+      }),
+      builder.addCase(
+        likeThunk.rejected,
+        (state, action: PayloadAction<any>) => {
+          (state.status = true), (state.error = action.payload);
+        }
+      );
   },
 });

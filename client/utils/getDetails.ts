@@ -22,8 +22,7 @@ export async function getLikeFromPortfolio(data: portfolio[]) {
 
       if (user) {
         const result: likeType[] = data.map((e, i) => {
-          console.log(user.data._id, e.likes);
-          return user.data._id in e.likes
+          return e.likes.includes(user.data._id)
             ? { isLiked: true, count: e.likes.length }
             : { isLiked: false, count: e.likes.length };
         });
