@@ -13,7 +13,7 @@ const Login = () => {
   const state = useAppSelector(
     (state: { login: loginInitialStateType }) => state.login
   );
-  const { data, status } = useSession();
+  const { data: session, status } = useSession();
   const [message, setMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -45,12 +45,12 @@ const Login = () => {
     }
   }, [state]);
   useEffect(() => {
-    if (data) {
+    if (session) {
       setIsPending(true);
       setMessage("Yuklanmoqda...");
-      login({ email: data?.user?.email || "", isDirect: true });
+      login({ email: session?.user?.email || "", isDirect: true });
     }
-  }, [data]);
+  }, [session]);
   return (
     <div className={s.container}>
       <Head>
