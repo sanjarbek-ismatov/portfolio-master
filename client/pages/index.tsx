@@ -1,7 +1,3 @@
-import { faHeart as liked } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faHeart as likedHeart } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "components/Navbar";
 import Image from "next/image";
 import s from "styles/M.module.scss";
@@ -13,22 +9,20 @@ import { GetServerSideProps } from "next";
 import type { likeType, portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import { getLikeFromPortfolio, getToken } from "utils/getDetails";
-import { like, useAppSelector } from "state/store";
-import { useSession } from "next-auth/react";
+import { useAppSelector } from "state/store";
+import Like from "components/Index/Like";
+import { isAuth } from "utils/auth";
 const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
   const [likes, setLikes] = useState<likeType[]>();
-  const token = getToken();
-  const { data: session } = useSession();
+  const auth = isAuth();
   const state = useAppSelector((state) => state.like);
   useEffect(() => {
-    getLikeFromPortfolio(data)
+    getLikeFromPortfolio()
       .then((likedata: any) => {
-        console.log(likedata);
         setLikes(likedata);
       })
       .catch((err) => console.log(err));
-    console.log("state yangilandi");
-  }, [data, state.status]);
+  }, [data, state]);
 
   const [text, setText] = useState("");
 
@@ -73,20 +67,7 @@ const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
                   <p>Sanjarbek Ismatov</p>
                 </div>
                 <h1>{e.title}</h1>
-                <div>
-                  {(token || session) && likes && (
-                    <>
-                      <FontAwesomeIcon
-                        onClick={() => {
-                          like(e._id);
-                        }}
-                        className={s.icon}
-                        icon={likes[i].isLiked ? liked : faHeart}
-                      />
-                      <p>{likes && likes[i].count}</p>
-                    </>
-                  )}
-                </div>
+                <div>{auth && likes && <Like e={e} likes={likes} i={i} />}</div>
               </div>
             </div>
           );

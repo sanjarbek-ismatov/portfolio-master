@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
+import { portfolio } from "types/portfolio";
 import { errorType, form } from "types/reducer";
+import { getLikeFromPortfolio } from "utils/getDetails";
 var url: string = process.env.SERVER_URL || "";
 if (process.env.NODE_ENV === "development") {
   url = "http://localhost:4000";

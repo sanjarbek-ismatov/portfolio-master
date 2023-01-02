@@ -15,13 +15,15 @@ export const getToken = () => {
     return localStorage.token;
   }
 };
-export async function getLikeFromPortfolio(data: portfolio[]) {
+export async function getLikeFromPortfolio() {
   return new Promise(async (resolve, reject) => {
     try {
       const user: any = await getMe();
+      const res = await fetch(`${url}/api/portfolio/all`);
 
+      const data = await res.json();
       if (user) {
-        const result: likeType[] = data.map((e, i) => {
+        const result: likeType[] = data.map((e: portfolio, i: number) => {
           return e.likes.includes(user.data._id)
             ? { isLiked: true, count: e.likes.length }
             : { isLiked: false, count: e.likes.length };

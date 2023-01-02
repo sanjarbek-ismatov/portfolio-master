@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { likeType } from "types/portfolio";
 import {
   loginInitialStateType,
   portfolioSliceInitialStateType,
@@ -17,10 +18,12 @@ const initialStateLogin: loginInitialStateType = {
 type initialStateLikeType = {
   status: string | boolean;
   error: string;
+  likes: likeType[];
 };
 const initialStateLike: initialStateLikeType = {
   status: false,
   error: "",
+  likes: [],
 };
 export const registerSlice = createSlice({
   name: "register",
