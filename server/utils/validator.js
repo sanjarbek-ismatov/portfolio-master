@@ -6,6 +6,10 @@ function registerValidator(body) {
     username: Joi.string(),
     email: Joi.string().required(),
     password: Joi.string(),
+    description: Joi.string(),
+    telegramProfile: Joi.string().required(),
+    githubProfile: Joi.string(),
+    skills: Joi.string(),
   });
   return valid.validate(body);
 }
@@ -22,6 +26,7 @@ function portfolioValidator(body) {
     images: Joi.array().items(Joi.binary()),
     description: Joi.string(),
     url: Joi.string().required(),
+    used: Joi.array().items(Joi.string()),
   });
   return valid.validate(body);
 }

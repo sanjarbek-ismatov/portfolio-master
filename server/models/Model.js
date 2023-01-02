@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
 const { portfolioValidator } = require("../utils/validator");
 const userSchema = new mongoose.Schema({
-  image: mongoose.SchemaTypes.ObjectId,
+  image: String,
   firstname: String,
   lastname: String,
-  isAdmin: Boolean,
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   username: {
     type: String,
     unique: true,
@@ -34,6 +37,10 @@ async function createUser(body, id) {
     username: body.username,
     email: body.email,
     password: body.password,
+    description: body.description,
+    telegramProfile: body.telegramProfile,
+    githubProfile: body.githubProfile,
+    skills: body.skills.split(", "),
   });
   if (id) user.image = id;
   await user.save();
@@ -60,15 +67,9 @@ const portfolioSchema = new mongoose.Schema({
       },
     },
   ],
-  url: String,
 });
 const Portfolio = mongoose.model("portfolio", portfolioSchema);
-async function createPortfolio(body) {
-  const { error } = portfolioValidator();
-  if (error) return false;
-  await new Portfolio(body).save();
-  return true;
-}
+
 module.exports.createUser = createUser;
 module.exports.User = User;
 module.exports.Portfolio = Portfolio;

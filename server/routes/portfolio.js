@@ -16,6 +16,8 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
     title: req.body.title,
     description: req.body.description,
     images: images,
+    url: req.body.url,
+    used: req.body.used,
   });
   newPortfolio.author = req.id;
   await newPortfolio.save();

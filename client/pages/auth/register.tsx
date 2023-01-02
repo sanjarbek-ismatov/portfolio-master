@@ -7,9 +7,6 @@ import Dialog from "components/Dialog";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-
-import { registerSliceInitialStateType } from "types/reducer";
-
 import { register, useAppSelector } from "state/store";
 const Register = () => {
   const { data } = useSession();
@@ -19,9 +16,7 @@ const Register = () => {
   const router = useRouter();
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const state = useAppSelector(
-    (state: { register: registerSliceInitialStateType }) => state.register
-  );
+  const state = useAppSelector((state) => state.register);
 
   function formik(e: any) {
     e.preventDefault();
@@ -35,12 +30,17 @@ const Register = () => {
       return;
     }
     const data = new FormData();
+
     data.append("image", e.target["0"].files[0]);
     data.append("firstname", e.target["1"].value);
     data.append("lastname", e.target["2"].value);
     data.append("username", e.target["3"].value);
     data.append("email", e.target["4"].value);
     data.append("password", e.target["5"].value);
+    data.append("description", e.target["9"].value);
+    data.append("skills", e.target["10"].value);
+    data.append("telegramProfile", e.target["7"].value);
+    data.append("githubProfile", e.target["8"].value);
     setTimeout(() => register(data), 2000);
   }
   useEffect(() => {
@@ -84,14 +84,14 @@ const Register = () => {
             required
           />
           <input
-            className={s.input}
+            className={s.rowInput}
             type="text"
             name="firstname"
             placeholder="Ismingiz"
             required
           />
           <input
-            className={s.input}
+            className={s.rowInput}
             type="text"
             name="lastname"
             placeholder="Familyangiz"
@@ -112,17 +112,42 @@ const Register = () => {
             required
           />
           <input
-            className={s.input}
+            className={s.rowInput}
             type="password"
             name="password"
             placeholder="Parolni o'rnating"
             required
           />
           <input
-            className={s.input}
+            className={s.rowInput}
             type="password"
             name="password"
             placeholder="Qayta takrorlang"
+            required
+          />
+          <input
+            className={s.rowInput}
+            type="text"
+            name="telegramProfile"
+            placeholder="Telegramdagi @usernameingiz"
+          />
+          <input
+            className={s.rowInput}
+            type="text"
+            name="githubProfile"
+            placeholder="Githubdagisi (Agar bo'lsa)"
+          />
+          <textarea
+            className={s.area}
+            name="description"
+            placeholder="O`zingiz haqingizda"
+            required
+          />
+
+          <textarea
+            className={s.area}
+            name="skills"
+            placeholder="Qaysi texnologiyalarni bilasiz? Iltimos vergul qo`yib yozing: html, css, javascript, php, reactjs"
             required
           />
           <button className={s.button} type={"submit"}>

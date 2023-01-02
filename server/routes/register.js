@@ -17,7 +17,7 @@ router.post("/", upload.single("image"), async (req, res) => {
   if (req.body.password)
     req.body.password = await bcrypt.hash(req.body.password, salt);
 
-  if (req.file) await createUser(req.body, req.file.id);
+  if (req.file) await createUser(req.body, req.file.filename);
   else await createUser(req.body, null);
   res.send(true);
 });

@@ -4,6 +4,24 @@
   font-size: 30px;
   width: 30px;
 }
+.liked{
+  color: $red;
+  animation: like .5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+.notLiked{
+  animation: notlike .5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+@keyframes like {
+  
+  to{
+    transform: rotate(360deg);
+  }
+}
+@keyframes notlike {
+  to {
+      transform: rotate(-360deg);
+    }
+}
 .profileImage {
   width: 30px;
   border-radius: 50%;
