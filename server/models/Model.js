@@ -17,6 +17,12 @@ const userSchema = new mongoose.Schema({
     default: false,
     type: Boolean,
   },
+  description: String,
+  telegramProfile: String,
+  githubProfile: String,
+  skills: {
+    type: [String],
+  },
   password: String,
 });
 const User = mongoose.model("user", userSchema);
@@ -41,7 +47,8 @@ const portfolioSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-
+  url: String,
+  used: [String],
   likes: [mongoose.SchemaTypes.ObjectId],
   comments: [
     {
