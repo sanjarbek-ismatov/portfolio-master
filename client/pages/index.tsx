@@ -15,6 +15,7 @@ import { isAuth } from "utils/auth";
 const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
   const [likes, setLikes] = useState<likeType[]>();
   const auth = isAuth();
+  const url = serverUrl();
   const state = useAppSelector((state) => state.like);
   useEffect(() => {
     getLikeFromPortfolio()
@@ -62,9 +63,9 @@ const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
                   <img
                     className={s.profileImage}
                     alt="profile rasmi"
-                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    src={`${url}/image/${e.author.image}`}
                   />
-                  <p>Sanjarbek Ismatov</p>
+                  <p>{e.author.firstname}</p>
                 </div>
                 <h1>{e.title}</h1>
                 <div>{auth && likes && <Like e={e} likes={likes} i={i} />}</div>

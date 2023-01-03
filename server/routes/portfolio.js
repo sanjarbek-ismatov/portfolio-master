@@ -19,7 +19,7 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
     url: req.body.url,
     used: req.body.used.split(", "),
   });
-  const userInfo = await User.findById(req.id);
+  const userInfo = await User.findById(req.id).select("-password");
   userInfo.portfolios.push(newPortfolio._id);
   newPortfolio.author = userInfo;
   await userInfo.save();
