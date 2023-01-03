@@ -26,7 +26,7 @@ function portfolioValidator(body) {
     images: Joi.array().items(Joi.binary()),
     description: Joi.string(),
     url: Joi.string().required(),
-    used: Joi.array().items(Joi.string()),
+    used: Joi.string(),
   });
   return valid.validate(body);
 }

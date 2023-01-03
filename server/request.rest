@@ -1,1 +1,3 @@
-GET http://localhost:4000/api/portfolio/all
+
+
+POST http://localhost:4000/api/portfolio/create

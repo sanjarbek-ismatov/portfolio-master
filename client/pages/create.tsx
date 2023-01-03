@@ -1,11 +1,10 @@
 import Dialog from "components/Dialog";
 import { useRouter } from "next/router";
-import { FormEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { portfolio, useAppDispatch, useAppSelector } from "state/store";
-import { portfolioThunk } from "state/thunks";
+import { useEffect, useState } from "react";
+
+import { portfolio, useAppSelector } from "state/store";
+
 import s from "styles/L.module.scss";
-import { portfolioSliceInitialStateType } from "types/reducer";
 
 const Login = () => {
   const [dialog, setDialog] = useState(false);
@@ -15,10 +14,8 @@ const Login = () => {
   const router = useRouter();
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const state = useAppSelector(
-    (state: { portfolio: portfolioSliceInitialStateType }) => state.portfolio
-  );
-  const dispatch = useAppDispatch();
+  const state = useAppSelector((state) => state.portfolio);
+
   function handleSubmit() {
     setIsPending(true);
     setMessage("Yuklanmoqda...");
@@ -29,7 +26,7 @@ const Login = () => {
     data.append("title", form["1"].value);
     data.append("url", form["2"].value);
     data.append("description", form["3"].value);
-
+    data.append("used", form["4"].value);
     for (const file of files) {
       data.append("images", file);
     }
@@ -90,6 +87,11 @@ const Login = () => {
             className={s.area}
             name="description"
             placeholder="Loyiha haqida batafsil"
+          />
+          <textarea
+            className={s.area}
+            name="used"
+            placeholder="Qaysi texnologiyalardan foydalandingiz? Masalan: reactjs, nodejs, mongodb"
           />
           <button type="submit" className={s.button}>
             Joylash
