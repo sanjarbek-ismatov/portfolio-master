@@ -8,7 +8,7 @@ import Footer from "components/Footer";
 import { GetServerSideProps } from "next";
 import type { likeType, portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
-import { getLikeFromPortfolio, getToken } from "utils/getDetails";
+import { getLikeFromPortfolio, getToken, getUser } from "utils/getDetails";
 import { useAppSelector } from "state/store";
 import Like from "components/Index/Like";
 import { isAuth } from "utils/auth";
