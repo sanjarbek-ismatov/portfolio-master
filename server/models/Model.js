@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
     default: false,
     type: Boolean,
   },
+  portfolios: [mongoose.SchemaTypes.ObjectId],
   description: String,
   telegramProfile: String,
   githubProfile: String,
@@ -49,7 +50,7 @@ const portfolioSchema = new mongoose.Schema({
   title: String,
   images: [String],
   description: String,
-  author: mongoose.SchemaTypes.ObjectId,
+  author: userSchema.obj,
   date: {
     type: Date,
     default: Date.now(),

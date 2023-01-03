@@ -36,3 +36,7 @@ export async function getLikeFromPortfolio() {
     }
   });
 }
+export const getUser = async (id: string) => {
+  const res = await fetch(`${url}/api/user/${id}`);
+  return await res.json();
+};

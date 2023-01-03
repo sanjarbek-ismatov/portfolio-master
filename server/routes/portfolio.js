@@ -1,12 +1,12 @@
 const express = require("express");
 const auth = require("../middleware/auth");
 const { upload } = require("../models/gfs");
-const { Portfolio } = require("../models/Model");
+const { Portfolio, User } = require("../models/Model");
 const { portfolioValidator } = require("../utils/validator");
 const router = express.Router();
 router.get("/all", async (req, res) => {
-  const portfolio = await Portfolio.find();
-  res.status(200).send(portfolio);
+  const portfolios = await Portfolio.find();
+  res.status(200).send(portfolios);
 });
 router.post("/create", upload.array("images"), auth, async (req, res) => {
   const { error } = portfolioValidator(req.body);
@@ -19,7 +19,10 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
     url: req.body.url,
     used: req.body.used.split(", "),
   });
-  newPortfolio.author = req.id;
+  const userInfo = await User.findById(req.id);
+  userInfo.portfolios.push(newPortfolio._id);
+  newPortfolio.author = userInfo;
+  await userInfo.save();
   await newPortfolio.save();
   res.status(201).send("Success");
 });
