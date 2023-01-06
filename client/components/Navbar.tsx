@@ -1,8 +1,6 @@
 import {
   faBars,
-  faCircleInfo,
   faLock,
-  faLockOpen,
   faPlus,
   faRightFromBracket,
   faX,
@@ -10,16 +8,15 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useState } from "react";
-import cn from "classnames";
 import s from "styles/N.module.scss";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import { getToken } from "utils/getDetails";
+
+import { isAuth } from "utils/auth";
 const Navbar = () => {
-  const { data, status } = useSession();
   const router = useRouter();
-  const token = getToken();
+  const auth = isAuth();
   const [menu, setMenu] = useState<boolean>();
   const visibleContent = () => {
     menu ? setMenu(false) : setMenu(true);
@@ -47,7 +44,7 @@ const Navbar = () => {
               </a>
             </Link>
           </li>
-          {!data && !token && (
+          {!auth && (
             <li>
               <Link href="/auth/login">
                 <a>
@@ -56,7 +53,7 @@ const Navbar = () => {
               </Link>
             </li>
           )}
-          {(data || token) && (
+          {auth && (
             <>
               <li>
                 <Link href="/">

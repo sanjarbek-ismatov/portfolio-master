@@ -1,22 +1,21 @@
 import Navbar from "components/Navbar";
-import Image from "next/image";
-import s from "styles/M.module.scss";
-import Input from "components/Input";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "components/Footer";
 import { GetServerSideProps } from "next";
 import type { likeType, portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
-import { getLikeFromPortfolio, getToken, getUser } from "utils/getDetails";
+import { getLikeFromPortfolio } from "utils/getDetails";
 import { useAppSelector } from "state/store";
-import Like from "components/Index/Like";
 import { isAuth } from "utils/auth";
+import { Main } from "components/Index/Main";
 const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
   const [likes, setLikes] = useState<likeType[]>();
   const auth = isAuth();
   const url = serverUrl();
+
   const state = useAppSelector((state) => state.like);
+
   useEffect(() => {
     getLikeFromPortfolio()
       .then((likedata: any) => {
@@ -33,47 +32,15 @@ const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
         <title>Portfolio Master</title>
       </Head>
       <Navbar />
-      <main className={s.container}>
-        <Input
-          clear={() => setText("")}
-          className={s.input}
-          handleChange={(e) => setText(e.target.value)}
-          value={text}
-        />
-        {data.map((e, i: number) => {
-          return (
-            <div key={i} className={s.post}>
-              {likes && (
-                <Image
-                  className={s.postImage}
-                  loading="lazy"
-                  placeholder="blur"
-                  loader={() => images[i]}
-                  unoptimized
-                  blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
-                  height={450}
-                  width={800}
-                  alt="portfolio rasmi"
-                  src={images[i]}
-                />
-              )}
-
-              <div className={s.desc}>
-                <div className={s.profile}>
-                  <img
-                    className={s.profileImage}
-                    alt="profile rasmi"
-                    src={`${url}/image/${e.author.image}`}
-                  />
-                  <p>{e.author.firstname}</p>
-                </div>
-                <h1>{e.title}</h1>
-                <div>{auth && likes && <Like e={e} likes={likes} i={i} />}</div>
-              </div>
-            </div>
-          );
-        })}
-      </main>
+      <Main
+        setText={setText}
+        text={text}
+        data={data}
+        likes={likes}
+        images={images}
+        auth={auth}
+        url={url}
+      />
       {/* <script
         type="text/javascript"
         dangerouslySetInnerHTML={{

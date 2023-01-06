@@ -1,9 +1,9 @@
-import { likeType, portfolio } from "types/portfolio";
+import { likeType, portfolio, user } from "types/portfolio";
 import { serverUrl } from "./serverUrl";
 import axios from "axios";
 const url = serverUrl();
 export async function getMe() {
-  const data = await axios.get(`${url}/api/user/me`, {
+  const data: { data: user } = await axios.get(`${url}/api/user/me`, {
     headers: {
       ["x-token"]: localStorage.token,
     },
@@ -15,6 +15,7 @@ export const getToken = () => {
     return localStorage.token;
   }
 };
+
 export async function getLikeFromPortfolio() {
   return new Promise(async (resolve, reject) => {
     try {
