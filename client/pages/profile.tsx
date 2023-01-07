@@ -1,39 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { user } from "types/portfolio";
+import { portfolio, user } from "types/portfolio";
 import { getMe } from "utils/getDetails";
 import Image from "next/image";
 import { serverUrl } from "utils/serverUrl";
 
 const Profile = () => {
   const url = serverUrl();
-  const [data, setData] = useState<user>();
+  const [data, setData] = useState<portfolio[]>();
+  const [user, setUser] = useState<user>();
   useEffect(() => {
     getMe().then((datas) => {
-      setData(datas.data);
+      setData(datas.data.portfolios);
+      setUser(datas.data.user);
       console.log(datas);
     });
   }, []);
   return (
     <div>
-      {data && !data.isDirect && (
+      {user && !user.isDirect && (
         <>
           <Image
             height={100}
             width={100}
-            src={`${url}/image/${data.image}`}
+            src={`${url}/image/${user.image}`}
             alt="profile"
             unoptimized
           />
           <h1>
-            {data.firstname} {data.lastname}
+            {user.firstname} {user.lastname}
           </h1>
-          <a href={`mailto://${data.email}`}>{data.email}</a>
-          <p>@{data.username}</p>
-          <p>{data.description}</p>
-          <a href={`https://github.com/${data.githubProfile}`}>Github</a>
-          <a href={`https://t.me/${data.telegramProfile}`}>Telegram</a>
+          <a href={`mailto://${user.email}`}>{user.email}</a>
+          <p>@{user.username}</p>
+          <p>{user.description}</p>
+          <a href={`https://github.com/${user.githubProfile}`}>Github</a>
+          <a href={`https://t.me/${user.telegramProfile}`}>Telegram</a>
           <h2>Skillari</h2>
-          {data.skills.map((e, i) => (
+          {user.skills.map((e, i) => (
             <p key={i}>{e}</p>
           ))}
         </>

@@ -3,11 +3,12 @@ import { serverUrl } from "./serverUrl";
 import axios from "axios";
 const url = serverUrl();
 export async function getMe() {
-  const data: { data: user } = await axios.get(`${url}/api/user/me`, {
-    headers: {
-      ["x-token"]: localStorage.token,
-    },
-  });
+  const data: { data: { user: user; portfolios: portfolio[] } } =
+    await axios.get(`${url}/api/user/me`, {
+      headers: {
+        ["x-token"]: localStorage.token,
+      },
+    });
   return data;
 }
 export const getToken = () => {
