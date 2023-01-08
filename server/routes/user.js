@@ -5,13 +5,9 @@ const router = express.Router();
 router.get("/me", auth, async (req, res) => {
   const user = await User.findById(req.id).select("-password");
   const portfolios = await Portfolio.find();
-  const userPortfolios = portfolios
-    .filter((e) => {
-      return e.author.username === user.username;
-    })
-    .map((e) => {
-      return { title: e.title, url: e.url };
-    });
+  const userPortfolios = portfolios.filter((e) => {
+    return e.author.username === user.username;
+  });
   res.status(200).send({ user, portfolios: userPortfolios });
 });
 router.get("/all", async (req, res) => {

@@ -18,9 +18,13 @@ export const store = configureStore({
   },
 
   middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware({ serializableCheck: false }).concat(
-      createLogger()
-    );
+    if (process.env.NODE_ENV === "development") {
+      return getDefaultMiddleware({ serializableCheck: false }).concat(
+        createLogger()
+      );
+    } else {
+      return getDefaultMiddleware({ serializableCheck: false });
+    }
   },
 });
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

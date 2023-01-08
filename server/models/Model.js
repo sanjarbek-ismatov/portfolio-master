@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model("user", userSchema);
 
-async function createUser(body, id) {
+async function createUser(body, imagename) {
   const user = await new User({
     firstname: body.firstname,
     lastname: body.lastname,
@@ -43,7 +43,7 @@ async function createUser(body, id) {
     githubProfile: body.githubProfile,
     skills: body.skills.split(", "),
   });
-  if (id) user.image = id;
+  if (id) user.image = imagename;
   await user.save();
 }
 const portfolioSchema = new mongoose.Schema({

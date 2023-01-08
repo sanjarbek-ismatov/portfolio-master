@@ -14,24 +14,22 @@ const Like = ({
   e: portfolio;
   likes: likeType[] | any;
   i: number;
-}) => {
-  return (
-    <>
-      <FontAwesomeIcon
-        cursor={"pointer"}
-        onClick={() => {
-          like(e._id);
-        }}
-        className={cn({
-          [s.icon]: true,
-          [s.liked]: likes[i].isLiked,
-          [s.notLiked]: !likes[i].isLiked,
-        })}
-        icon={likes[i].isLiked ? liked : notLiked}
-      />
-      <p>{likes && likes[i].count}</p>
-    </>
-  );
-};
+}) => (
+  <>
+    <FontAwesomeIcon
+      cursor={"pointer"}
+      onClick={() => {
+        like(e._id);
+      }}
+      className={cn({
+        [s.icon]: true,
+        [s.liked]: likes[i].isLiked,
+        [s.notLiked]: !likes[i].isLiked,
+      })}
+      icon={likes[i].isLiked ? liked : notLiked}
+    />
+    <p>{likes && likes[i].count}</p>
+  </>
+);
 
 export default Like;
