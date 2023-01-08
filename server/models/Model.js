@@ -43,7 +43,7 @@ async function createUser(body, imagename) {
     githubProfile: body.githubProfile,
     skills: body.skills.split(", "),
   });
-  if (id) user.image = imagename;
+  if (imagename) user.image = imagename;
   await user.save();
 }
 const portfolioSchema = new mongoose.Schema({
