@@ -12,6 +12,7 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
   const { error } = portfolioValidator(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   const images = req.files.map((e, i) => e.filename);
+  console.log(images);
   const newPortfolio = new Portfolio({
     title: req.body.title,
     description: req.body.description,
@@ -19,11 +20,15 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
     url: req.body.url,
     used: req.body.used.split(", "),
   });
+  console.log(newPortfolio);
   const userInfo = await User.findById(req.id).select("-password");
+  console.log(userInfo);
   userInfo.portfolios.push(newPortfolio._id);
-  newPortfolio.author = userInfo;
+  newPortfolio.author = Object.assign({ _id: req.id }, userInfo);
+  console.log("after " + newPortfolio);
   await userInfo.save();
   await newPortfolio.save();
+  console.log("saved");
   res.status(201).send("Success");
 });
 router.put("/like/:id", auth, async (req, res) => {

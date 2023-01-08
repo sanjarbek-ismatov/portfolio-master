@@ -50,7 +50,7 @@ const portfolioSchema = new mongoose.Schema({
   title: String,
   images: [String],
   description: String,
-  author: userSchema.obj,
+  author: {},
   date: {
     type: Date,
     default: Date.now(),
