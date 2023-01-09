@@ -7,15 +7,20 @@ import type { likeType, portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import { getLikeFromPortfolio } from "utils/getDetails";
 import { useAppSelector } from "state/store";
-import { isAuth } from "utils/auth";
+import { useAuth } from "utils/auth";
 import { Main } from "components/Index/Main";
+import { useRouter } from "next/router";
+
 const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
   const [likes, setLikes] = useState<likeType[]>();
-  const auth = isAuth();
+  const auth = useAuth();
+  const router = useRouter();
   const url = serverUrl();
 
   const state = useAppSelector((state) => state.like);
-
+  useEffect(() => {
+    if (!auth) router.replace("/auth/register");
+  }, []);
   useEffect(() => {
     getLikeFromPortfolio()
       .then((likedata: any) => {

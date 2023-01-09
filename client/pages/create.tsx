@@ -1,12 +1,15 @@
 import Dialog from "components/Dialog";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { portfolio, useAppSelector } from "state/store";
 
 import s from "styles/L.module.scss";
+import { useAuth } from "utils/auth";
 
 const Login = () => {
+  const auth = useAuth();
   const [dialog, setDialog] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [message, setMessage] = useState("Siz portfolioni joylamoqchimisiz?");
@@ -15,7 +18,9 @@ const Login = () => {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const state = useAppSelector((state) => state.portfolio);
-
+  useEffect(() => {
+    if (!auth) router.replace("/auth/register");
+  }, []);
   function handleSubmit() {
     setIsPending(true);
     setMessage("Yuklanmoqda...");

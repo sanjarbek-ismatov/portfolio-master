@@ -15,10 +15,10 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
-import { isAuth } from "utils/auth";
+import { useAuth } from "utils/auth";
 const Navbar = () => {
   const router = useRouter();
-  const auth = isAuth();
+  const auth = useAuth();
   const [menu, setMenu] = useState<boolean>();
   const visibleContent = () => {
     menu ? setMenu(false) : setMenu(true);

@@ -1,3 +1,4 @@
+import "styles/globals.scss";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { useEffect } from "react";
@@ -8,7 +9,6 @@ import { Session } from "next-auth";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import Layout from "components/Layout";
-import "styles/globals.scss";
 function MyApp({
   Component,
   pageProps: { session, ...pageProps },

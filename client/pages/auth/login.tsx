@@ -10,9 +10,7 @@ import Dialog from "components/Dialog";
 import { useRouter } from "next/router";
 import { login, useAppSelector } from "state/store";
 const Login = () => {
-  const state = useAppSelector(
-    (state: { login: loginInitialStateType }) => state.login
-  );
+  const state = useAppSelector((state) => state.login);
   const { data: session, status } = useSession();
   const [message, setMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
@@ -80,10 +78,12 @@ const Login = () => {
         </form>
         <div className={s.other}>
           <button className={s.button} onClick={() => signIn("github")}>
-            <FontAwesomeIcon icon={faGithub} /> Github orqali davom etish
+            <FontAwesomeIcon className="icon" icon={faGithub} /> Github orqali
+            davom etish
           </button>
           <button className={s.button} onClick={() => signIn("facebook")}>
-            <FontAwesomeIcon icon={faFacebook} /> Facebook orqali davom etish
+            <FontAwesomeIcon className="icon" icon={faFacebook} /> Facebook
+            orqali davom etish
           </button>
         </div>
       </div>

@@ -1,12 +1,19 @@
 import Footer from "components/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import s from "styles/I.module.scss";
 import backGroundImage from "images/back.jpg";
 import Navbar from "components/Navbar";
+import { useRouter } from "next/router";
+import { useAuth } from "utils/auth";
 
 const Index = () => {
+  const router = useRouter();
+  const auth = useAuth();
+  useEffect(() => {
+    if (auth) router.replace("/page/1");
+  }, []);
   return (
     <>
       <Navbar />
