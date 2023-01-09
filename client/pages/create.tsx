@@ -20,7 +20,7 @@ const Login = () => {
   const state = useAppSelector((state) => state.portfolio);
   useEffect(() => {
     if (!auth) router.replace("/auth/register");
-  }, []);
+  }, [auth, router]);
   function handleSubmit() {
     setIsPending(true);
     setMessage("Yuklanmoqda...");

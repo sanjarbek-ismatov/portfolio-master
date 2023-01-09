@@ -77,7 +77,6 @@ const Navbar = () => {
                     onClick={() => {
                       signOut();
                       localStorage.removeItem("token");
-                      router.replace("/");
                     }}
                   >
                     <FontAwesomeIcon

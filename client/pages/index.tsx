@@ -13,7 +13,7 @@ const Index = () => {
   const auth = useAuth();
   useEffect(() => {
     if (auth) router.replace("/page/1");
-  }, []);
+  }, [auth, router]);
   return (
     <>
       <Navbar />
