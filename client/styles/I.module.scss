@@ -1,0 +1,65 @@
+@import "_colors";
+.container {
+  max-width: 1200px;
+  margin: 50px auto;
+  text-align: center;
+}
+// .leftContainer{
+//     float: left;
+// }
+// .rightContainer{
+//     float: right;
+// }
+.sectionContainer {
+  width: 100%;
+  padding: 50px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  h1 {
+    border-bottom: 1px solid rgb(173, 173, 173);
+    padding: 15px;
+  }
+  .grid {
+    width: 100%;
+    margin: 50px auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: left;
+    .column {
+      padding: 50px 30px;
+      box-shadow: 0px 5px 10px 5px rgb(204, 204, 204);
+      border-radius: 10px;
+      margin: 5px 25px;
+      p {
+        margin: 20px 30px 0 0;
+        line-height: 25px;
+        text-align: left;
+        font-size: 15px;
+        color: #888;
+      }
+
+      width: 350px;
+    }
+  }
+  .leftContainer {
+    line-height: 60px;
+  }
+}
+.link {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 15px 20px;
+  background-color: $background;
+  color: #fff;
+  font-size: 20px;
+  margin: 15px 10px 10px;
+  border-radius: 30px;
+}
+.footerSection {
+  line-height: 60px;
+}

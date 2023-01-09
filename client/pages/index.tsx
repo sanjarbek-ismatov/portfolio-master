@@ -1,82 +1,110 @@
-import Navbar from "components/Navbar";
-import Head from "next/head";
-import React, { useEffect, useState } from "react";
 import Footer from "components/Footer";
-import { GetServerSideProps } from "next";
-import type { likeType, portfolio } from "types/portfolio";
-import { serverUrl } from "utils/serverUrl";
-import { getLikeFromPortfolio } from "utils/getDetails";
-import { useAppSelector } from "state/store";
-import { isAuth } from "utils/auth";
-import { Main } from "components/Index/Main";
-const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
-  const [likes, setLikes] = useState<likeType[]>();
-  const auth = isAuth();
-  const url = serverUrl();
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import s from "styles/I.module.scss";
+import backGroundImage from "images/back.jpg";
+import Navbar from "components/Navbar";
 
-  const state = useAppSelector((state) => state.like);
-
-  useEffect(() => {
-    getLikeFromPortfolio()
-      .then((likedata: any) => {
-        setLikes(likedata);
-      })
-      .catch((err) => console.log(err));
-  }, [data, state]);
-
-  const [text, setText] = useState("");
-
+const Index = () => {
   return (
-    <div>
-      <Head>
-        <title>Portfolio Master</title>
-      </Head>
+    <>
       <Navbar />
-      <Main
-        setText={setText}
-        text={text}
-        data={data}
-        likes={likes}
-        images={images}
-        auth={auth}
-        url={url}
-      />
-      {/* <script
-        type="text/javascript"
-        dangerouslySetInnerHTML={{
-          __html: `
-            const navbar = document.getElementById("navbar")
-            window.addEventListener("scroll", () => {
-              if (document.body.scrollTop > 20 || navbar.scrollTop > 20 ) {
-                console.log("ok", navbar);
-              }
-            });
-            console.log("ok")
-  
-          `,
-        }}
-      ></script> */}
-      {/* <Script src="/static/index.js" /> */}
+      <div className={s.container}>
+        <div className={s.sectionContainer}>
+          <div className={s.leftContainer}>
+            <h1 data-aos="fade-up" data-aos-duration="700">
+              Portfolio masterga xush kelibsiz!
+            </h1>
+            <Link href="/auth/register">
+              <button
+                data-aos="fade-up"
+                data-aos-duration="700"
+                className={s.link}
+              >
+                Ro`yhatdan o`tish
+              </button>
+            </Link>
+
+            <Link href="/auth/login">
+              <button
+                data-aos="fade-up"
+                data-aos-duration="700"
+                data-aos-delay="100"
+                className={s.link}
+              >
+                Tizimga kirish
+              </button>
+            </Link>
+          </div>
+          <div className={s.rightContainer}>
+            <Image
+              height={406}
+              width={512}
+              src={backGroundImage}
+              alt="Background"
+            />
+          </div>
+        </div>
+        <div className={s.sectionContainer}>
+          <h1>Loyiha haqida</h1>
+          <div className={s.grid}>
+            <div
+              data-aos="fade-up"
+              data-aos-duration="700"
+              className={s.column}
+            >
+              <h3>Loyiha nima uchun?</h3>
+              <p>
+                Ushbu loyiha dasturchilarning loyihalarini ulashish, muhokama
+                qilish, tarqatish uchun qilingan.
+              </p>
+            </div>
+            <div
+              data-aos="fade-up"
+              data-aos-duration="700"
+              data-aos-delay="200"
+              className={s.column}
+            >
+              <h3>Kim tomonidan yaratildi?</h3>
+              <p>
+                Bu loyihani Sanjarbek Ismatov ishlab chiqdi. Bu uning hozircha
+                eng katta loyihasi.
+              </p>
+            </div>
+            <div
+              data-aos="fade-up"
+              data-aos-duration="700"
+              data-aos-delay="400"
+              className={s.column}
+            >
+              <h3>Ro`yhatdan o`tish majburiymi?</h3>
+              <p>
+                Ha. Ro`yhatdan o`tmagan foydalanuvchilar bilan muammo yuzaga
+                keladi. Iltimos tizimga kiring!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className={s.footerSection}>
+          <h1 data-aos="fade-up" data-aos-duration="700">
+            Nimani kutyapsiz? Hammani lol qoldirish vaqti keldi!
+          </h1>
+          <Link href="/auth/register">
+            <button
+              data-aos="fade-up"
+              data-aos-duration="1000"
+              data-aos-delay="200"
+              className={s.link}
+            >
+              Boshlash
+            </button>
+          </Link>
+        </div>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 };
-export const getServerSideProps: GetServerSideProps<{
-  data: portfolio[];
-}> = async () => {
-  const url = serverUrl();
-  const res = await fetch(`${url}/api/portfolio/all`);
 
-  const data = await res.json();
-  const images = data.map(
-    (e: portfolio, i: number) => `${url}/image/${e.images[0]}`
-  );
-
-  return {
-    props: {
-      data: data,
-      images: images,
-    },
-  };
-};
 export default Index;

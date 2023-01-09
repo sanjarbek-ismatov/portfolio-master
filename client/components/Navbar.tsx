@@ -1,10 +1,12 @@
 import {
+  faArrowRightToBracket,
   faBars,
   faLock,
   faPlus,
   faRightFromBracket,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useState } from "react";
@@ -33,7 +35,7 @@ const Navbar = () => {
                   right: "0",
                 }
               : {
-                  right: "-300px",
+                  right: "-100%",
                 }
           }
         >
@@ -45,13 +47,23 @@ const Navbar = () => {
             </Link>
           </li>
           {!auth && (
-            <li>
-              <Link href="/auth/login">
-                <a>
-                  <FontAwesomeIcon icon={faLock} /> Kirish
-                </a>
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link href="/auth/login">
+                  <a>
+                    <FontAwesomeIcon icon={faLock} /> Kirish
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/auth/register">
+                  <a>
+                    <FontAwesomeIcon icon={faArrowRightToBracket} /> Ro`yhatdan
+                    o`tish
+                  </a>
+                </Link>
+              </li>
+            </>
           )}
           {auth && (
             <>
