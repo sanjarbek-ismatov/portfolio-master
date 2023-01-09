@@ -21,18 +21,18 @@ const Footer = () => {
         <div>
           <h1>Kontakt</h1>
           <p>
-            <FontAwesomeIcon icon={faEnvelopeOpen} /> Pochta:{" "}
+            <FontAwesomeIcon className="icon" icon={faEnvelopeOpen} />{" "}
             <a href="mailto:ismatovsanjarbek@yandex.ru">
               ismatovsanjarbek@yandex.ru
             </a>
           </p>
           <p>
-            <FontAwesomeIcon icon={faPhone} /> Telefon:{" "}
+            <FontAwesomeIcon className="icon" icon={faPhone} />{" "}
             <a href="tel:+998902455060">+998902455060</a>
           </p>
           <p>
-            <FontAwesomeIcon icon={faLocationPin} /> Surxondaryo viloyati,
-            Muzrabot tumani
+            <FontAwesomeIcon className="icon" icon={faLocationPin} />{" "}
+            Surxondaryo viloyati, Muzrabot tumani
           </p>
         </div>
         <div>
@@ -40,28 +40,32 @@ const Footer = () => {
           <p>
             <Link href="/auth/register">
               <a>
-                <FontAwesomeIcon icon={faChevronRight} /> Ro`yhatdan o`tish
+                <FontAwesomeIcon className="icon" icon={faChevronRight} />{" "}
+                Ro`yhatdan o`tish
               </a>
             </Link>
           </p>
           <p>
             <Link href="/auth/login">
               <a>
-                <FontAwesomeIcon icon={faChevronRight} /> Tizimga kirish
+                <FontAwesomeIcon className="icon" icon={faChevronRight} />{" "}
+                Tizimga kirish
               </a>
             </Link>
           </p>
           <p>
             <Link href="/create">
               <a>
-                <FontAwesomeIcon icon={faChevronRight} /> Portfolio joylash
+                <FontAwesomeIcon className="icon" icon={faChevronRight} />{" "}
+                Portfolio joylash
               </a>
             </Link>
           </p>
           <p>
             <Link href="/about">
               <a>
-                <FontAwesomeIcon icon={faChevronRight} /> Loyiha haqida
+                <FontAwesomeIcon className="icon" icon={faChevronRight} />{" "}
+                Loyiha haqida
               </a>
             </Link>
           </p>
@@ -70,31 +74,31 @@ const Footer = () => {
           <h1>Ijtimoiy tarmoq</h1>
           <p>
             <a href="https://t.me/sanjarbek_ismatov">
-              <FontAwesomeIcon icon={faTelegram} /> Telegram
+              <FontAwesomeIcon className="icon" icon={faTelegram} /> Telegram
             </a>
           </p>
           <p>
             <a href="https://instagram.com/sanjarbek_ismatov">
-              <FontAwesomeIcon icon={faInstagram} /> Instagram
+              <FontAwesomeIcon className="icon" icon={faInstagram} /> Instagram
             </a>
           </p>
           <p>
             <a href="https://t.me/sanjarbek_ismatov">
-              <FontAwesomeIcon icon={faVk} /> VK
+              <FontAwesomeIcon className="icon" icon={faVk} /> VK
             </a>
           </p>
           <p>
             <a href="https://t.me/sanjarbek_ismatov">
-              <FontAwesomeIcon icon={faFacebook} /> Facebook
+              <FontAwesomeIcon className="icon" icon={faFacebook} /> Facebook
             </a>
           </p>
         </div>
         <div>
           <h1>Loyiha haqida</h1>
           <p>
-            <FontAwesomeIcon icon={faCircleInfo} /> Ushbu Loyiha portfolio
-            joylash uchun yaratilgan sayt. Umid qilamanki undan ajoyib
-            foydalanasiz!
+            <FontAwesomeIcon className="icon" icon={faCircleInfo} /> Ushbu
+            Loyiha portfolio joylash uchun yaratilgan sayt. Umid qilamanki undan
+            ajoyib foydalanasiz!
           </p>
         </div>
       </div>

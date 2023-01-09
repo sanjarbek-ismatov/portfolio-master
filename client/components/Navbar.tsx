@@ -42,7 +42,8 @@ const Navbar = () => {
           <li>
             <Link href="/create">
               <a>
-                <FontAwesomeIcon icon={faPlus} /> Portfolio joylash
+                <FontAwesomeIcon className="icon" icon={faPlus} /> Portfolio
+                joylash
               </a>
             </Link>
           </li>
@@ -51,15 +52,18 @@ const Navbar = () => {
               <li>
                 <Link href="/auth/login">
                   <a>
-                    <FontAwesomeIcon icon={faLock} /> Kirish
+                    <FontAwesomeIcon className="icon" icon={faLock} /> Kirish
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/auth/register">
                   <a>
-                    <FontAwesomeIcon icon={faArrowRightToBracket} /> Ro`yhatdan
-                    o`tish
+                    <FontAwesomeIcon
+                      className="icon"
+                      icon={faArrowRightToBracket}
+                    />{" "}
+                    Ro`yhatdan o`tish
                   </a>
                 </Link>
               </li>
@@ -76,14 +80,18 @@ const Navbar = () => {
                       router.replace("/");
                     }}
                   >
-                    <FontAwesomeIcon icon={faRightFromBracket} /> Chiqish
+                    <FontAwesomeIcon
+                      className="icon"
+                      icon={faRightFromBracket}
+                    />{" "}
+                    Chiqish
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/profile">
                   <a>
-                    <FontAwesomeIcon icon={faUser} /> Profil
+                    <FontAwesomeIcon className="icon" icon={faUser} /> Profil
                   </a>
                 </Link>
               </li>
