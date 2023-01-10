@@ -9,14 +9,17 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import s from "styles/N.module.scss";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import { useAuth } from "utils/auth";
+import { ThemeContext } from "context/themeContext";
+import { themes } from "types/theme";
 const Navbar = () => {
+  const { theme, changeTheme, allThemes } = useContext(ThemeContext);
   const router = useRouter();
   const auth = useAuth();
   const [menu, setMenu] = useState<boolean>();
@@ -96,6 +99,22 @@ const Navbar = () => {
               </li>
             </>
           )}
+          <li>
+            <select onChange={(e: any) => changeTheme(e.target.value)}>
+              {allThemes &&
+                allThemes.map((e, i) => {
+                  return (
+                    <option
+                      selected={theme === e ? true : false}
+                      value={e}
+                      key={i}
+                    >
+                      {e}
+                    </option>
+                  );
+                })}
+            </select>
+          </li>
         </ul>
         <FontAwesomeIcon
           onClick={visibleContent}

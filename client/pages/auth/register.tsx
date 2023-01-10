@@ -161,10 +161,12 @@ const Register = () => {
               signIn("github");
             }}
           >
-            <FontAwesomeIcon icon={faGithub} /> Github orqali davom etish
+            <FontAwesomeIcon className="icon" icon={faGithub} /> Github orqali
+            davom etish
           </button>
           <button className={s.button} onClick={() => signIn("facebook")}>
-            <FontAwesomeIcon icon={faFacebook} /> Facebook orqali davom etish
+            <FontAwesomeIcon className="icon" icon={faFacebook} /> Facebook
+            orqali davom etish
           </button>
         </div>
       </div>
