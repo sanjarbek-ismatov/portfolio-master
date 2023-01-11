@@ -30,6 +30,8 @@ const Layout = ({ children }: { children: ReactNode }) => {
         className={cn({
           [s.light]: theme === "light",
           [s.dark]: theme === "dark",
+          [s.contrast]: theme === "contrast",
+          [s.lightblue]: theme === "lightblue",
         })}
       >
         {children}
