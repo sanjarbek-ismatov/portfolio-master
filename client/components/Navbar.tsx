@@ -6,7 +6,7 @@ import {
   faRightFromBracket,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-
+import cn from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useContext, useState } from "react";
@@ -116,11 +116,22 @@ const Navbar = () => {
             </select>
           </li>
         </ul>
-        <FontAwesomeIcon
-          onClick={visibleContent}
+        {/* <FontAwesomeIcon
+          
           className={s.icon}
           icon={menu ? faX : faBars}
-        />
+        /> */}
+        <div
+          onClick={visibleContent}
+          className={cn({
+            [s.iconMenu]: true,
+            [s.iconX]: menu,
+          })}
+        >
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </nav>
   );
