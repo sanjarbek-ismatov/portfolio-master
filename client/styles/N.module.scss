@@ -22,6 +22,19 @@
     li {
       padding: 0 20px;
       text-transform: uppercase;
+      select {
+        text-transform: capitalize;
+        outline: none;
+        background-color: transparent;
+        color: $lightColor;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+        option {
+          color: inherit;
+          background-color: $background;
+        }
+      }
       a {
         color: $lightColor;
         text-decoration: none;
@@ -31,13 +44,13 @@
 }
 .icon {
   display: none;
-  width: 40px;
-  font-size: 30px;
+  width: 20px;
+  font-size: 20px;
   z-index: 2;
   cursor: pointer;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 830px) {
   .icon {
     display: block;
   }

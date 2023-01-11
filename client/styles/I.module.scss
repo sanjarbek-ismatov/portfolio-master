@@ -15,7 +15,7 @@
   padding: 50px 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   h1 {
     border-bottom: 1px solid rgb(173, 173, 173);
@@ -30,7 +30,8 @@
     text-align: left;
     .column {
       padding: 50px 30px;
-      box-shadow: 0px 5px 10px 5px rgb(204, 204, 204);
+      border: 1px solid $background;
+      box-shadow: 0px 5px 10px 5px inherit;
       border-radius: 10px;
       margin: 5px 25px;
       p {

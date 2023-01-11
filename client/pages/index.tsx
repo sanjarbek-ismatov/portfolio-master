@@ -46,8 +46,8 @@ const Index = () => {
           </div>
           <div className={s.rightContainer}>
             <Image
-              height={406}
-              width={512}
+              height={355}
+              width={646}
               src={backGroundImage}
               alt="Background"
             />

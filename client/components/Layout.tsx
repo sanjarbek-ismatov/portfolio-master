@@ -1,6 +1,11 @@
 import Head from "next/head";
 import React, { ReactNode } from "react";
+import cn from "classnames";
+import s from "styles/L.module.scss";
+import { useContext } from "react";
+import { ThemeContext } from "context/themeContext";
 const Layout = ({ children }: { children: ReactNode }) => {
+  const { theme } = useContext(ThemeContext);
   return (
     <>
       <Head>
@@ -21,7 +26,14 @@ const Layout = ({ children }: { children: ReactNode }) => {
         />
         <link rel="shortcut icon" href="https://i.ibb.co/M6cGSt0/icon.png" />
       </Head>
-      {children}
+      <div
+        className={cn({
+          [s.light]: theme === "light",
+          [s.dark]: theme === "dark",
+        })}
+      >
+        {children}
+      </div>
     </>
   );
 };

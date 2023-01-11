@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { themes } from "types/theme";
 export const useTheme: any = () => {
   const allThemes: themes[] = ["dark", "light"];
-  const [localTheme, setLocalTheme] = useState<themes>(
-    typeof window !== "undefined" ? localStorage.theme : "light"
-  );
-  if (!localTheme) {
-    localStorage.setItem("theme", "light");
-  }
+  const [localTheme, setLocalTheme] = useState<themes>("light");
+  useEffect(() => {
+    if (!localStorage.theme) {
+      localStorage.setItem("theme", "light");
+    } else {
+      setLocalTheme(localStorage.theme);
+    }
+  }, [localTheme]);
+
   const changeTheme: (theme: themes) => void = (theme) => {
     setLocalTheme(theme);
     localStorage.setItem("theme", theme);
