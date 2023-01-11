@@ -46,7 +46,8 @@
 .dialog {
   width: 600px;
   padding: 25px;
-  background-color: #fff;
+  background-color: inherit;
+  color: inherit;
   line-height: 50px;
   border-radius: 10px;
   animation: dialog 0.3s ease;

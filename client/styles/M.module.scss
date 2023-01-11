@@ -4,26 +4,26 @@
   font-size: 30px;
   width: 30px;
 }
-.liked{
+.liked {
   color: $red;
-  animation: like .5s cubic-bezier(0.68, -0.55, 0.27, 1.55) alternate;
+  animation: like 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) alternate;
 }
-.notLiked{
-  animation: notlike .5s cubic-bezier(0.68, -0.55, 0.27, 1.55) alternate;
+.notLiked {
+  animation: notlike 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) alternate;
 }
 @keyframes like {
-  from{
-    transform: scale(.3);
+  from {
+    transform: scale(0.3);
   }
-  to{
+  to {
     transform: scale(1.1);
   }
 }
 
 @keyframes notlike {
   to {
-      opacity: 0;
-    }
+    opacity: 0;
+  }
 }
 .profileImage {
   width: 50px;
@@ -72,7 +72,7 @@
   display: flex;
   align-items: center;
   border: 2px solid $background;
-
+  background-color: transparent;
   border-radius: 5px;
   padding: 10px;
   margin: 40px auto;
