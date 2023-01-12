@@ -3,16 +3,18 @@ import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import Footer from "components/Footer";
 import { GetServerSideProps } from "next";
-import type { likeType, portfolio } from "types/portfolio";
+import type { dataType, likeType, portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
-import { getLikeFromPortfolio } from "utils/getDetails";
+import { getPortfolios } from "utils/getDetails";
 import { useAppSelector } from "state/store";
 import { useAuth } from "utils/auth";
 import { Main } from "components/Index/Main";
 import { useRouter } from "next/router";
 
-const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
+const Index = () => {
   const [likes, setLikes] = useState<likeType[]>();
+  const [data, setData] = useState<portfolio[]>();
+  const [images, setImages] = useState<string[]>();
   const auth = useAuth();
   const router = useRouter();
   const url = serverUrl();
@@ -20,14 +22,16 @@ const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
   const state = useAppSelector((state) => state.like);
   useEffect(() => {
     if (!auth) router.replace("/auth/register");
-  }, []);
+  }, [auth, router]);
   useEffect(() => {
-    getLikeFromPortfolio()
-      .then((likedata: any) => {
-        setLikes(likedata);
+    getPortfolios()
+      .then((datas) => {
+        setLikes(datas.result);
+        setImages(datas.images);
+        setData(datas.data);
       })
       .catch((err) => console.log(err));
-  }, [data, state]);
+  }, []);
 
   const [text, setText] = useState("");
 
@@ -66,22 +70,22 @@ const Index = ({ data, images }: { data: portfolio[]; images: string[] }) => {
     </div>
   );
 };
-export const getServerSideProps: GetServerSideProps<{
-  data: portfolio[];
-}> = async () => {
-  const url = serverUrl();
-  const res = await fetch(`${url}/api/portfolio/all`);
+// export const getServerSideProps: GetServerSideProps<{
+//   data: portfolio[];
+// }> = async () => {
+//   const url = serverUrl();
+//   const res = await fetch(`${url}/api/portfolio/all`);
 
-  const data = await res.json();
-  const images = data.map(
-    (e: portfolio, i: number) => `${url}/image/${e.images[0]}`
-  );
+//   const data = await res.json();
+//   const images = data.map(
+//     (e: portfolio, i: number) => `${url}/image/${e.images[0]}`
+//   );
 
-  return {
-    props: {
-      data: data,
-      images: images,
-    },
-  };
-};
+//   return {
+//     props: {
+//       data: data,
+//       images: images,
+//     },
+//   };
+// };
 export default Index;

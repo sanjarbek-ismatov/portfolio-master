@@ -14,9 +14,9 @@ export function Main({
 }: {
   setText: React.Dispatch<React.SetStateAction<string>>;
   text: string;
-  data: portfolio[];
-  likes: likeType[] | undefined;
-  images: string[];
+  data?: portfolio[];
+  likes?: likeType[] | undefined;
+  images?: string[];
   auth: any;
   url: string;
 }) {
@@ -28,17 +28,19 @@ export function Main({
         handleChange={(e) => setText(e.target.value)}
         value={text}
       />
-      {data.map((e, i: number) => (
-        <PortfolioCard
-          key={i}
-          i={i}
-          likes={likes}
-          images={images}
-          auth={auth}
-          url={url}
-          e={e}
-        />
-      ))}
+      {data &&
+        images &&
+        data.map((e, i: number) => (
+          <PortfolioCard
+            key={i}
+            i={i}
+            likes={likes}
+            images={images}
+            auth={auth}
+            url={url}
+            e={e}
+          />
+        ))}
     </main>
   );
 }

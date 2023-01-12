@@ -32,3 +32,8 @@ export type likeType = {
   isLiked: boolean;
   count: number;
 };
+export type dataType = {
+  data: portfolio[];
+  images: string[];
+  result: likeType[];
+};

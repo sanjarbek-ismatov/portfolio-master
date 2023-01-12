@@ -1,4 +1,4 @@
-import { likeType, portfolio, user } from "types/portfolio";
+import { dataType, likeType, portfolio, user } from "types/portfolio";
 import { serverUrl } from "./serverUrl";
 import axios from "axios";
 const url = serverUrl();
@@ -17,14 +17,17 @@ export const getToken = () => {
   }
 };
 
-export async function getLikeFromPortfolio() {
+export async function getPortfolios(): Promise<dataType> {
   return new Promise(async (resolve, reject) => {
     try {
       const user: { data: { user: user; portfolios: portfolio[] } } =
         await getMe();
       const res = await fetch(`${url}/api/portfolio/all`);
 
-      const data = await res.json();
+      const data: portfolio[] = await res.json();
+      const images = data.map(
+        (e: portfolio, i: number) => `${url}/image/${e.images[0]}`
+      );
       if (user) {
         const result: likeType[] = data.map((e: portfolio, i: number) => {
           return e.likes.includes(user.data.user._id)
@@ -32,7 +35,7 @@ export async function getLikeFromPortfolio() {
             : { isLiked: false, count: e.likes.length };
         });
 
-        resolve(result);
+        resolve({ data, images, result } as dataType);
       }
     } catch (ex) {
       reject(ex);
