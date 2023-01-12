@@ -2,8 +2,8 @@ import Navbar from "components/Navbar";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import Footer from "components/Footer";
-import { GetServerSideProps } from "next";
-import type { dataType, likeType, portfolio } from "types/portfolio";
+
+import type { likeType, portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import { getPortfolios } from "utils/getDetails";
 import { useAppSelector } from "state/store";
@@ -18,7 +18,6 @@ const Index = () => {
   const auth = useAuth();
   const router = useRouter();
   const url = serverUrl();
-
   const state = useAppSelector((state) => state.like);
   useEffect(() => {
     if (!auth) router.replace("/auth/register");
@@ -31,7 +30,7 @@ const Index = () => {
         setData(datas.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [state]);
 
   const [text, setText] = useState("");
 
@@ -70,22 +69,5 @@ const Index = () => {
     </div>
   );
 };
-// export const getServerSideProps: GetServerSideProps<{
-//   data: portfolio[];
-// }> = async () => {
-//   const url = serverUrl();
-//   const res = await fetch(`${url}/api/portfolio/all`);
 
-//   const data = await res.json();
-//   const images = data.map(
-//     (e: portfolio, i: number) => `${url}/image/${e.images[0]}`
-//   );
-
-//   return {
-//     props: {
-//       data: data,
-//       images: images,
-//     },
-//   };
-// };
 export default Index;

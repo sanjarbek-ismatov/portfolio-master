@@ -1,0 +1,50 @@
+@import "_colors";
+.container {
+  display: block;
+  text-align: end;
+  position: relative;
+  padding: 10px;
+  margin-bottom: 30px;
+  height: 100%;
+  max-height: 43px;
+  border: 2px solid $background;
+  transition: max-height 0.5s linear;
+  overflow: hidden;
+  .icon {
+    height: 20px;
+    cursor: pointer;
+  }
+  .filters {
+    text-align: start;
+    display: flex;
+    flex-wrap: wrap;
+
+    label {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-width: 40px;
+      margin: 10px;
+      user-select: none;
+      font-size: 20px;
+    }
+    input {
+      position: absolute;
+      height: 0;
+    }
+
+    span {
+      display: block;
+      width: 20px;
+      height: 20px;
+      margin: 5px;
+      background-color: #fff;
+    }
+    input:checked + span {
+      background-color: $background;
+    }
+  }
+}
+.containerShow {
+  max-height: 100vh;
+}

@@ -29,6 +29,10 @@
   color: $lightColor;
   background-color: $lightBlue;
 }
+.rootContainer {
+  min-height: 100vh;
+  width: 100%;
+}
 .form {
   text-align: center;
   padding: 60px 30px;

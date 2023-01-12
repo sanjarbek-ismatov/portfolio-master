@@ -1,6 +1,6 @@
 @import "_colors";
 .icon {
-  color: $color;
+  color: inherit;
   font-size: 30px;
   width: 30px;
 }
@@ -47,15 +47,16 @@
   padding: 30px 20px;
   border: 1px solid rgba(185, 185, 185, 0.89);
   border-radius: 15px;
-  box-shadow: 1px 13px 37px -6px rgba(130, 129, 129, 0.89);
-  -webkit-box-shadow: 1px 13px 37px -6px rgba(130, 129, 129, 0.89);
-  -moz-box-shadow: 1px 13px 37px -6px rgba(130, 129, 129, 0.89);
+  box-shadow: 1px 13px 37px -6px $shadowColor;
+  -webkit-box-shadow: 1px 13px 37px -6px $shadowColor;
+  -moz-box-shadow: 1px 13px 37px -6px $shadowColor;
 }
 .container {
   width: 100%;
   text-align: center;
   margin: 50px 0;
   padding: 0 30px;
+  min-height: 100vh;
 }
 .profile {
   text-align: center;
@@ -74,7 +75,7 @@
   border: 2px solid $background;
   background-color: transparent;
   border-radius: 5px;
-  padding: 10px;
+  padding: 5px 10px;
   margin: 40px auto;
   input {
     width: 100%;

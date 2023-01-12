@@ -28,6 +28,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       </Head>
       <div
         className={cn({
+          [s.rootContainer]: true,
           [s.light]: theme === "light",
           [s.dark]: theme === "dark",
           [s.contrast]: theme === "contrast",
