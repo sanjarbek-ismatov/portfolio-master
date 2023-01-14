@@ -8,6 +8,14 @@ router.get("/all", async (req, res) => {
   const portfolios = await Portfolio.find();
   res.status(200).send(portfolios);
 });
+router.get("/:id", async (req, res) => {
+  const query = req.params.id.split("_")[1].replace("+", " ");
+  const portfolio = await Portfolio.findOne({ title: query });
+  if (!portfolio) {
+    return res.status(404).send("Afsus topilmadi!");
+  }
+  res.status(200).send(portfolio);
+});
 router.post("/create", upload.array("images"), auth, async (req, res) => {
   const { error } = portfolioValidator(req.body);
   if (error) return res.status(400).send(error.details[0].message);
