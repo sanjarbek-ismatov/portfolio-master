@@ -5,14 +5,14 @@ import s from "styles/M.module.scss";
 export function PortfolioCard({
   i,
   likes,
-  images,
+
   auth,
   url,
   e,
 }: {
   i: number;
   likes: likeType[] | undefined;
-  images: string[];
+
   auth: any;
   url: string;
   e: portfolio;
@@ -24,13 +24,13 @@ export function PortfolioCard({
           className={s.postImage}
           loading="lazy"
           placeholder="blur"
-          loader={() => images[i]}
+          loader={() => `${url}/image/${e.images[0]}`}
           unoptimized
           blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
           height={450}
           width={800}
           alt="portfolio rasmi"
-          src={images[i]}
+          src={`${url}/image/${e.images[0]}`}
         />
       )}
 

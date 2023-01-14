@@ -3,14 +3,15 @@ import Input from "components/Input";
 import { likeType, portfolio } from "types/portfolio";
 import s from "styles/M.module.scss";
 import { PortfolioCard } from "./Card";
-import { useAppSelector } from "state/store";
 import Filter from "./Filter";
+import { useState } from "react";
+import { filterByKey } from "utils/filterByKey";
 export function Main({
   setText,
   text,
   data,
   likes,
-  images,
+
   auth,
   url,
 }: {
@@ -18,11 +19,11 @@ export function Main({
   text: string;
   data?: portfolio[];
   likes?: likeType[] | undefined;
-  images?: string[];
+
   auth: any;
   url: string;
 }) {
-  const state = useAppSelector((state) => state.like);
+  const [filters, setFilters] = useState<string[]>([]);
   return (
     <main className={s.container}>
       <Input
@@ -31,20 +32,32 @@ export function Main({
         handleChange={(e) => setText(e.target.value)}
         value={text}
       />
-      <Filter />
+      <Filter filter={data} setFilters={setFilters} />
       {data ? (
-        images &&
-        data.map((e, i: number) => (
-          <PortfolioCard
-            key={i}
-            i={i}
-            likes={likes}
-            images={images}
-            auth={auth}
-            url={url}
-            e={e}
-          />
-        ))
+        filters &&
+        filterByKey(data, text)
+          .filter(({ used }) => {
+            const bools: boolean[] = [];
+            used.filter((el) => {
+              if (!filters.length) {
+                return true;
+              } else {
+                bools.push(filters.includes(el));
+              }
+            });
+
+            return bools.filter((e) => e).length === filters.length;
+          })
+          .map((e, i: number) => (
+            <PortfolioCard
+              key={i}
+              i={i}
+              likes={likes}
+              auth={auth}
+              url={url}
+              e={e}
+            />
+          ))
       ) : (
         <h1>Yuklanmoqda...</h1>
       )}

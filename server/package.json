@@ -28,7 +28,9 @@
     "winston": "^3.8.2"
   },
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
-  }
+    "start": "node dist/bundle.js",
+    "dev": "nodemon server.js",
+    "build": "webpack"
+  },
+  "devDependencies": {}
 }

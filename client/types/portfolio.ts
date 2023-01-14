@@ -21,6 +21,7 @@ export type portfolio = {
   author: user;
   date: string;
   likes: string[];
+  used: string[];
   comments: {
     commentAuthor: string;
     body: string;
@@ -34,6 +35,5 @@ export type likeType = {
 };
 export type dataType = {
   data: portfolio[];
-  images: string[];
   result: likeType[];
 };

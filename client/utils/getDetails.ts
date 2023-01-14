@@ -25,9 +25,7 @@ export async function getPortfolios(): Promise<dataType> {
       const res = await fetch(`${url}/api/portfolio/all`);
 
       const data: portfolio[] = await res.json();
-      const images = data.map(
-        (e: portfolio, i: number) => `${url}/image/${e.images[0]}`
-      );
+
       if (user) {
         const result: likeType[] = data.map((e: portfolio, i: number) => {
           return e.likes.includes(user.data.user._id)
@@ -35,7 +33,7 @@ export async function getPortfolios(): Promise<dataType> {
             : { isLiked: false, count: e.likes.length };
         });
 
-        resolve({ data, images, result } as dataType);
+        resolve({ data, result } as dataType);
       }
     } catch (ex) {
       reject(ex);

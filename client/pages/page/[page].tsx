@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 const Index = () => {
   const [likes, setLikes] = useState<likeType[]>();
   const [data, setData] = useState<portfolio[]>();
-  const [images, setImages] = useState<string[]>();
+
   const auth = useAuth();
   const router = useRouter();
   const url = serverUrl();
@@ -26,7 +26,7 @@ const Index = () => {
     getPortfolios()
       .then((datas) => {
         setLikes(datas.result);
-        setImages(datas.images);
+
         setData(datas.data);
       })
       .catch((err) => console.log(err));
@@ -45,7 +45,6 @@ const Index = () => {
         text={text}
         data={data}
         likes={likes}
-        images={images}
         auth={auth}
         url={url}
       />

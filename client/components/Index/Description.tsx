@@ -16,21 +16,32 @@ export function Description({
   i: number;
 }) {
   return (
-    <div className={s.desc}>
-      <div className={s.profile}>
-        <Image
-          className={s.profileImage}
-          alt="profile rasmi"
-          loader={() => `${url}/image/${e.author.image}`}
-          height={50}
-          width={50}
-          src={`${url}/image/${e.author.image}`}
-          unoptimized
-        />
-        <p>{e.author.firstname}</p>
+    <div className={s.descContainer}>
+      <div className={s.desc}>
+        <div className={s.profile}>
+          <Image
+            className={s.profileImage}
+            alt="profile rasmi"
+            loader={() => `${url}/image/${e.author.image}`}
+            height={50}
+            width={50}
+            src={`${url}/image/${e.author.image}`}
+            unoptimized
+          />
+          <p>{e.author.firstname}</p>
+        </div>
+
+        <h1>{e.title}</h1>
+
+        <div>
+          <Like e={e} likes={likes} i={i} />
+        </div>
       </div>
-      <h1>{e.title}</h1>
-      <div>{auth && likes && <Like e={e} likes={likes} i={i} />}</div>
+      {e.used.map((e, i) => (
+        <span className={s.badge} key={i}>
+          {e}
+        </span>
+      ))}
     </div>
   );
 }

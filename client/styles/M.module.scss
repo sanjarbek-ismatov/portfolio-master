@@ -19,7 +19,12 @@
     transform: scale(1.1);
   }
 }
-
+.badge {
+  padding: 10px;
+  border-radius: 30px;
+  border: 1px solid $background;
+  margin: 10px;
+}
 @keyframes notlike {
   to {
     opacity: 0;
@@ -34,7 +39,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin: 10px auto;
 }
 .postImage {
   width: 800px;
@@ -77,6 +82,10 @@
   border-radius: 5px;
   padding: 5px 10px;
   margin: 40px auto;
+  .icon {
+    height: 20px;
+    color: inherit;
+  }
   input {
     width: 100%;
     outline: none;
