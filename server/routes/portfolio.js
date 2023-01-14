@@ -9,7 +9,7 @@ router.get("/all", async (req, res) => {
   res.status(200).send(portfolios);
 });
 router.get("/:id", async (req, res) => {
-  const query = req.params.id.split("_")[1].replace("+", " ");
+  const query = req.params.id.split("_")[1].replace("-", " ");
   const portfolio = await Portfolio.findOne({ title: query });
   if (!portfolio) {
     return res.status(404).send("Afsus topilmadi!");
