@@ -9,11 +9,11 @@ import { useRouter } from "next/router";
 import { useAuth } from "utils/auth";
 
 const Index = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const auth = useAuth();
   useEffect(() => {
-    if (auth) router.replace("/page/1");
-  }, [auth, router]);
+    if (auth) window.location.href = "/page/1";
+  }, [auth]);
   return (
     <>
       <Navbar />

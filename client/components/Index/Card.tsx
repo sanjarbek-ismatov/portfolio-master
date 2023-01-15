@@ -2,6 +2,7 @@ import Image from "next/image";
 import { likeType, portfolio } from "types/portfolio";
 import { Description } from "./Description";
 import s from "styles/M.module.scss";
+import { useRouter } from "next/router";
 export function PortfolioCard({
   i,
   likes,
@@ -17,10 +18,16 @@ export function PortfolioCard({
   url: string;
   e: portfolio;
 }): JSX.Element {
+  const router = useRouter();
   return (
     <div className={s.post}>
       {likes && (
         <Image
+          onClick={() =>
+            router.push(
+              `/portfolio/${e.author.username}_${e.title.replace(" ", "+")}`
+            )
+          }
           className={s.postImage}
           loading="lazy"
           placeholder="blur"

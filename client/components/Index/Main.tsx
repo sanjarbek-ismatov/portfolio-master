@@ -6,6 +6,7 @@ import { PortfolioCard } from "./Card";
 import Filter from "./Filter";
 import { useState } from "react";
 import { filterByKey } from "utils/filterByKey";
+import { useRouter } from "next/router";
 export function Main({
   setText,
   text,

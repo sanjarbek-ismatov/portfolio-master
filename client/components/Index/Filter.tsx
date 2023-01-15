@@ -1,5 +1,6 @@
 import { faCheck, faSliders } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import s from "styles/Filter.module.scss";
 import { portfolio } from "types/portfolio";
@@ -11,9 +12,13 @@ const Filter = ({
   filter?: portfolio[];
   setFilters: React.Dispatch<React.SetStateAction<string[]>>;
 }) => {
+  const router = useRouter();
   const [filtered, setFiltered] = useState<string[]>([]);
   const [show, setShow] = useState(false);
-
+  useEffect(() => {
+    if (typeof router.query.filter === "string")
+      setFilters([router.query?.filter]);
+  }, []);
   useEffect(() => {
     filter && filterByUsed(filter).then((e) => setFiltered(e));
   }, [filter]);
