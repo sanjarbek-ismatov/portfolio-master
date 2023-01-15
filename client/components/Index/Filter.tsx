@@ -12,13 +12,9 @@ const Filter = ({
   filter?: portfolio[];
   setFilters: React.Dispatch<React.SetStateAction<string[]>>;
 }) => {
-  const router = useRouter();
   const [filtered, setFiltered] = useState<string[]>([]);
   const [show, setShow] = useState(false);
-  useEffect(() => {
-    if (typeof router.query.filter === "string")
-      setFilters([router.query?.filter]);
-  }, []);
+
   useEffect(() => {
     filter && filterByUsed(filter).then((e) => setFiltered(e));
   }, [filter]);

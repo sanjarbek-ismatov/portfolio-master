@@ -2,6 +2,7 @@ import { likeType, portfolio } from "types/portfolio";
 import Like from "./Like";
 import s from "styles/M.module.scss";
 import Image from "next/image";
+import { useRouter } from "next/router";
 export function Description({
   url,
   e,
@@ -15,6 +16,7 @@ export function Description({
   likes: likeType[] | undefined;
   i: number;
 }) {
+  const router = useRouter();
   return (
     <div className={s.descContainer}>
       <div className={s.desc}>
@@ -38,7 +40,11 @@ export function Description({
         </div>
       </div>
       {e.used.map((e, i) => (
-        <span className={s.badge} key={i}>
+        <span
+          onClick={() => router.push(`/page/${router.query.page}?filter=${e}`)}
+          className={s.badge}
+          key={i}
+        >
           {e}
         </span>
       ))}

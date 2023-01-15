@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import { portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
-
-const Portfolio = ({ data }: { data: portfolio & any }) => {
+import Image from "next/image";
+const Portfolio = ({ data }: { data: portfolio }) => {
   const router = useRouter();
   if (router.isFallback) {
     return <h1>Sahifa yuklanmoqda...</h1>;
@@ -12,7 +12,24 @@ const Portfolio = ({ data }: { data: portfolio & any }) => {
   if (!data) {
     return <p>Sahifa mavjud emas</p>;
   }
-  return <div>{data.title} ok</div>;
+  const url = serverUrl();
+  return (
+    <div>
+      <h1>{data.title}</h1>
+      {data.images.map((e, i) => {
+        return (
+          <Image
+            key={i}
+            height={300}
+            width={600}
+            loader={() => `${url}/image/${e}`}
+            alt="Image"
+            src={`${url}/image/${e}`}
+          />
+        );
+      })}
+    </div>
+  );
 };
 // export const getStaticPaths: GetStaticPaths = async () => {
 //   const url = serverUrl();
