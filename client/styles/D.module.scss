@@ -6,7 +6,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.527);
+  background-color: inherit;
+  backdrop-filter: brightness(0.3) blur(10px);
   top: 0;
 }
 @keyframes dialog {
@@ -47,7 +48,8 @@
   width: 600px;
   padding: 25px;
   background-color: inherit;
-  color: inherit;
+  border: 1px solid $background;
+  color: $lightColor;
   line-height: 50px;
   border-radius: 10px;
   animation: dialog 0.3s ease;

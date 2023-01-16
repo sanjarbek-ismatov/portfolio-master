@@ -100,10 +100,7 @@ const Navbar = () => {
             </>
           )}
           <li>
-            <select
-              defaultValue="light"
-              onChange={(e: any) => changeTheme(e.target.value)}
-            >
+            <select onChange={(e: any) => changeTheme(e.target.value)}>
               {allThemes &&
                 allThemes.map((e, i) => {
                   return (

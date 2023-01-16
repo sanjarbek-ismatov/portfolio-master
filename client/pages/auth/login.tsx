@@ -28,26 +28,30 @@ const Login = () => {
     setTimeout(() => login(form), 2000);
   }
   useEffect(() => {
-    setIsPending(true);
-    if (state.error) {
-      setIsPending(false);
-      setMessage(state.error);
-      setIsSuccess(false);
-      setIsError(true);
-    } else if (!state.error && state.status) {
-      setIsPending(false);
-      setMessage("Login bajarildi!");
-      setIsSuccess(true);
-      setIsError(false);
-      localStorage.setItem("token", state.token);
-    }
+    return () => {
+      setIsPending(true);
+      if (state.error) {
+        setIsPending(false);
+        setMessage(state.error);
+        setIsSuccess(false);
+        setIsError(true);
+      } else if (!state.error && state.status) {
+        setIsPending(false);
+        setMessage("Login bajarildi!");
+        setIsSuccess(true);
+        setIsError(false);
+        localStorage.setItem("token", state.token);
+      }
+    };
   }, [state]);
   useEffect(() => {
-    if (session) {
-      setIsPending(true);
-      setMessage("Yuklanmoqda...");
-      login({ email: session?.user?.email || "", isDirect: true });
-    }
+    return () => {
+      if (session) {
+        setIsPending(true);
+        setMessage("Yuklanmoqda...");
+        login({ email: session?.user?.email || "", isDirect: true });
+      }
+    };
   }, [session]);
   return (
     <div className={s.container}>

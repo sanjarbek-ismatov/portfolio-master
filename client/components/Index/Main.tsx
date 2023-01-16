@@ -4,7 +4,7 @@ import { likeType, portfolio } from "types/portfolio";
 import s from "styles/M.module.scss";
 import { PortfolioCard } from "./Card";
 import Filter from "./Filter";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { filterByKey } from "utils/filterByKey";
 import { useRouter } from "next/router";
 export function Main({
@@ -26,13 +26,13 @@ export function Main({
 }) {
   const [filters, setFilters] = useState<string[]>([]);
   const router = useRouter();
-  useEffect(() => {
+  useMemo(() => {
     if (typeof router.query.filter === "string") {
       setFilters([router.query?.filter]);
     } else {
       setFilters([]);
     }
-  }, [router, router.query.filter]);
+  }, [router]);
   return (
     <main className={s.container}>
       <Input
