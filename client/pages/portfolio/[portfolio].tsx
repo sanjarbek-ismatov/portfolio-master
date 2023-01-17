@@ -1,17 +1,18 @@
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { Swiper, SwiperSlide } from "swiper/react";
 import s from "styles/Portfolio.module.scss";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
-// import "swiper/css/scrollbar";
+
 import { useRouter } from "next/router";
 import React from "react";
 import { portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import Image from "next/image";
-import { A11y, Navigation, Pagination, Scrollbar } from "swiper";
+import { Navigation, Pagination } from "swiper";
+import Navbar from "components/Navbar";
 const Portfolio = ({ data }: { data: portfolio }) => {
   const router = useRouter();
   if (router.isFallback) {
@@ -20,59 +21,81 @@ const Portfolio = ({ data }: { data: portfolio }) => {
   if (!data) {
     return <p>Sahifa mavjud emas</p>;
   }
+
   const url = serverUrl();
   return (
-    <div className={s.container}>
-      <div className={s.main}>
-        <div className={s.card}>
-          <h1>{data.title}</h1>
-          <Swiper
-            className={s.swiper}
-            spaceBetween={30}
-            navigation
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Navigation, Pagination]}
-          >
-            {data.images.map((e, i) => {
-              return (
-                <SwiperSlide key={i}>
-                  <Image
-                    className={s.image}
-                    width={800}
-                    height={450}
-                    loader={() => `${url}/image/${e}`}
-                    alt="Image"
-                    src={`${url}/image/${e}`}
-                  />
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
-          <div className={s.description}>
-            <Image
-              height={60}
-              width={60}
-              className={s.profileImage}
-              alt="profile"
-              loader={() => `${url}/image/${data.author.image}`}
-              src={`${url}/image/${data.author.image}`}
-            />
-            <a href={data.url} target="_blank" rel="noreferrer">
-              <button className={s.linkButton}>Ochish</button>
-            </a>
+    <>
+      <Navbar />
+      <div className={s.container}>
+        <div className={s.main}>
+          <div className={s.card}>
+            <div className={s.titleContainer}>
+              <h1>{data.title}</h1>
+              <div className={s.timeContainer}>
+                <p>
+                  <span>{new Date(data.date).toLocaleDateString()}</span>
+                  <span>
+                    {new Date(data.date).getHours()}:
+                    {new Date(data.date).getMinutes()}
+                  </span>
+                </p>
+              </div>
+            </div>
+            <Swiper
+              className={s.swiper}
+              spaceBetween={30}
+              navigation
+              pagination={{
+                clickable: true,
+              }}
+              modules={[Navigation, Pagination]}
+            >
+              {data.images.map((e, i) => {
+                return (
+                  <SwiperSlide key={i}>
+                    <Image
+                      className={s.image}
+                      width={800}
+                      height={450}
+                      loader={() => `${url}/image/${e}`}
+                      alt="Image"
+                      src={`${url}/image/${e}`}
+                    />
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+            <div className={s.description}>
+              <div className={s.profileContainer}>
+                <Image
+                  height={60}
+                  width={60}
+                  className={s.profileImage}
+                  alt="profile"
+                  loader={() => `${url}/image/${data.author.image}`}
+                  src={`${url}/image/${data.author.image}`}
+                />
+                <h2 className={s.h2}>@{data.author.username}</h2>
+              </div>
+
+              <a href={data.url} target="_blank" rel="noreferrer">
+                <button className={s.linkButton}>Ochish</button>
+              </a>
+            </div>
+            <div className={s.descriptionContainer}>
+              <p>{data.description}</p>
+            </div>
+          </div>
+          <div className={s.topic}>
+            {data.used.map((e, i) => (
+              <Link href={`/page/1?filter=${e}`} key={i}>
+                <a className={s.badge}>#{e}</a>
+              </Link>
+            ))}
           </div>
         </div>
-        <div className={s.topic}>
-          {data.used.map((e, i) => (
-            <Link href={`/page/1?filter=${e}`} key={i}>
-              <a className={s.badge}>#{e}</a>
-            </Link>
-          ))}
-        </div>
       </div>
-    </div>
+    </>
   );
 };
 // export const getStaticPaths: GetStaticPaths = async () => {
