@@ -1,16 +1,18 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import { portfolio } from 'types/portfolio'
-import { serverUrl } from 'utils/serverUrl'
-const url = serverUrl()
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { serverUrl } from "utils/serverUrl";
+const url = serverUrl();
 const portfolioApi = createApi({
-  reducerPath: 'portfolio',
-  baseQuery: fetchBaseQuery({baseUrl: `${url}/api`}),
+  reducerPath: "portfolio",
+  baseQuery: fetchBaseQuery({ baseUrl: `${url}/api` }),
   endpoints(build) {
-      return {
-        getAllPorfolios: build.query<portfolio[], null>({
-          query: () => '/portfolio/all'
-        })
-      }
+    return {
+      postLikeById: build.query<boolean, string>({
+        query: (id) => ({
+          url: `/portfolio/like/${id}`,
+          method: "POST",
+        }),
+      }),
+    };
   },
-})
-export const {useGetAllPorfoliosQuery} = portfolioApi
+});
+export const { usePostLikeByIdQuery } = portfolioApi;

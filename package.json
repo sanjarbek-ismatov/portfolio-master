@@ -11,5 +11,8 @@
     "start": "cd server && yarn start",
     "heroku-postbuild": "cd server && yarn"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "prettier": "^2.8.3"
+  }
 }

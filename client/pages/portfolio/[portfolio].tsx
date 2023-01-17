@@ -1,8 +1,10 @@
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import { Swiper, SwiperSlide } from "swiper/react";
+import s from "styles/Portfolio.module.scss";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import Link from "next/link";
 // import "swiper/css/scrollbar";
 import { useRouter } from "next/router";
 import React from "react";
@@ -20,30 +22,56 @@ const Portfolio = ({ data }: { data: portfolio }) => {
   }
   const url = serverUrl();
   return (
-    <div>
-      <h1>{data.title}</h1>
-      <Swiper
-        spaceBetween={30}
-        navigation
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Navigation, Pagination]}
-      >
-        {data.images.map((e, i) => {
-          return (
-            <SwiperSlide key={i}>
-              <Image
-                height={300}
-                width={600}
-                loader={() => `${url}/image/${e}`}
-                alt="Image"
-                src={`${url}/image/${e}`}
-              />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+    <div className={s.container}>
+      <div className={s.main}>
+        <div className={s.card}>
+          <h1>{data.title}</h1>
+          <Swiper
+            className={s.swiper}
+            spaceBetween={30}
+            navigation
+            pagination={{
+              clickable: true,
+            }}
+            modules={[Navigation, Pagination]}
+          >
+            {data.images.map((e, i) => {
+              return (
+                <SwiperSlide key={i}>
+                  <Image
+                    className={s.image}
+                    width={800}
+                    height={450}
+                    loader={() => `${url}/image/${e}`}
+                    alt="Image"
+                    src={`${url}/image/${e}`}
+                  />
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+          <div className={s.description}>
+            <Image
+              height={60}
+              width={60}
+              className={s.profileImage}
+              alt="profile"
+              loader={() => `${url}/image/${data.author.image}`}
+              src={`${url}/image/${data.author.image}`}
+            />
+            <a href={data.url} target="_blank" rel="noreferrer">
+              <button className={s.linkButton}>Ochish</button>
+            </a>
+          </div>
+        </div>
+        <div className={s.topic}>
+          {data.used.map((e, i) => (
+            <Link href={`/page/1?filter=${e}`} key={i}>
+              <a className={s.badge}>#{e}</a>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
