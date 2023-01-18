@@ -16,10 +16,10 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import { useAuth } from "utils/auth";
-import { ThemeContext } from "context/themeContext";
-import { themes } from "types/theme";
+// import { ThemeContext } from "context/themeContext";
+
 const Navbar = () => {
-  const { theme, changeTheme, allThemes } = useContext(ThemeContext);
+  // const { theme, changeTheme, allThemes } = useContext(ThemeContext);
   const router = useRouter();
   const auth = useAuth();
   const [menu, setMenu] = useState<boolean>();
@@ -99,7 +99,7 @@ const Navbar = () => {
               </li>
             </>
           )}
-          <li>
+          {/* <li>
             <select onChange={(e: any) => changeTheme(e.target.value)}>
               {allThemes &&
                 allThemes.map((e, i) => {
@@ -114,7 +114,7 @@ const Navbar = () => {
                   );
                 })}
             </select>
-          </li>
+          </li> */}
         </ul>
         {/* <FontAwesomeIcon
           

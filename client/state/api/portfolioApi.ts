@@ -1,13 +1,5 @@
-import {
-  BaseQueryFn,
-  BaseQueryMeta,
-  BaseQueryResult,
-} from "@reduxjs/toolkit/dist/query/baseQueryTypes";
-import {
-  createApi,
-  FetchArgs,
-  fetchBaseQuery,
-} from "@reduxjs/toolkit/query/react";
+import { BaseQueryResult } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { serverUrl } from "utils/serverUrl";
 const url = serverUrl();
 export const portfolioApi = createApi({

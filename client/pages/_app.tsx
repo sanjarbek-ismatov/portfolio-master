@@ -9,8 +9,8 @@ import { Session } from "next-auth";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import Layout from "components/Layout";
-import { ThemeContext } from "context/themeContext";
-import { useTheme } from "hooks/useTheme";
+// import { ThemeContext } from "context/themeContext";
+// import { useTheme } from "hooks/useTheme";
 function MyApp({
   Component,
   pageProps: { session, ...pageProps },
@@ -21,15 +21,15 @@ function MyApp({
       console.log = (...val) => {};
     }
   }, []);
-  const [theme, changeTheme, allThemes] = useTheme();
+  // const [theme, changeTheme, allThemes] = useTheme();
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
-        <ThemeContext.Provider value={{ theme, changeTheme, allThemes }}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ThemeContext.Provider>
+        {/* <ThemeContext.Provider value={{ theme, changeTheme, allThemes }}> */}
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+        {/* </ThemeContext.Provider> */}
       </Provider>
     </SessionProvider>
   );
