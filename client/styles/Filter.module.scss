@@ -46,7 +46,8 @@
       background-color: inherit;
       .icon {
         opacity: 0;
-        color: inherit;
+        color: $lightColor;
+        padding: 2px;
       }
     }
     input:checked + span {
