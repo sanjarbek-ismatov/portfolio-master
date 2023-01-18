@@ -7,13 +7,15 @@ import "swiper/css/pagination";
 import Link from "next/link";
 
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import Image from "next/image";
 import { Navigation, Pagination } from "swiper";
 import Navbar from "components/Navbar";
+import Spinner from "components/Spinner";
 const Portfolio = ({ data }: { data: portfolio }) => {
+  const [isLoad, setIsLoad] = useState<boolean>(true);
   const router = useRouter();
   if (router.isFallback) {
     return <h1>Sahifa yuklanmoqda...</h1>;
@@ -23,9 +25,11 @@ const Portfolio = ({ data }: { data: portfolio }) => {
   }
 
   const url = serverUrl();
+
   return (
     <>
       <Navbar />
+
       <div className={s.container}>
         <div className={s.main}>
           <div className={s.card}>
@@ -41,30 +45,41 @@ const Portfolio = ({ data }: { data: portfolio }) => {
                 </p>
               </div>
             </div>
-            <Swiper
-              className={s.swiper}
-              spaceBetween={30}
-              navigation
-              pagination={{
-                clickable: true,
-              }}
-              modules={[Navigation, Pagination]}
-            >
-              {data.images.map((e, i) => {
-                return (
-                  <SwiperSlide key={i}>
-                    <Image
-                      className={s.image}
-                      width={800}
-                      height={450}
-                      loader={() => `${url}/image/${e}`}
-                      alt="Image"
-                      src={`${url}/image/${e}`}
-                    />
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
+            <div className={s.swiperContainer}>
+              {isLoad && (
+                <Spinner position="absolute" size="100" border="5" speed="1" />
+              )}
+              <Swiper
+                className={s.swiper}
+                // onSlideChange={() => setIsLoad(true)}
+                spaceBetween={30}
+                navigation
+                pagination={{
+                  clickable: true,
+                }}
+                modules={[Navigation, Pagination]}
+              >
+                {data.images.map((e, i) => {
+                  return (
+                    <SwiperSlide key={i}>
+                      <Image
+                        className={s.image}
+                        width={800}
+                        onLoadingComplete={() => setIsLoad(false)}
+                        // loading="lazy"
+                        // placeholder="blur"
+                        height={450}
+                        unoptimized
+                        // blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
+                        loader={() => `${url}/image/${e}`}
+                        alt="Image"
+                        src={`${url}/image/${e}`}
+                      />
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            </div>
             <div className={s.description}>
               <div className={s.profileContainer}>
                 <Image

@@ -1,0 +1,17 @@
+@import "_colors";
+@keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.spinner {
+  width: 20px;
+  height: 20px;
+  z-index: 99;
+  border: 2px solid transparent;
+  border-top-color: $background;
+  border-bottom-color: $background;
+  border-radius: 50%;
+  animation: spinner 1s infinite ease;
+  margin-right: 20px;
+}
