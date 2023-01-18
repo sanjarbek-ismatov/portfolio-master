@@ -13,9 +13,8 @@ import { serverUrl } from "utils/serverUrl";
 import Image from "next/image";
 import { Navigation, Pagination } from "swiper";
 import Navbar from "components/Navbar";
-import Spinner from "components/Spinner";
+import LazyImage from "components/LazyImage";
 const Portfolio = ({ data }: { data: portfolio }) => {
-  const [isLoad, setIsLoad] = useState<boolean>(true);
   const router = useRouter();
   if (router.isFallback) {
     return <h1>Sahifa yuklanmoqda...</h1>;
@@ -46,9 +45,6 @@ const Portfolio = ({ data }: { data: portfolio }) => {
               </div>
             </div>
             <div className={s.swiperContainer}>
-              {isLoad && (
-                <Spinner position="absolute" size="100" border="5" speed="1" />
-              )}
               <Swiper
                 className={s.swiper}
                 // onSlideChange={() => setIsLoad(true)}
@@ -62,18 +58,18 @@ const Portfolio = ({ data }: { data: portfolio }) => {
                 {data.images.map((e, i) => {
                   return (
                     <SwiperSlide key={i}>
-                      <Image
+                      <LazyImage
+                        spinnerOptions={{
+                          size: "100",
+                          position: "absolute",
+                          border: "5",
+                          speed: "1",
+                        }}
                         className={s.image}
+                        url={url}
                         width={800}
-                        onLoadingComplete={() => setIsLoad(false)}
-                        // loading="lazy"
-                        // placeholder="blur"
                         height={450}
-                        unoptimized
-                        // blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
-                        loader={() => `${url}/image/${e}`}
-                        alt="Image"
-                        src={`${url}/image/${e}`}
+                        filename={e}
                       />
                     </SwiperSlide>
                   );
@@ -82,13 +78,18 @@ const Portfolio = ({ data }: { data: portfolio }) => {
             </div>
             <div className={s.description}>
               <div className={s.profileContainer}>
-                <Image
-                  height={60}
-                  width={60}
+                <LazyImage
+                  spinnerOptions={{
+                    size: "30",
+                    position: "static",
+                    border: "2",
+                    speed: "1",
+                  }}
                   className={s.profileImage}
-                  alt="profile"
-                  loader={() => `${url}/image/${data.author.image}`}
-                  src={`${url}/image/${data.author.image}`}
+                  url={url}
+                  height={50}
+                  width={50}
+                  filename={data.author.image}
                 />
                 <h2 className={s.h2}>@{data.author.username}</h2>
               </div>

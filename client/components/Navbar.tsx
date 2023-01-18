@@ -9,7 +9,7 @@ import {
 import cn from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import s from "styles/N.module.scss";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { signOut } from "next-auth/react";
@@ -28,7 +28,9 @@ const Navbar = () => {
   };
   return (
     <nav id="navbar" className={s.nav}>
-      <h1>Portfolio</h1>
+      <Link href="/">
+        <h1>Portfolio</h1>
+      </Link>
       <div className={s.content}>
         <ul
           className={s.menu}

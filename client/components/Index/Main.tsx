@@ -7,6 +7,7 @@ import Filter from "./Filter";
 import { useEffect, useMemo, useState } from "react";
 import { filterByKey } from "utils/filterByKey";
 import { useRouter } from "next/router";
+import Spinner from "components/Spinner";
 export function Main({
   setText,
   text,
@@ -68,7 +69,9 @@ export function Main({
             />
           ))
       ) : (
-        <h1>Yuklanmoqda...</h1>
+        <div className={s.loading}>
+          <Spinner size="100" speed="1" position="static" border="5" />
+        </div>
       )}
     </main>
   );

@@ -40,6 +40,7 @@ const Index = () => {
         <title>Portfolio Master</title>
       </Head>
       <Navbar />
+
       <Main
         setText={setText}
         text={text}

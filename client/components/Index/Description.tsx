@@ -3,6 +3,7 @@ import Like from "./Like";
 import s from "styles/M.module.scss";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import LazyImage from "components/LazyImage";
 export function Description({
   url,
   e,
@@ -21,14 +22,18 @@ export function Description({
     <div className={s.descContainer}>
       <div className={s.desc}>
         <div className={s.profile}>
-          <Image
+          <LazyImage
+            spinnerOptions={{
+              size: "30",
+              position: "static",
+              border: "2",
+              speed: "1",
+            }}
             className={s.profileImage}
-            alt="profile rasmi"
-            loader={() => `${url}/image/${e.author.image}`}
+            url={url}
             height={50}
             width={50}
-            src={`${url}/image/${e.author.image}`}
-            unoptimized
+            filename={e.author.image}
           />
           <p>{e.author.firstname}</p>
         </div>

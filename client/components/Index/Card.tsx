@@ -3,6 +3,7 @@ import { likeType, portfolio } from "types/portfolio";
 import { Description } from "./Description";
 import s from "styles/M.module.scss";
 import { useRouter } from "next/router";
+import LazyImage from "components/LazyImage";
 export function PortfolioCard({
   i,
   likes,
@@ -22,22 +23,23 @@ export function PortfolioCard({
   return (
     <div className={s.post}>
       {likes && (
-        <Image
+        <LazyImage
+          className={s.postImage}
           onClick={() =>
             router.push(
               `/portfolio/${e.author.username}_${e.title.replace(" ", "+")}`
             )
           }
-          className={s.postImage}
-          loading="lazy"
-          placeholder="blur"
-          loader={() => `${url}/image/${e.images[0]}`}
-          unoptimized
-          blurDataURL="https://cdn.pixabay.com/photo/2015/06/24/02/12/the-blurred-819388_1280.jpg"
-          height={450}
+          filename={e.images[0]}
           width={800}
-          alt="portfolio rasmi"
-          src={`${url}/image/${e.images[0]}`}
+          height={450}
+          url={url}
+          spinnerOptions={{
+            size: "100",
+            position: "absolute",
+            border: "5",
+            speed: "1",
+          }}
         />
       )}
 
