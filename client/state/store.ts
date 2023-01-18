@@ -9,21 +9,26 @@ import { createLogger } from "redux-logger";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "types/reducer";
 import { loginThunk, portfolioThunk, registerThunk, likeThunk } from "./thunks";
+import { portfolioApi } from "./api/portfolioApi";
 export const store = configureStore({
   reducer: {
     register: registerSlice.reducer,
     login: loginSlice.reducer,
     portfolio: portfolioSlice.reducer,
     like: likeSlice.reducer,
+    [portfolioApi.reducerPath]: portfolioApi.reducer,
   },
 
   middleware(getDefaultMiddleware) {
     if (process.env.NODE_ENV === "development") {
       return getDefaultMiddleware({ serializableCheck: false }).concat(
-        createLogger()
+        createLogger(),
+        portfolioApi.middleware
       );
     } else {
-      return getDefaultMiddleware({ serializableCheck: false });
+      return getDefaultMiddleware({ serializableCheck: false }).concat(
+        portfolioApi.middleware
+      );
     }
   },
 });

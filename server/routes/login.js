@@ -27,8 +27,9 @@ router.post("/", multer().any(), async (req, res) => {
       return res.status(401).send("Xato parol!");
     }
   }
-  console.log(user, req.body.password);
   const token = jwt.sign({ _id: user._id }, process.env.SECRET);
-  res.setHeader("x-token", token).send("Login bajarildi!");
+  res
+    .setHeader("x-token", token)
+    .json({ message: "Login bajarildi!", code: 200 });
 });
 module.exports = router;

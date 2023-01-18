@@ -1,58 +1,45 @@
 import Link from "next/link";
 import s from "styles/L.module.scss";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Head from "next/head";
-import { loginInitialStateType } from "types/reducer";
 import { useEffect, useState } from "react";
 import Dialog from "components/Dialog";
 import { useRouter } from "next/router";
-import { login, useAppSelector } from "state/store";
+
+import { useLoginUserMutation } from "state/api/portfolioApi";
 const Login = () => {
-  const state = useAppSelector((state) => state.login);
+  const [loginUser, { isLoading, isError, isSuccess, data, error }] =
+    useLoginUserMutation();
   const { data: session, status } = useSession();
   const [message, setMessage] = useState("");
-  const [isPending, setIsPending] = useState(false);
-  const [isError, setIsError] = useState<boolean>(false);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const router = useRouter();
   function formik(e: any) {
     setMessage("Yuklanmoqda...");
-
     e.preventDefault();
     const form = new FormData();
     form.append("email", e.target["0"].value);
     form.append("password", e.target["1"].value);
 
-    setTimeout(() => login(form), 2000);
+    loginUser(form);
   }
   useEffect(() => {
-    return () => {
-      setIsPending(true);
-      if (state.error) {
-        setIsPending(false);
-        setMessage(state.error);
-        setIsSuccess(false);
-        setIsError(true);
-      } else if (!state.error && state.status) {
-        setIsPending(false);
-        setMessage("Login bajarildi!");
-        setIsSuccess(true);
-        setIsError(false);
-        localStorage.setItem("token", state.token);
-      }
-    };
-  }, [state]);
+    if (error && "data" in error) {
+      setMessage(error.data as string);
+    } else if (isSuccess) {
+      setMessage("Login bajarildi!");
+      data && localStorage.setItem("token", data.token);
+    }
+  }, [isLoading, data, isError, isSuccess, error]);
   useEffect(() => {
     return () => {
       if (session) {
-        setIsPending(true);
         setMessage("Yuklanmoqda...");
-        login({ email: session?.user?.email || "", isDirect: true });
+        loginUser({ email: session?.user?.email || "", isDirect: true } as any);
       }
     };
-  }, [session]);
+  }, [loginUser, session]);
   return (
     <div className={s.container}>
       <Head>
@@ -99,9 +86,9 @@ const Login = () => {
           isSuccess={isSuccess}
           ok={() => {
             setMessage("");
-            !state.error && state.status && router.replace("/");
+            isSuccess && router.replace("/");
           }}
-          isPending={isPending}
+          isPending={isLoading}
           message={message}
         />
       )}
