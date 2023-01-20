@@ -76,7 +76,6 @@ const Register = () => {
         <h1>Ro`yhatdan o`tish</h1>
         <form onSubmit={formik}>
           <input
-            autoComplete="off"
             className={s.input}
             type="file"
             name="file"
@@ -85,7 +84,6 @@ const Register = () => {
             required
           />
           <input
-            autoComplete="off"
             className={s.rowInput}
             type="text"
             name="firstname"
@@ -93,7 +91,6 @@ const Register = () => {
             required
           />
           <input
-            autoComplete="off"
             className={s.rowInput}
             type="text"
             name="lastname"
@@ -101,7 +98,6 @@ const Register = () => {
             required
           />
           <input
-            autoComplete="off"
             className={s.input}
             type="text"
             name="username"
@@ -109,7 +105,6 @@ const Register = () => {
             required
           />
           <input
-            autoComplete="off"
             className={s.input}
             type="email"
             name="email"
@@ -117,7 +112,6 @@ const Register = () => {
             required
           />
           <input
-            autoComplete="off"
             className={s.rowInput}
             type="password"
             name="password"
@@ -125,7 +119,6 @@ const Register = () => {
             required
           />
           <input
-            autoComplete="off"
             className={s.rowInput}
             type="password"
             name="password"
@@ -133,21 +126,18 @@ const Register = () => {
             required
           />
           <input
-            autoComplete="off"
             className={s.rowInput}
             type="text"
             name="telegramProfile"
             placeholder="Telegramdagi @usernameingiz"
           />
           <input
-            autoComplete="off"
             className={s.rowInput}
             type="text"
             name="githubProfile"
             placeholder="Githubdagisi (Agar bo'lsa)"
           />
           <textarea
-            autoComplete="off"
             className={s.area}
             name="description"
             placeholder="O`zingiz haqingizda"
@@ -155,7 +145,6 @@ const Register = () => {
           />
 
           <textarea
-            autoComplete="off"
             className={s.area}
             name="skills"
             placeholder="Qaysi texnologiyalarni bilasiz? Iltimos vergul qo`yib yozing: html, css, javascript, php, reactjs"

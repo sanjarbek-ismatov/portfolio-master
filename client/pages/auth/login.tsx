@@ -50,7 +50,7 @@ const Login = () => {
         <h1>Kirish</h1>
         <form onSubmit={formik}>
           <input
-            autoComplete="off"
+           
             className={s.input}
             type="email"
             name="email"
@@ -58,7 +58,7 @@ const Login = () => {
             required
           />
           <input
-            autoComplete="off"
+           
             className={s.input}
             type="password"
             name="password"

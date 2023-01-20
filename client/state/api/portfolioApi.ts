@@ -1,5 +1,6 @@
 import { BaseQueryResult } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getToken } from "utils/getDetails";
 import { serverUrl } from "utils/serverUrl";
 const url = serverUrl();
 export const portfolioApi = createApi({
@@ -7,11 +8,18 @@ export const portfolioApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${url}/api` }),
   endpoints(build) {
     return {
-      postLikeById: build.query<boolean, string>({
+      postLikeById: build.mutation<boolean, string>({
         query: (id) => ({
           url: `portfolio/like/${id}`,
-          method: "POST",
+          method: "PUT",
+          headers: {
+            ["x-token"]: getToken(),
+          },
         }),
+        // transformResponse(baseQueryReturnValue: BaseQueryResult<any>) {
+
+        //   return { ...baseQueryReturnValue };
+        // },
       }),
       loginUser: build.mutation<
         { message: string; code: number; token: string },
@@ -34,4 +42,4 @@ export const portfolioApi = createApi({
     };
   },
 });
-export const { usePostLikeByIdQuery, useLoginUserMutation } = portfolioApi;
+export const { usePostLikeByIdMutation, useLoginUserMutation } = portfolioApi;
