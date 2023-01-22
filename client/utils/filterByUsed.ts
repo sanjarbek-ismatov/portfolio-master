@@ -12,12 +12,16 @@ export const filterByUsed = (data: portfolio[]) => {
 export const filterToUrl = (router: NextRouter, newUsed: string) => {
   if (typeof router.query.filter === "string") {
     const array = router.query.filter.split(",");
-    array.push(newUsed);
-    const arrayToUrl = array.join(",").slice(0, -1);
-    console.log(router.basePath);
+    if (array.includes(newUsed)) {
+      array.splice(array.indexOf(newUsed), 1);
+    } else {
+      array.push(newUsed);
+    }
+    const arrayToUrl = array.join(",");
     router.push({
       pathname: "/page/1",
       query: { filter: arrayToUrl },
     });
   }
+  return true;
 };

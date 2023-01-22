@@ -38,8 +38,10 @@ const Filter = ({
                 <input
                   onChange={(e) =>
                     e.target.checked
-                      ? filterToUrl(router, element)
-                      : setFilters((prev) =>
+                      ? filterToUrl(router, element) &&
+                        setFilters((prev: string[]) => [...prev, element])
+                      : filterToUrl(router, element) &&
+                        setFilters((prev) =>
                           prev.filter((el, ind) => el !== element)
                         )
                   }
