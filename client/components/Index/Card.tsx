@@ -4,25 +4,28 @@ import { Description } from "./Description";
 import s from "styles/M.module.scss";
 import { useRouter } from "next/router";
 import LazyImage from "components/LazyImage";
+import { ReactNode } from "react";
 export function PortfolioCard({
-  i,
-  likes,
+  // i,
+  // likes,
 
-  auth,
-  url,
-  e,
+  // auth,
+  // url,
+  // e,
+  children,
 }: {
-  i: number;
-  likes: likeType[] | undefined;
+  // i: number;
+  // likes: likeType[] | undefined;
 
-  auth: any;
-  url: string;
-  e: portfolio;
+  // auth: any;
+  // url: string;
+  // e: portfolio;
+  children: ReactNode;
 }): JSX.Element {
   const router = useRouter();
   return (
     <div className={s.post}>
-      {likes && (
+      {/* {likes && (
         <LazyImage
           className={s.postImage}
           onClick={() =>
@@ -43,7 +46,8 @@ export function PortfolioCard({
         />
       )}
 
-      <Description auth={auth} url={url} e={e} i={i} likes={likes} />
+      <Description auth={auth} url={url} e={e} i={i} likes={likes} /> */}
+      {children}
     </div>
   );
 }

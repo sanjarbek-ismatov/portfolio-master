@@ -4,39 +4,41 @@ import { likeType, portfolio } from "types/portfolio";
 import s from "styles/M.module.scss";
 import { PortfolioCard } from "./Card";
 import Filter from "./Filter";
-import { useEffect, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import { filterByKey } from "utils/filterByKey";
 import { useRouter } from "next/router";
 import Spinner from "components/Spinner";
 export function Main({
-  setText,
-  text,
-  data,
-  likes,
+  // setText,
+  // text,
+  // data,
+  // likes,
 
-  auth,
-  url,
+  // auth,
+  // url,
+  children,
 }: {
-  setText: React.Dispatch<React.SetStateAction<string>>;
-  text: string;
-  data?: portfolio[];
-  likes?: likeType[] | undefined;
+  // setText: React.Dispatch<React.SetStateAction<string>>;
+  // text: string;
+  // data?: portfolio[];
+  // likes?: likeType[] | undefined;
 
-  auth: any;
-  url: string;
+  // auth: any;
+  // url: string;
+  children: ReactNode;
 }) {
-  const [filters, setFilters] = useState<string[]>([]);
-  const router = useRouter();
-  useMemo(() => {
-    if (typeof router.query.filter === "string") {
-      setFilters([router.query?.filter]);
-    } else {
-      setFilters([]);
-    }
-  }, [router]);
+  // const [filters, setFilters] = useState<string[]>([]);
+  // const router = useRouter();
+  // useMemo(() => {
+  //   if (typeof router.query.filter === "string") {
+  //     setFilters([router.query?.filter]);
+  //   } else {
+  //     setFilters([]);
+  //   }
+  // }, [router]);
   return (
     <main className={s.container}>
-      <Input
+      {/* <Input
         clear={() => setText("")}
         className={s.input}
         handleChange={(e) => setText(e.target.value)}
@@ -72,7 +74,8 @@ export function Main({
         <div className={s.loading}>
           <Spinner size="100" speed="1" position="static" border="5" />
         </div>
-      )}
+      )} */}
+      {children}
     </main>
   );
 }

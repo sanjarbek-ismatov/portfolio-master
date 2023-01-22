@@ -4,23 +4,26 @@ import s from "styles/M.module.scss";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import LazyImage from "components/LazyImage";
+import { ReactNode } from "react";
 export function Description({
-  url,
-  e,
-  auth,
-  likes,
-  i,
+  // url,
+  // e,
+  // auth,
+  // likes,
+  // i,
+  children,
 }: {
-  url: string;
-  e: portfolio;
-  auth: any;
-  likes: likeType[] | undefined;
-  i: number;
+  // url: string;
+  // e: portfolio;
+  // auth: any;
+  // likes: likeType[] | undefined;
+  // i: number;
+  children: ReactNode;
 }) {
   const router = useRouter();
   return (
     <div className={s.descContainer}>
-      <div className={s.desc}>
+      {/* <div className={s.desc}>
         <div className={s.profile}>
           <LazyImage
             spinnerOptions={{
@@ -52,7 +55,8 @@ export function Description({
         >
           {e}
         </span>
-      ))}
+      ))} */}
+      {children}
     </div>
   );
 }

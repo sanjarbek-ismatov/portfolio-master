@@ -1,4 +1,4 @@
-import { dataType, likeType, portfolio, user } from "types/portfolio";
+import { likeType, portfolio, user } from "types/portfolio";
 import { serverUrl } from "./serverUrl";
 import axios from "axios";
 const url = serverUrl();
@@ -17,7 +17,7 @@ export const getToken = () => {
   }
 };
 
-export async function getPortfolios(): Promise<dataType> {
+export async function getPortfolios(): Promise<portfolio[]> {
   return new Promise(async (resolve, reject) => {
     try {
       const user: { data: { user: user; portfolios: portfolio[] } } =
@@ -26,15 +26,14 @@ export async function getPortfolios(): Promise<dataType> {
 
       const data: portfolio[] = await res.json();
 
-      if (user) {
-        const result: likeType[] = data.map((e: portfolio, i: number) => {
-          return e.likes.includes(user.data.user._id)
-            ? { isLiked: true, count: e.likes.length }
-            : { isLiked: false, count: e.likes.length };
-        });
+      // if (user) {
+      //   const result: likeType[] = data.map((e: portfolio, i: number) => {
+      //     return e.likes.includes(user.data.user._id)
+      //       ? { isLiked: true, count: e.likes.length }
+      //       : { isLiked: false, count: e.likes.length };
+      //   });
 
-        resolve({ data, result } as dataType);
-      }
+      resolve(data);
     } catch (ex) {
       reject(ex);
     }
