@@ -1,15 +1,19 @@
 import { faCheck, faSliders } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import s from "styles/Filter.module.scss";
 import { portfolio } from "types/portfolio";
-import { filterByUsed } from "utils/filterByUsed";
+import { filterByUsed, filterToUrl } from "utils/filterByUsed";
 const Filter = ({
   filter,
   setFilters,
+  filters,
+  router,
 }: {
   filter?: portfolio[];
+  filters: string[];
+  router: NextRouter;
   setFilters: React.Dispatch<React.SetStateAction<string[]>>;
 }) => {
   const [filtered, setFiltered] = useState<string[]>([]);
@@ -18,6 +22,7 @@ const Filter = ({
   useEffect(() => {
     filter && filterByUsed(filter).then((e) => setFiltered(e));
   }, [filter]);
+
   return (
     <div style={show ? { maxHeight: "100vh" } : {}} className={s.container}>
       <FontAwesomeIcon
@@ -33,12 +38,13 @@ const Filter = ({
                 <input
                   onChange={(e) =>
                     e.target.checked
-                      ? setFilters((prev: any) => [...prev, element])
+                      ? filterToUrl(router, element)
                       : setFilters((prev) =>
                           prev.filter((el, ind) => el !== element)
                         )
                   }
                   value={element}
+                  checked={filters.includes(element)}
                   type="checkbox"
                 />
                 <span>

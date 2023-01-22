@@ -9,7 +9,7 @@ import {
 import cn from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import s from "styles/N.module.scss";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { signOut } from "next-auth/react";
@@ -23,9 +23,14 @@ const Navbar = () => {
   const router = useRouter();
   const auth = useAuth();
   const [menu, setMenu] = useState<boolean>();
+  const [hydration, setHydration] = useState(false);
   const visibleContent = () => {
     menu ? setMenu(false) : setMenu(true);
   };
+  useEffect(() => {
+    setHydration(true);
+  }, []);
+  if (!hydration) return null;
   return (
     <nav id="navbar" className={s.nav}>
       <Link href="/">
