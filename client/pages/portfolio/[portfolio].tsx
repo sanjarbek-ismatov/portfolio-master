@@ -5,20 +5,18 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
-
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import Image from "next/image";
 import { Navigation, Pagination } from "swiper";
 import Navbar from "components/Navbar";
 import LazyImage from "components/LazyImage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
 const Portfolio = ({ data }: { data: portfolio }) => {
   const router = useRouter();
-  if (router.isFallback) {
-    return <h1>Sahifa yuklanmoqda...</h1>;
-  }
   if (!data) {
     return <p>Sahifa mavjud emas</p>;
   }
@@ -93,15 +91,21 @@ const Portfolio = ({ data }: { data: portfolio }) => {
                 />
                 <h2 className={s.h2}>@{data.author.username}</h2>
               </div>
-
-              <a href={data.url} target="_blank" rel="noreferrer">
-                <button className={s.linkButton}>Ochish</button>
-              </a>
+              <div>
+                <button className={s.linkButton}>
+                  <FontAwesomeIcon className="icon" icon={faHeart} />{" "}
+                  {data.likes.length}
+                </button>
+                <a href={data.url} target="_blank" rel="noreferrer">
+                  <button className={s.linkButton}>Ochish</button>
+                </a>
+              </div>
             </div>
             <div className={s.descriptionContainer}>
               <p>{data.description}</p>
             </div>
           </div>
+
           <div className={s.topic}>
             {data.used.map((e, i) => (
               <Link href={`/page/1?filter=${e}`} key={i}>

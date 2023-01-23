@@ -29,10 +29,10 @@ const LazyImage = ({
         {...rest}
         width={width}
         onLoadingComplete={() => setIsLoad(false)}
-        loading="lazy"
         placeholder="empty"
         height={height}
         unoptimized
+        priority
         loader={() => `${url}/image/${filename}`}
         alt="Image"
         src={`${url}/image/${filename}`}
