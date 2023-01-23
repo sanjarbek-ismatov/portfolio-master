@@ -8,7 +8,7 @@ export const portfolioApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${url}/api` }),
   endpoints(build) {
     return {
-      postLikeById: build.mutation<boolean, string>({
+      postLikeById: build.mutation<{count: number; isLiked: boolean}, string>({
         query: (id) => ({
           url: `portfolio/like/${id}`,
           method: "PUT",
@@ -16,10 +16,6 @@ export const portfolioApi = createApi({
             ["x-token"]: getToken(),
           },
         }),
-        // transformResponse(baseQueryReturnValue: BaseQueryResult<any>) {
-
-        //   return { ...baseQueryReturnValue };
-        // },
       }),
       loginUser: build.mutation<
         { message: string; code: number; token: string },

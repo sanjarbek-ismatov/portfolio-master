@@ -39,11 +39,11 @@ router.put("/like/:id", auth, async (req, res) => {
   if (portfolio.likes.includes(req.id)) {
     portfolio.likes.splice(portfolio.likes.indexOf(req.id), 1);
     await portfolio.save();
-    return res.status(200).send(false);
+    return res.status(200).send({count: portfolio.likes.length, isLiked: false});
   } else {
     portfolio.likes.push(req.id);
     await portfolio.save();
-    res.status(200).send(true);
+    res.status(200).send({count: portfolio.likes.length, isLiked: true});
   }
 });
 module.exports = router;

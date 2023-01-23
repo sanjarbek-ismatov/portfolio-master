@@ -14,9 +14,14 @@ import { Navigation, Pagination } from "swiper";
 import Navbar from "components/Navbar";
 import LazyImage from "components/LazyImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as notLiked } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as liked } from "@fortawesome/free-solid-svg-icons";
+import { usePostLikeByIdMutation } from "state/api/portfolioApi";
 const Portfolio = ({ data }: { data: portfolio }) => {
   const router = useRouter();
+  const [createLike, { isLoading, data: likedata, error }] =
+    usePostLikeByIdMutation();
+  // useEffect(() => console.log(likedata), [likedata]);
   if (!data) {
     return <p>Sahifa mavjud emas</p>;
   }
@@ -92,9 +97,15 @@ const Portfolio = ({ data }: { data: portfolio }) => {
                 <h2 className={s.h2}>@{data.author.username}</h2>
               </div>
               <div>
-                <button className={s.linkButton}>
-                  <FontAwesomeIcon className="icon" icon={faHeart} />{" "}
-                  {data.likes.length}
+                <button
+                  onClick={() => createLike(data._id)}
+                  className={s.linkButton}
+                >
+                  <FontAwesomeIcon
+                    className="icon"
+                    icon={likedata?.isLiked ? liked : notLiked}
+                  />{" "}
+                  {(likedata && likedata.count) || data.likes.length}
                 </button>
                 <a href={data.url} target="_blank" rel="noreferrer">
                   <button className={s.linkButton}>Ochish</button>
