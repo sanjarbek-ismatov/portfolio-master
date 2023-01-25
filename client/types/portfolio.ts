@@ -23,10 +23,10 @@ export type portfolio = {
   likes: string[];
   used: string[];
   comments: {
-    commentAuthor: string;
+    commentAuthor: user;
     body: string;
     date: string;
-  };
+  }[];
   url: string;
 };
 export type likeType = {

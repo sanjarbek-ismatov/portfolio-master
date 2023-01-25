@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as notLiked } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as liked } from "@fortawesome/free-solid-svg-icons";
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
+import Comment from "components/portfolio/Comment";
 const Portfolio = ({ data }: { data: portfolio }) => {
   const router = useRouter();
   const [createLike, { isLoading, data: likedata, error }] =
@@ -115,6 +116,7 @@ const Portfolio = ({ data }: { data: portfolio }) => {
             <div className={s.descriptionContainer}>
               <p>{data.description}</p>
             </div>
+            <Comment data={data} />
           </div>
 
           <div className={s.topic}>

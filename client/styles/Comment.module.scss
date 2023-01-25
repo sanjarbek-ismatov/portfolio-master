@@ -1,0 +1,38 @@
+@import "_colors";
+.commentContainer {
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+.input {
+  outline: none;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #b9b9b9;
+  padding: 5px 15px;
+  transition: all 0.3s;
+  &:focus,
+  &:valid {
+    border-bottom: 1px solid rgb(121, 121, 121);
+  }
+}
+.profileImage {
+  border-radius: 50%;
+}
+.iconContainer {
+  height: 50px;
+  width: 58px;
+  display: flex;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  background-color: $background;
+  border-radius: 50%;
+}
+.icon {
+  height: 30px;
+  width: 30px;
+  color: #fff;
+}

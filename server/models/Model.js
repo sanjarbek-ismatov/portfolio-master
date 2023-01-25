@@ -53,14 +53,16 @@ const portfolioSchema = new mongoose.Schema({
   author: {},
   date: {
     type: Date,
-    default: Date.now(),
+    default: function () {
+      return new Date();
+    },
   },
   url: String,
   used: [String],
   likes: [mongoose.SchemaTypes.ObjectId],
   comments: [
     {
-      commentAuthor: mongoose.SchemaTypes.ObjectId,
+      commentAuthor: userSchema.obj,
       body: String,
       date: {
         type: Date,

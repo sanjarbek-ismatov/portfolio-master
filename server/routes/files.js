@@ -31,11 +31,18 @@ router.get("/files", (req, res) => {
 router.get("/image/:image", async (req, res) => {
   await gfs.files.findOne({ filename: req.params.image }, (err, file) => {
     if (err) return res.status(404).send("Fayl topilmadi!");
-    if (file.contentType === "image/png" || file.contentType === "image/jpeg") {
-      const readStream = gfb.openDownloadStream(file._id);
-      readStream.pipe(res.contentType(file.contentType));
-    } else {
-      res.send("Rasm emas!");
+    try {
+      if (
+        file &&
+        (file.contentType === "image/png" || file.contentType === "image/jpeg")
+      ) {
+        const readStream = gfb.openDownloadStream(file._id);
+        readStream.pipe(res.contentType(file.contentType));
+      } else {
+        res.send("Rasm emas!");
+      }
+    } catch (ex) {
+      throw ex;
     }
   });
 });
