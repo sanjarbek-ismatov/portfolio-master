@@ -1,5 +1,6 @@
 import { BaseQueryResult } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { commentType } from "types/portfolio";
 import { getToken } from "utils/getDetails";
 import { serverUrl } from "utils/serverUrl";
 const url = serverUrl();
@@ -8,15 +9,17 @@ export const portfolioApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${url}/api` }),
   endpoints(build) {
     return {
-      postLikeById: build.mutation<{count: number; isLiked: boolean}, string>({
-        query: (id) => ({
-          url: `portfolio/like/${id}`,
-          method: "PUT",
-          headers: {
-            ["x-token"]: getToken(),
-          },
-        }),
-      }),
+      postLikeById: build.mutation<{ count: number; isLiked: boolean }, string>(
+        {
+          query: (id) => ({
+            url: `portfolio/like/${id}`,
+            method: "PUT",
+            headers: {
+              ["x-token"]: getToken(),
+            },
+          }),
+        }
+      ),
       loginUser: build.mutation<
         { message: string; code: number; token: string },
         FormData
@@ -35,7 +38,26 @@ export const portfolioApi = createApi({
           };
         },
       }),
+      createComment: build.mutation<
+        commentType[],
+        { id: string; body: string }
+      >({
+        query(arg) {
+          return {
+            url: `/portfolio/comment/${arg.id}`,
+            method: "PUT",
+            body: arg.body,
+            headers: {
+              ["x-token"]: getToken(),
+            },
+          };
+        },
+      }),
     };
   },
 });
-export const { usePostLikeByIdMutation, useLoginUserMutation } = portfolioApi;
+export const {
+  usePostLikeByIdMutation,
+  useLoginUserMutation,
+  useCreateCommentMutation,
+} = portfolioApi;

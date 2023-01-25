@@ -54,6 +54,6 @@ router.put("/comment/:id", [auth, upload.none()], async (req, res) => {
   const portfolio = await Portfolio.findById(req.params.id);
   portfolio.comments.push({ commentAuthor: user, body: req.body.body });
   await portfolio.save();
-  res.send(true);
+  res.status(200).send(portfolio.comments);
 });
 module.exports = router;

@@ -13,6 +13,11 @@ export type user = {
   githubProfile: string;
   skills: string[];
 };
+export type commentType = {
+  commentAuthor: user;
+  body: string;
+  date: string;
+};
 export type portfolio = {
   _id: string;
   images: string[];
@@ -22,11 +27,7 @@ export type portfolio = {
   date: string;
   likes: string[];
   used: string[];
-  comments: {
-    commentAuthor: user;
-    body: string;
-    date: string;
-  }[];
+  comments: commentType[];
   url: string;
 };
 export type likeType = {

@@ -1,27 +1,38 @@
 import LazyImage from "components/LazyImage";
 import React, { useEffect, useState } from "react";
-import { portfolio, user } from "types/portfolio";
+import { commentType, portfolio, user } from "types/portfolio";
 import { getMe } from "utils/getDetails";
 import { serverUrl } from "utils/serverUrl";
 import s from "styles/Comment.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { faComment, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
-import { FieldValues } from "react-hook-form/dist/types";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { faComment } from "@fortawesome/free-regular-svg-icons";
+import { useCreateCommentMutation } from "state/api/portfolioApi";
+
 const Comment = ({ data }: { data: portfolio }) => {
-  const { handleSubmit, register } = useForm();
+  const [createComment, { status: queryStatus, data: queryData }] =
+    useCreateCommentMutation();
+  const { handleSubmit, register } = useForm<commentType>();
   const [me, setMe] = useState<user>();
   useEffect(() => {
     getMe().then((datas) => setMe(datas.data.user));
   }, [data]);
-  const status = (data: any) => console.log(data);
+  useEffect(() => {
+    console.log(queryStatus);
+  }, [queryStatus]);
+
   const url = serverUrl();
   if (!me) {
     return null;
   }
   return (
     <div>
-      <form method="PUT" onSubmit={handleSubmit(status)}>
+      <form
+        method="PUT"
+        onSubmit={handleSubmit((formData: any) =>
+          createComment({ id: data._id, body: formData })
+        )}
+      >
         <div className={s.commentContainer}>
           <LazyImage
             className={s.profileImage}
@@ -48,26 +59,28 @@ const Comment = ({ data }: { data: portfolio }) => {
           </button>
         </div>
       </form>
-      {data &&
-        data.comments &&
-        data.comments.map((e, i) => (
-          <div className={s.commentContainer} key={i}>
-            <LazyImage
-              className={s.profileImage}
-              width={50}
-              height={50}
-              spinnerOptions={{
-                size: "50",
-                speed: "1",
-                border: "2",
-                position: "static",
-              }}
-              filename={e.commentAuthor.image}
-              url={url}
-            />
-            <p key={i}>{e.body}</p>
+      <h2>Izohlar</h2>
+      {(queryData || data.comments).map((e, i) => (
+        <div className={s.commentContainer} key={i}>
+          <LazyImage
+            className={s.profileImage}
+            width={50}
+            height={50}
+            spinnerOptions={{
+              size: "50",
+              speed: "1",
+              border: "2",
+              position: "static",
+            }}
+            filename={e.commentAuthor.image}
+            url={url}
+          />
+          <div className={s.details}>
+            <h5>{e.body}</h5>
+            <p>{new Date(e.date).toLocaleDateString()}</p>
           </div>
-        ))}
+        </div>
+      ))}
     </div>
   );
 };
