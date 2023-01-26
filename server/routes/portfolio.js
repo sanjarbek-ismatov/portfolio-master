@@ -59,4 +59,10 @@ router.put("/comment/:id", [auth, upload.none()], async (req, res) => {
   await portfolio.save();
   res.status(200).send(portfolio.comments);
 });
+router.delete("/comment/delete/:id", auth, async (req, res) => {
+  const portfolio = await Portfolio.findById(req.params.id);
+  portfolio.comments.splice(req.query.index, 1);
+  await portfolio.save();
+  res.status(200).send(portfolio.comments);
+});
 module.exports = router;
