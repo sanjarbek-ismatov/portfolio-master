@@ -60,6 +60,13 @@ const Comment = ({ data }: { data: portfolio }) => {
         </div>
       </form>
       <h2>Izohlar</h2>
+      {(!data.comments || !data.comments.length) && !queryData ? (
+        <div className={s.commentContainer}>
+          <p>Hozircha izohlar mavjud emas</p>
+        </div>
+      ) : (
+        ""
+      )}
       {(queryData || data.comments).map((e, i) => (
         <div className={s.commentContainer} key={i}>
           <LazyImage
