@@ -62,7 +62,10 @@ const portfolioSchema = new mongoose.Schema({
   likes: [mongoose.SchemaTypes.ObjectId],
   comments: [
     {
-      commentAuthor: userSchema.obj,
+      commentAuthor: Object.assign(
+        { _id: mongoose.SchemaTypes.ObjectId },
+        userSchema.obj
+      ),
       body: String,
       date: {
         type: Date,

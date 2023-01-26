@@ -18,7 +18,10 @@
     }
     h5 {
       color: #4b4b4b;
-      font-size: 15px;
+      font-size: 20px;
+      &:hover .trashIcon {
+        opacity: 1;
+      }
     }
   }
 }
@@ -50,6 +53,12 @@
   align-items: center;
   background-color: $background;
   border-radius: 50%;
+}
+.trashIcon {
+  opacity: 0;
+  height: 17px;
+  cursor: pointer;
+  color: #7e7c7c;
 }
 .icon {
   height: 30px;

@@ -20,6 +20,7 @@ import { usePostLikeByIdMutation } from "state/api/portfolioApi";
 import Comment from "components/portfolio/Comment";
 const Portfolio = ({ data }: { data: portfolio }) => {
   const router = useRouter();
+
   const [createLike, { isLoading, data: likedata, error }] =
     usePostLikeByIdMutation();
   // useEffect(() => console.log(likedata), [likedata]);

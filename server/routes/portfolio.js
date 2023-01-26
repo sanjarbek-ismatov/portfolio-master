@@ -49,10 +49,13 @@ router.put("/like/:id", auth, async (req, res) => {
   }
 });
 router.put("/comment/:id", [auth, upload.none()], async (req, res) => {
-  const user = await User.findById(req.id);
+  const user = Object.assign({ id: req.id }, await User.findById(req.id));
 
-  const portfolio = await Portfolio.findById(req.params.id);
-  portfolio.comments.push({ commentAuthor: user, body: req.body.body });
+  const portfolio = await Portfolio.findById(req.params.id, "-password");
+  portfolio.comments.push({
+    commentAuthor: user,
+    body: req.body.body,
+  });
   await portfolio.save();
   res.status(200).send(portfolio.comments);
 });

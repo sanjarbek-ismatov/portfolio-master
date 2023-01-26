@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
 import { useCreateCommentMutation } from "state/api/portfolioApi";
+import { faTrash, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const Comment = ({ data }: { data: portfolio }) => {
   const [createComment, { status: queryStatus, data: queryData }] =
@@ -17,10 +18,6 @@ const Comment = ({ data }: { data: portfolio }) => {
   useEffect(() => {
     getMe().then((datas) => setMe(datas.data.user));
   }, [data]);
-  useEffect(() => {
-    console.log(queryStatus);
-  }, [queryStatus]);
-
   const url = serverUrl();
   if (!me) {
     return null;
@@ -83,7 +80,12 @@ const Comment = ({ data }: { data: portfolio }) => {
             url={url}
           />
           <div className={s.details}>
-            <h5>{e.body}</h5>
+            <h5>
+              {e.body}{" "}
+              {e.commentAuthor._id.includes(me._id) ? (
+                <FontAwesomeIcon className={s.trashIcon} icon={faTrashCan} />
+              ) : null}
+            </h5>
             <p>{new Date(e.date).toLocaleDateString()}</p>
           </div>
         </div>
