@@ -17,8 +17,9 @@ const Comment = ({ data }: { data: portfolio }) => {
   const [createComment, { status: queryStatus, data: queryData }] =
     useCreateCommentMutation();
   const [deleteComment, { data: updateComment }] = useDeleteCommentMutation();
-  const { handleSubmit, register } = useForm<commentType>();
+  const { handleSubmit, register, resetField } = useForm<commentType>();
   const [me, setMe] = useState<user>();
+  const [comments, setComments] = useState(data.comments);
   useEffect(() => {
     getMe().then((datas) => setMe(datas.data.user));
   }, [data]);
@@ -30,9 +31,12 @@ const Comment = ({ data }: { data: portfolio }) => {
     <div>
       <form
         method="PUT"
-        onSubmit={handleSubmit((formData: any) =>
-          createComment({ id: data._id, body: formData })
-        )}
+        onSubmit={handleSubmit((formData: any) => {
+          createComment({ id: data._id, body: formData }).then((datas: any) =>
+            setComments(datas.data)
+          );
+          resetField("body");
+        })}
       >
         <div className={s.commentContainer}>
           <LazyImage
@@ -49,6 +53,7 @@ const Comment = ({ data }: { data: portfolio }) => {
             url={url}
           />{" "}
           <input
+            autoComplete="off"
             className={s.input}
             {...register("body")}
             type="text"
@@ -61,14 +66,14 @@ const Comment = ({ data }: { data: portfolio }) => {
         </div>
       </form>
       <h2>Izohlar</h2>
-      {(!data.comments || !data.comments.length) && !queryData ? (
+      {!comments ? (
         <div className={s.commentContainer}>
           <p>Hozircha izohlar mavjud emas</p>
         </div>
       ) : (
         ""
       )}
-      {(updateComment || queryData || data.comments).map((e, i) => (
+      {comments.map((e, i) => (
         <div className={s.commentContainer} key={i}>
           <LazyImage
             className={s.profileImage}
@@ -88,7 +93,11 @@ const Comment = ({ data }: { data: portfolio }) => {
               {e.body}{" "}
               {e.commentAuthor._id.includes(me._id) ? (
                 <FontAwesomeIcon
-                  onClick={() => deleteComment({ id: data._id, index: i })}
+                  onClick={() => {
+                    deleteComment({ id: data._id, index: i }).then(
+                      (datas: any) => setComments(datas.data)
+                    );
+                  }}
                   className={s.trashIcon}
                   icon={faTrashCan}
                 />
