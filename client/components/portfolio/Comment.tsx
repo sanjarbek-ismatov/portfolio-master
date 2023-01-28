@@ -7,12 +7,16 @@ import s from "styles/Comment.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
-import { useCreateCommentMutation } from "state/api/portfolioApi";
+import {
+  useCreateCommentMutation,
+  useDeleteCommentMutation,
+} from "state/api/portfolioApi";
 import { faTrash, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const Comment = ({ data }: { data: portfolio }) => {
   const [createComment, { status: queryStatus, data: queryData }] =
     useCreateCommentMutation();
+  const [deleteComment, { data: updateComment }] = useDeleteCommentMutation();
   const { handleSubmit, register } = useForm<commentType>();
   const [me, setMe] = useState<user>();
   useEffect(() => {
@@ -64,7 +68,7 @@ const Comment = ({ data }: { data: portfolio }) => {
       ) : (
         ""
       )}
-      {(queryData || data.comments).map((e, i) => (
+      {(updateComment || queryData || data.comments).map((e, i) => (
         <div className={s.commentContainer} key={i}>
           <LazyImage
             className={s.profileImage}
@@ -83,7 +87,11 @@ const Comment = ({ data }: { data: portfolio }) => {
             <h5>
               {e.body}{" "}
               {e.commentAuthor._id.includes(me._id) ? (
-                <FontAwesomeIcon className={s.trashIcon} icon={faTrashCan} />
+                <FontAwesomeIcon
+                  onClick={() => deleteComment({ id: data._id, index: i })}
+                  className={s.trashIcon}
+                  icon={faTrashCan}
+                />
               ) : null}
             </h5>
             <p>{new Date(e.date).toLocaleDateString()}</p>

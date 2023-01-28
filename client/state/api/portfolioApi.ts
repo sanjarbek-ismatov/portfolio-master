@@ -53,6 +53,18 @@ export const portfolioApi = createApi({
           };
         },
       }),
+      deleteComment: build.mutation<
+        commentType[],
+        { id: string; index: number }
+      >({
+        query: ({ id, index }) => ({
+          method: "DELETE",
+          url: `/portfolio/comment/delete/${id}?index=${index}`,
+          headers: {
+            ["x-token"]: getToken(),
+          },
+        }),
+      }),
     };
   },
 });
@@ -60,4 +72,5 @@ export const {
   usePostLikeByIdMutation,
   useLoginUserMutation,
   useCreateCommentMutation,
+  useDeleteCommentMutation,
 } = portfolioApi;
