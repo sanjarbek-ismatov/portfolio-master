@@ -52,7 +52,7 @@ router.put("/comment/:id", [auth, upload.none()], async (req, res) => {
   const user = Object.assign({ id: req.id }, await User.findById(req.id));
 
   const portfolio = await Portfolio.findById(req.params.id, "-password");
-  portfolio.comments.push({
+  portfolio.comments.unshift({
     commentAuthor: user,
     body: req.body.body,
   });

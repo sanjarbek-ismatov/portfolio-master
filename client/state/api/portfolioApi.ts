@@ -1,4 +1,7 @@
-import { BaseQueryResult } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import {
+  BaseQueryFn,
+  BaseQueryResult,
+} from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { commentType } from "types/portfolio";
 import { getToken } from "utils/getDetails";
@@ -64,6 +67,15 @@ export const portfolioApi = createApi({
             ["x-token"]: getToken(),
           },
         }),
+        // transformResponse(
+        //   baseQueryReturnValue: BaseQueryResult<
+        //     BaseQueryFn<any, commentType[]>
+        //   >,
+        //   meta,
+        //   arg
+        // ) {
+        //   return baseQueryReturnValue;
+        // },
       }),
     };
   },

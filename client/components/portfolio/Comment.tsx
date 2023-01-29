@@ -66,47 +66,47 @@ const Comment = ({ data }: { data: portfolio }) => {
         </div>
       </form>
       <h2>Izohlar</h2>
-      {!comments ? (
+
+      {!comments.length ? (
         <div className={s.commentContainer}>
           <p>Hozircha izohlar mavjud emas</p>
         </div>
       ) : (
-        ""
-      )}
-      {comments.map((e, i) => (
-        <div className={s.commentContainer} key={i}>
-          <LazyImage
-            className={s.profileImage}
-            width={50}
-            height={50}
-            spinnerOptions={{
-              size: "50",
-              speed: "1",
-              border: "2",
-              position: "static",
-            }}
-            filename={e.commentAuthor.image}
-            url={url}
-          />
-          <div className={s.details}>
-            <h5>
-              {e.body}{" "}
-              {e.commentAuthor._id.includes(me._id) ? (
-                <FontAwesomeIcon
-                  onClick={() => {
-                    deleteComment({ id: data._id, index: i }).then(
-                      (datas: any) => setComments(datas.data)
-                    );
-                  }}
-                  className={s.trashIcon}
-                  icon={faTrashCan}
-                />
-              ) : null}
-            </h5>
-            <p>{new Date(e.date).toLocaleDateString()}</p>
+        comments.map((e, i) => (
+          <div className={s.commentContainer} key={i}>
+            <LazyImage
+              className={s.profileImage}
+              width={50}
+              height={50}
+              spinnerOptions={{
+                size: "50",
+                speed: "1",
+                border: "2",
+                position: "static",
+              }}
+              filename={e.commentAuthor.image}
+              url={url}
+            />
+            <div className={s.details}>
+              <h5>
+                {e.body}{" "}
+                {e.commentAuthor._id.includes(me._id) ? (
+                  <FontAwesomeIcon
+                    onClick={() => {
+                      deleteComment({ id: data._id, index: i }).then(
+                        (datas: any) => setComments(datas.data)
+                      );
+                    }}
+                    className={s.trashIcon}
+                    icon={faTrashCan}
+                  />
+                ) : null}
+              </h5>
+              <p>{new Date(e.date).toLocaleDateString()}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };

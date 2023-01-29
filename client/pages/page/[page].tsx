@@ -63,7 +63,7 @@ const Index = ({
           filter={data}
           setFilters={setFilters}
         />
-        {data ? (
+        {data.length ? (
           filters &&
           filterByKey(data, text)
             .filter(({ used }) => {
@@ -140,7 +140,8 @@ const Index = ({
             ))
         ) : (
           <div className={s.loading}>
-            <Spinner size="100" speed="1" position="static" border="5" />
+            <h1>Hmm, negadir bironta ham portfolio mavjud emas :(</h1>
+            {/* <Spinner size="100" speed="1" position="static" border="5" /> */}
           </div>
         )}
       </Main>
