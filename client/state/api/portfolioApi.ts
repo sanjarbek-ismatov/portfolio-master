@@ -31,13 +31,22 @@ export const portfolioApi = createApi({
           return {
             url: "login",
             method: "POST",
-            body: body,
+            body,
           };
         },
         transformResponse(baseQueryReturnValue: BaseQueryResult<any>, meta) {
           return {
             ...baseQueryReturnValue,
             token: meta?.response?.headers.get("x-token"),
+          };
+        },
+      }),
+      registerUser: build.mutation<string, FormData>({
+        query(body) {
+          return {
+            url: "/register",
+            method: "POST",
+            body,
           };
         },
       }),
@@ -67,15 +76,6 @@ export const portfolioApi = createApi({
             ["x-token"]: getToken(),
           },
         }),
-        // transformResponse(
-        //   baseQueryReturnValue: BaseQueryResult<
-        //     BaseQueryFn<any, commentType[]>
-        //   >,
-        //   meta,
-        //   arg
-        // ) {
-        //   return baseQueryReturnValue;
-        // },
       }),
     };
   },
@@ -85,4 +85,5 @@ export const {
   useLoginUserMutation,
   useCreateCommentMutation,
   useDeleteCommentMutation,
+  useRegisterUserMutation,
 } = portfolioApi;

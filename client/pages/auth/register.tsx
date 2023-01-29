@@ -7,26 +7,21 @@ import Dialog from "components/Dialog";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { register, useAppSelector } from "state/store";
+import { useRegisterUserMutation } from "state/api/portfolioApi";
+
 const Register = () => {
   const { data } = useSession();
   const [message, setMessage] = useState("");
-  const [isPending, setIsPending] = useState(false);
+  const [register, { isLoading, isSuccess, isError, error }] =
+    useRegisterUserMutation();
 
   const router = useRouter();
-  const [isError, setIsError] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const state = useAppSelector((state) => state.register);
 
   function formik(e: any) {
     e.preventDefault();
     setMessage("Yuklanmoqda!");
-    setIsPending(true);
     if (e.target["5"].value !== e.target["6"].value) {
       setMessage("Parolni to'g'ri kiriting");
-      setIsPending(false);
-      setIsError(true);
-      setIsSuccess(false);
       return;
     }
     const data = new FormData();
@@ -41,32 +36,24 @@ const Register = () => {
     data.append("skills", e.target["10"].value);
     data.append("telegramProfile", e.target["7"].value);
     data.append("githubProfile", e.target["8"].value);
-    setTimeout(() => register(data), 2000);
+    register(data);
   }
   useEffect(() => {
-    setIsPending(true);
-    if (state.error) {
-      setIsPending(false);
-      setIsError(true);
-      setIsSuccess(false);
-      setMessage(state.error);
-    } else if (!state.error && state.status) {
-      setIsPending(false);
-      setIsSuccess(true);
+    if (error && "data" in error) {
+      setMessage(error.data as string);
+    } else if (isSuccess) {
       setMessage("Ro`yhatdan muvaffiqiyatli o`tdingiz!");
-      setIsError(false);
     }
-  }, [state]);
+  }, [isSuccess, error]);
   useEffect(() => {
     if (data) {
-      setIsPending(true);
       setMessage("Yuklanmoqda...");
       register({
         email: data.user?.email || "",
         isDirect: true,
-      });
+      } as any);
     }
-  }, [data]);
+  }, [data, register]);
   return (
     <div className={s.container}>
       <Head>
@@ -174,10 +161,10 @@ const Register = () => {
         <Dialog
           ok={() => {
             setMessage("");
-            signOut();
-            !isError && isSuccess && router.replace("/auth/login");
+            isSuccess && router.replace("/auth/login");
+            isSuccess && data && signOut();
           }}
-          isPending={isPending}
+          isPending={isLoading}
           message={message}
           isError={isError}
           isSuccess={isSuccess}

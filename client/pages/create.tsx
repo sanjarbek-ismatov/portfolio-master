@@ -19,7 +19,7 @@ const Login = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const state = useAppSelector((state) => state.portfolio);
   useEffect(() => {
-    if (!auth) router.replace("/auth/register");
+    if (!auth) router.replace("/auth/login");
   }, [auth, router]);
   function handleSubmit() {
     setIsPending(true);

@@ -36,7 +36,7 @@ const Dialog = ({
           <p>{message}</p>
         </div>
         <div className={s.buttons}>
-          {ok && <button onClick={ok}>{okText || "Ha"}</button>}
+          {ok && !isPending && <button onClick={ok}>{okText || "Ha"}</button>}
           {cancel && (
             <button onClick={cancel}>{cancelText || "Bekor qilish"}</button>
           )}
