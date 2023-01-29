@@ -9,21 +9,21 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
-import Image from "next/image";
 import { Navigation, Pagination } from "swiper";
 import Navbar from "components/Navbar";
 import LazyImage from "components/LazyImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as notLiked } from "@fortawesome/free-regular-svg-icons";
-import { faHeart as liked } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
+
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
 import Comment from "components/portfolio/Comment";
+import { subtractTime } from "utils/dateToReadable";
 const Portfolio = ({ data }: { data: portfolio }) => {
   const router = useRouter();
-
+  useEffect(() => subtractTime(data.date), [data.date]);
+  const [likeCount, setLikeCount] = useState(data.likes.length);
   const [createLike, { isLoading, data: likedata, error }] =
     usePostLikeByIdMutation();
-  // useEffect(() => console.log(likedata), [likedata]);
   if (!data) {
     return <p>Sahifa mavjud emas</p>;
   }
@@ -52,7 +52,6 @@ const Portfolio = ({ data }: { data: portfolio }) => {
             <div className={s.swiperContainer}>
               <Swiper
                 className={s.swiper}
-                // onSlideChange={() => setIsLoad(true)}
                 spaceBetween={30}
                 navigation
                 pagination={{
@@ -100,14 +99,15 @@ const Portfolio = ({ data }: { data: portfolio }) => {
               </div>
               <div>
                 <button
-                  onClick={() => createLike(data._id)}
+                  onClick={() =>
+                    createLike(data._id).then(({ data }: any) =>
+                      setLikeCount(data.count)
+                    )
+                  }
                   className={s.linkButton}
                 >
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={likedata?.isLiked ? liked : notLiked}
-                  />{" "}
-                  {(likedata && likedata.count) || data.likes.length}
+                  <FontAwesomeIcon className="icon" icon={faHeart} />{" "}
+                  {likeCount}
                 </button>
                 <a href={data.url} target="_blank" rel="noreferrer">
                   <button className={s.linkButton}>Ochish</button>
@@ -132,23 +132,6 @@ const Portfolio = ({ data }: { data: portfolio }) => {
     </>
   );
 };
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const url = serverUrl();
-//   const data: portfolio[] = await fetch(`${url}/api/portfolio/all`).then(
-//     (res) => res.json()
-//   );
-//   const paths = data.map((e, i) => {
-//     return {
-//       params: {
-//         portfolio: `${e.author.username}_${e.title.replace(" ", "-")}`,
-//       },
-//     };
-//   });
-//   return {
-//     paths,
-//     fallback: "blocking",
-//   };
-// };
 export const getServerSideProps: GetServerSideProps<{
   data: portfolio;
 }> = async ({ params }) => {

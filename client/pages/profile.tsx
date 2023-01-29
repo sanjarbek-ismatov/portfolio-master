@@ -12,7 +12,6 @@ const Profile = () => {
     getMe().then((datas) => {
       setData(datas.data.portfolios);
       setUser(datas.data.user);
-      console.log(datas);
     });
   }, []);
   return (

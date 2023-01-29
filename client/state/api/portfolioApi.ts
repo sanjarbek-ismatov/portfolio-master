@@ -12,18 +12,22 @@ export const portfolioApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${url}/api` }),
   endpoints(build) {
     return {
-      postLikeById: build.mutation<{ count: number; isLiked: boolean }, string>(
-        {
-          query: (id) => ({
-            url: `portfolio/like/${id}`,
-            method: "PUT",
-            headers: {
-              ["x-token"]: getToken(),
-            },
-          }),
-        }
-      ),
-      loginUser: build.mutation<
+      _postLikeById: build.mutation<
+        { count: number; isLiked: boolean },
+        string
+      >({
+        query: (id) => ({
+          url: `portfolio/like/${id}`,
+          method: "PUT",
+          headers: {
+            ["x-token"]: getToken(),
+          },
+        }),
+      }),
+      get postLikeById() {
+        return this._postLikeById;
+      },
+      _loginUser: build.mutation<
         { message: string; code: number; token: string },
         FormData
       >({
@@ -41,7 +45,10 @@ export const portfolioApi = createApi({
           };
         },
       }),
-      registerUser: build.mutation<string, FormData>({
+      get loginUser() {
+        return this._loginUser;
+      },
+      _registerUser: build.mutation<string, FormData>({
         query(body) {
           return {
             url: "/register",
@@ -50,7 +57,10 @@ export const portfolioApi = createApi({
           };
         },
       }),
-      createComment: build.mutation<
+      get registerUser() {
+        return this._registerUser;
+      },
+      _createComment: build.mutation<
         commentType[],
         { id: string; body: string }
       >({
@@ -65,7 +75,10 @@ export const portfolioApi = createApi({
           };
         },
       }),
-      deleteComment: build.mutation<
+      get createComment() {
+        return this._createComment;
+      },
+      _deleteComment: build.mutation<
         commentType[],
         { id: string; index: number }
       >({
@@ -77,6 +90,9 @@ export const portfolioApi = createApi({
           },
         }),
       }),
+      get deleteComment() {
+        return this._deleteComment;
+      },
     };
   },
 });
