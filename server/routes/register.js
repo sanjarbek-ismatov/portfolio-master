@@ -3,8 +3,26 @@ const { createUser, User } = require("../models/Model");
 const { registerValidator } = require("../utils/validator");
 const { upload } = require("../models/gfs");
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
 const router = express.Router();
 router.post("/", upload.single("image"), async (req, res) => {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "ismatovvsanjarbek@gmail.com",
+      pass: "sliznykcxxizrcvw",
+    },
+  });
+  const mailOptions = {
+    from: '"Sanjarbek" <ismatovvsanjarbek@gmail.com>',
+    to: "mrpydevx@gmail.com",
+    subject: "Bu perfect",
+    text: "Salom chumo",
+  };
+  transporter.sendMail(mailOptions, (err, info) => console.log(err, info));
   const salt = await bcrypt.genSalt();
 
   const { error } = registerValidator(req.body);

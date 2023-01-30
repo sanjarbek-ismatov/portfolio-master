@@ -8,7 +8,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useRegisterUserMutation } from "state/api/portfolioApi";
-
 const Register = () => {
   const { data } = useSession();
   const [message, setMessage] = useState("");
@@ -16,9 +15,9 @@ const Register = () => {
     useRegisterUserMutation();
 
   const router = useRouter();
-
   function formik(e: any) {
     e.preventDefault();
+
     setMessage("Yuklanmoqda!");
     if (e.target["5"].value !== e.target["6"].value) {
       setMessage("Parolni to'g'ri kiriting");

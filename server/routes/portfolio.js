@@ -3,6 +3,7 @@ const auth = require("../middleware/auth");
 const { upload } = require("../models/gfs");
 const { Portfolio, User } = require("../models/Model");
 const { portfolioValidator } = require("../utils/validator");
+const nodemailer = require("nodemailer");
 const router = express.Router();
 router.get("/all", async (req, res) => {
   const portfolios = await Portfolio.find();
