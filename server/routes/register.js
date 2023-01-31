@@ -5,6 +5,17 @@ const { upload } = require("../models/gfs");
 const bcrypt = require("bcrypt");
 const { sendMail, randomCode } = require("../utils/mailVerificator");
 const router = express.Router();
+router.post("/email-verification", async (req, res) => {
+  if (!req.query.code) return res.status(400).send("Bad request!");
+  const { code } = req.query;
+  const randomNumber = randomCode();
+  const status = sendMail(req.body.email, req.body.firstname, randomCode);
+  if (code === randomNumber) {
+    res.status(200).send(true);
+  } else {
+    res.status();
+  }
+});
 router.post("/", upload.single("image"), async (req, res) => {
   const salt = await bcrypt.genSalt();
 
@@ -15,14 +26,11 @@ router.post("/", upload.single("image"), async (req, res) => {
   if (email || username) {
     return res.status(400).send("Email yoki username allaqachon mavjud");
   }
-  const code = randomCode();
-  const status = sendMail(req.body.email, req.body.firstname, code);
-  console.log(status);
+
   if (req.body.password)
     req.body.password = await bcrypt.hash(req.body.password, salt);
-
-  // if (req.file) await createUser(req.body, req.file.filename);
-  // else await createUser(req.body, null);
+  if (req.file) await createUser(req.body, req.file.filename);
+  else await createUser(req.body, null);
   res.send(true);
 });
 module.exports = router;
