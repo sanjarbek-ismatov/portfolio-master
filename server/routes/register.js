@@ -3,26 +3,9 @@ const { createUser, User } = require("../models/Model");
 const { registerValidator } = require("../utils/validator");
 const { upload } = require("../models/gfs");
 const bcrypt = require("bcrypt");
-const nodemailer = require("nodemailer");
+const { sendMail, randomCode } = require("../utils/mailVerificator");
 const router = express.Router();
 router.post("/", upload.single("image"), async (req, res) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: "ismatovvsanjarbek@gmail.com",
-      pass: "sliznykcxxizrcvw",
-    },
-  });
-  const mailOptions = {
-    from: '"Sanjarbek" <ismatovvsanjarbek@gmail.com>',
-    to: "mrpydevx@gmail.com",
-    subject: "Bu perfect",
-    text: "Salom chumo",
-  };
-  transporter.sendMail(mailOptions, (err, info) => console.log(err, info));
   const salt = await bcrypt.genSalt();
 
   const { error } = registerValidator(req.body);
@@ -32,11 +15,14 @@ router.post("/", upload.single("image"), async (req, res) => {
   if (email || username) {
     return res.status(400).send("Email yoki username allaqachon mavjud");
   }
+  const code = randomCode();
+  const status = sendMail(req.body.email, req.body.firstname, code);
+  console.log(status);
   if (req.body.password)
     req.body.password = await bcrypt.hash(req.body.password, salt);
 
-  if (req.file) await createUser(req.body, req.file.filename);
-  else await createUser(req.body, null);
+  // if (req.file) await createUser(req.body, req.file.filename);
+  // else await createUser(req.body, null);
   res.send(true);
 });
 module.exports = router;
