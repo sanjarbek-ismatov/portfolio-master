@@ -48,12 +48,15 @@ export const portfolioApi = createApi({
       get loginUser() {
         return this._loginUser;
       },
-      _registerUser: build.mutation<string, FormData>({
-        query(body) {
+      _registerUser: build.mutation<string, { body: FormData; token: string }>({
+        query({ body, token }) {
           return {
             url: "/register",
             method: "POST",
             body,
+            headers: {
+              ["token"]: token,
+            },
           };
         },
       }),
@@ -93,6 +96,16 @@ export const portfolioApi = createApi({
       get deleteComment() {
         return this._deleteComment;
       },
+      _verifyEmail: build.mutation<boolean, any>({
+        query: (arg) => ({
+          url: "/register/send-verification",
+          body: arg,
+          method: "POST",
+        }),
+      }),
+      get verifyEmail() {
+        return this._verifyEmail;
+      },
     };
   },
 });
@@ -102,4 +115,5 @@ export const {
   useCreateCommentMutation,
   useDeleteCommentMutation,
   useRegisterUserMutation,
+  useVerifyEmailMutation,
 } = portfolioApi;

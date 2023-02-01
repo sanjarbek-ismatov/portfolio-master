@@ -1,6 +1,7 @@
+const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 module.exports = {
-  sendMail: (email, name, code) => {
+  sendMail: (email, url) => {
     var status;
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -16,19 +17,25 @@ module.exports = {
       from: '"Portfolio Master" <ismatovvsanjarbek@gmail.com>',
       to: email,
       subject: "Emailni tasdiqlash",
-      text: `Salom, ${name}! Portfolio Masterga ro'yhatdan o'tganingiz uchun rahmat! Sizning tasdiqlash kodingiz: ${code}
-          `,
       html: `
-        <h1 align="center">Salom, ${name}!</h1>
-        <p align="center">Portfolio Masterga ro'yhatdan o'tganingiz uchun rahmat! <br> Sizning tasdiqlash kodingiz: </p>
-        <hr>
-        <h2 align="center">${code}</h2>
+        <h1 align="center">Salom, Foydalanuvchi!</h1>
+        <p align="center">Portfolio Masterga ro'yhatdan o'tayotganingiz uchun rahmat! Davom ettirish uchun tasdiqlashni bosing:  
+        <a href="${url}" align="center" style="font-family: sans-serif;">Tasdiqlash</a>
+        </p>
           `,
     };
     transporter.sendMail(mailOptions, (err, info) => (status = err));
     return status;
   },
-  randomCode: () => {
-    return Math.floor(Math.random() * 1000000);
+  generateToken: (email) => jwt.sign({ email }, process.env.SECRET),
+  verifyToken: (token) => {
+    try {
+      const verified = jwt.verify(token, process.env.SECRET);
+      console.log(verified);
+      return true;
+    } catch (ex) {
+      return false;
+    }
   },
+  url: () => process.env.CLIENT_URL || "http://localhost:3000",
 };

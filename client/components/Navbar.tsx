@@ -67,7 +67,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/auth/register">
+                <Link href="/auth/register/emailverification">
                   <a>
                     <FontAwesomeIcon
                       className="icon"

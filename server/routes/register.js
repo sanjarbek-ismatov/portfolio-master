@@ -3,22 +3,27 @@ const { createUser, User } = require("../models/Model");
 const { registerValidator } = require("../utils/validator");
 const { upload } = require("../models/gfs");
 const bcrypt = require("bcrypt");
-const { sendMail, randomCode } = require("../utils/mailVerificator");
+const {
+  sendMail,
+  generateToken,
+  url,
+  verifyToken,
+} = require("../utils/mailVerificator");
 const router = express.Router();
-router.post("/email-verification", async (req, res) => {
-  if (!req.query.code) return res.status(400).send("Bad request!");
-  const { code } = req.query;
-  const randomNumber = randomCode();
-  const status = sendMail(req.body.email, req.body.firstname, randomCode);
-  if (code === randomNumber) {
-    res.status(200).send(true);
-  } else {
-    res.status();
-  }
+router.post("/send-verification", async (req, res) => {
+  if (!req.body.email) return res.status(400).send("Bad request!");
+  const token = generateToken(req.body.email);
+  sendMail(
+    req.body.email,
+    `${url()}/auth/register?email=${req.body.email}&token=${token}`
+  );
+  res.status(200).send(true);
 });
-router.post("/", upload.single("image"), async (req, res) => {
-  const salt = await bcrypt.genSalt();
 
+router.post("/", upload.single("image"), async (req, res) => {
+  const isVerif = verifyToken(req.headers["token"]);
+  if (!isVerif) return res.status(400).send("Ushbu email tasdiqlanmagan!");
+  const salt = await bcrypt.genSalt();
   const { error } = registerValidator(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   const email = await User.findOne({ email: req.body.email });

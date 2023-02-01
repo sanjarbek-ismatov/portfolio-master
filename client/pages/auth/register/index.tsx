@@ -16,6 +16,14 @@ const Register = () => {
 
   const router = useRouter();
   function formik(e: any) {
+    if (
+      !(
+        router.query.email &&
+        router.query.token &&
+        typeof router.query.token === "string"
+      )
+    )
+      return router.replace("/auth/emailverification");
     e.preventDefault();
 
     setMessage("Yuklanmoqda!");
@@ -24,7 +32,6 @@ const Register = () => {
       return;
     }
     const data = new FormData();
-
     data.append("image", e.target["0"].files[0]);
     data.append("firstname", e.target["1"].value);
     data.append("lastname", e.target["2"].value);
@@ -35,7 +42,7 @@ const Register = () => {
     data.append("skills", e.target["10"].value);
     data.append("telegramProfile", e.target["7"].value);
     data.append("githubProfile", e.target["8"].value);
-    register(data);
+    register({ body: data, token: router.query.token });
   }
   useEffect(() => {
     if (error && "data" in error) {
@@ -93,6 +100,7 @@ const Register = () => {
           <input
             className={s.input}
             type="email"
+            value={router.query.email || ""}
             name="email"
             placeholder="Pochta"
             required
