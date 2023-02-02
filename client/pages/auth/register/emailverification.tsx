@@ -2,8 +2,9 @@ import React, { FormEvent } from "react";
 import s from "styles/L.module.scss";
 import { useForm } from "react-hook-form";
 import { useVerifyEmailMutation } from "state/api/portfolioApi";
+import Dialog from 'components/Dialog';
 const EmailVerification = () => {
-  const [sendMail, { data }] = useVerifyEmailMutation();
+  const [sendMail, { data, isLoading }] = useVerifyEmailMutation();
   const { handleSubmit, register } = useForm<FormEvent>();
   return (
     <div className={s.container}>

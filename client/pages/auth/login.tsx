@@ -48,9 +48,8 @@ const Login = () => {
 
       <div className={s.form}>
         <h1>Kirish</h1>
-        <form onSubmit={formik}>
+        <form className={s.formik} onSubmit={formik}>
           <input
-           
             className={s.input}
             type="email"
             name="email"
@@ -58,7 +57,6 @@ const Login = () => {
             required
           />
           <input
-           
             className={s.input}
             type="password"
             name="password"
