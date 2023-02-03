@@ -5,5 +5,5 @@ export function serverUrl() {
   } else {
     url = "https://portfolio-master.onrender.com";
   }
-  return "https://4000-sanjarbekis-portfolioma-6ie9k2ksn24.ws-eu84.gitpod.io";
+  return url;
 }
