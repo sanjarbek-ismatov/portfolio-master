@@ -37,7 +37,7 @@
 }
 .topic {
   margin-top: 10px;
-  width: 400px;
+  width: 100%;
   padding: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -92,9 +92,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
-@media (max-width: 460px) {
+@media (max-width: 560px) {
   .h2 {
     display: none;
+  }
+  .titleContainer {
+    justify-content: center;
   }
 }

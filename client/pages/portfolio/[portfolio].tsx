@@ -18,6 +18,7 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
 import Comment from "components/portfolio/Comment";
 import { subtractTime } from "utils/dateToReadable";
+import Footer from "components/Footer";
 const Portfolio = ({ data }: { data: portfolio }) => {
   const router = useRouter();
   useEffect(() => subtractTime(data.date), [data.date]);
@@ -114,21 +115,21 @@ const Portfolio = ({ data }: { data: portfolio }) => {
                 </a>
               </div>
             </div>
+            <div className={s.topic}>
+              {data.used.map((e, i) => (
+                <Link href={`/page/1?filter=${e}`} key={i}>
+                  <a className={s.badge}>#{e}</a>
+                </Link>
+              ))}
+            </div>
             <div className={s.descriptionContainer}>
               <p>{data.description}</p>
             </div>
             <Comment data={data} />
           </div>
-
-          <div className={s.topic}>
-            {data.used.map((e, i) => (
-              <Link href={`/page/1?filter=${e}`} key={i}>
-                <a className={s.badge}>#{e}</a>
-              </Link>
-            ))}
-          </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

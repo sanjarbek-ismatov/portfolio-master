@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useState } from "react";
+import React, { HTMLAttributes, ReactNode, useState } from "react";
 import Image from "next/image";
 import Spinner from "./Spinner";
 import s from "styles/Image.module.scss";
@@ -7,6 +7,7 @@ const LazyImage = ({
   filename,
   width,
   height,
+  children,
   spinnerOptions,
   ...rest
 }: {
@@ -14,6 +15,7 @@ const LazyImage = ({
   filename: string;
   width: number;
   height: number;
+  children?: ReactNode;
   spinnerOptions: {
     size: string;
     speed: string;
@@ -37,6 +39,7 @@ const LazyImage = ({
         alt="Image"
         src={`${url}/image/${filename}`}
       />
+      {children}
     </div>
   );
 };

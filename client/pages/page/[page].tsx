@@ -78,17 +78,20 @@ const Index = ({
               return bools.filter((e) => e).length === filters.length;
             })
             .map((e, i: number) => (
-              <PortfolioCard key={i}>
+              <div
+                className={s.post}
+                onClick={() =>
+                  router.push(
+                    `/portfolio/${e.author.username}_${e.title.replace(
+                      " ",
+                      "+"
+                    )}`
+                  )
+                }
+                key={i}
+              >
                 <LazyImage
                   className={s.postImage}
-                  onClick={() =>
-                    router.push(
-                      `/portfolio/${e.author.username}_${e.title.replace(
-                        " ",
-                        "+"
-                      )}`
-                    )
-                  }
                   filename={e.images[0]}
                   width={800}
                   height={450}
@@ -99,9 +102,8 @@ const Index = ({
                     border: "5",
                     speed: "1",
                   }}
-                />
-
-                <Description>
+                >
+                  {" "}
                   <div className={s.desc}>
                     <div className={s.profile}>
                       <LazyImage
@@ -113,8 +115,8 @@ const Index = ({
                         }}
                         className={s.profileImage}
                         url={url}
-                        height={50}
-                        width={50}
+                        height={100}
+                        width={100}
                         filename={e.author.image}
                       />
                       <p>{e.author.firstname}</p>
@@ -122,21 +124,26 @@ const Index = ({
 
                     <h1>{e.title}</h1>
 
-                    <div>{e.likes.length} ta yoqtirish</div>
+                    <p>{e.likes.length} ta yoqtirish</p>
                   </div>
-                  {e.used.map((e, i) => (
-                    <span
-                      onClick={() =>
-                        router.push(`/page/${router.query.page}?filter=${e}`)
-                      }
-                      className={s.badge}
-                      key={i}
-                    >
-                      {e}
-                    </span>
-                  ))}
+                </LazyImage>
+
+                <Description>
+                  <div className={s.filterContainer}>
+                    {e.used.map((e, i) => (
+                      <span
+                        onClick={() =>
+                          router.push(`/page/${router.query.page}?filter=${e}`)
+                        }
+                        className={s.badge}
+                        key={i}
+                      >
+                        {e}
+                      </span>
+                    ))}
+                  </div>
                 </Description>
-              </PortfolioCard>
+              </div>
             ))
         ) : (
           <div className={s.loading}>
