@@ -5,25 +5,28 @@ import { getMe } from "utils/getDetails";
 import { serverUrl } from "utils/serverUrl";
 import s from "styles/Comment.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
 import {
   useCreateCommentMutation,
   useDeleteCommentMutation,
 } from "state/api/portfolioApi";
-import { faTrash, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { subtractTime } from "utils/dateToReadable";
 
-const Comment = ({ data }: { data: portfolio }) => {
-  const [createComment, { status: queryStatus, data: queryData }] =
+const Comment = ({ data: { comments, _id } }: { data: portfolio }) => {
+  const [createComment, { data: updatedCommentAfterCreate }] =
     useCreateCommentMutation();
-  const [deleteComment, { data: updateComment }] = useDeleteCommentMutation();
+  const [deleteComment, { data: updatedCommentAfterDelete }] =
+    useDeleteCommentMutation();
   const { handleSubmit, register, resetField } = useForm<commentType>();
   const [me, setMe] = useState<user>();
-  const [comments, setComments] = useState(data.comments);
+  const getComments = () => {
+    return updatedCommentAfterDelete || updatedCommentAfterCreate || comments;
+  };
   useEffect(() => {
-    getMe().then((datas) => setMe(datas.data.user));
-  }, [data]);
+    getMe().then(({ data: { user } }) => setMe(user));
+  }, []);
   const url = serverUrl();
   if (!me) {
     return null;
@@ -33,9 +36,10 @@ const Comment = ({ data }: { data: portfolio }) => {
       <form
         method="PUT"
         onSubmit={handleSubmit((formData: any) => {
-          createComment({ id: data._id, body: formData }).then((datas: any) =>
-            setComments(datas.data)
-          );
+          createComment({ id: _id, body: formData });
+          // .then((datas: any) =>
+          //   setComments(datas.data)
+          // );
           resetField("body");
         })}
       >
@@ -73,7 +77,7 @@ const Comment = ({ data }: { data: portfolio }) => {
           <p>Hozircha izohlar mavjud emas</p>
         </div>
       ) : (
-        comments.map((e, i) => (
+        getComments().map((e, i) => (
           <div className={s.commentContainer} key={i}>
             <LazyImage
               className={s.profileImage}
@@ -94,9 +98,10 @@ const Comment = ({ data }: { data: portfolio }) => {
                 {e.commentAuthor._id.includes(me._id) ? (
                   <FontAwesomeIcon
                     onClick={() => {
-                      deleteComment({ id: data._id, index: i }).then(
-                        (datas: any) => setComments(datas.data)
-                      );
+                      deleteComment({ id: _id, index: i });
+                      // .then(
+                      //   (datas: any) => setComments(datas.data)
+                      // );
                     }}
                     className={s.trashIcon}
                     icon={faTrashCan}

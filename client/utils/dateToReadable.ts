@@ -9,5 +9,8 @@ export function subtractTime(date: string): string {
   if (days >= 1) return `${days} kun avval`;
   else if (hours >= 1) return `${hours} soat avval`;
   else if (minutes >= 1) return `${minutes}  minut avval`;
+  else if (seconds < 0) {
+    return `0 sekund avval`;
+  }
   return `${seconds} sekund avval`;
 }

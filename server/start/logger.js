@@ -9,7 +9,6 @@ module.exports = () => {
     new winston.transports.Console({ level: "error" }),
     new winston.transports.File({ level: "error", filename: "error.log" })
   );
-
   process.on("unhandledRejection", (ex) => {
     throw ex;
   });

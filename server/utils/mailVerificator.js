@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const { User } = require("../models/Model");
 module.exports = {
   sendMail: (email, url) => {
     var status;
@@ -9,8 +10,8 @@ module.exports = {
       port: 465,
       secure: true,
       auth: {
-        user: "ismatovvsanjarbek@gmail.com",
-        pass: "sliznykcxxizrcvw",
+        user: process.env.AUTH_EMAIL,
+        pass: process.env.AUTH_PASSWORD,
       },
     });
     const mailOptions = {
@@ -28,13 +29,13 @@ module.exports = {
     return status;
   },
   generateToken: (email) => jwt.sign({ email }, process.env.SECRET),
-  verifyToken: (token) => {
+  verifyToken: (email, token) => {
     try {
-      const verified = jwt.verify(token, process.env.SECRET);
-      console.log(verified);
+      const { email: decodedEmail } = jwt.verify(token, process.env.SECRET);
+      if (decodedEmail !== email) return;
       return true;
     } catch (ex) {
-      return false;
+      return;
     }
   },
   url: () => process.env.CLIENT_URL || "http://localhost:3000",

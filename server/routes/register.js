@@ -21,7 +21,7 @@ router.post("/send-verification", async (req, res) => {
 });
 
 router.post("/", upload.single("image"), async (req, res) => {
-  const isVerif = verifyToken(req.headers["token"]);
+  const isVerif = verifyToken(req.body.email, req.headers["token"]);
   if (!isVerif) return res.status(400).send("Ushbu email tasdiqlanmagan!");
   const salt = await bcrypt.genSalt();
   const { error } = registerValidator(req.body);
