@@ -1,13 +1,10 @@
-import Footer from "components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import s from "styles/I.module.scss";
+import styles from "styles/Index.module.scss";
 import backGroundImage from "images/back.jpg";
-import Navbar from "components/Navbar";
-import { useRouter } from "next/router";
+import { Navbar, Footer } from "components";
 import { useAuth } from "utils/auth";
-
 const Index = () => {
   const auth = useAuth();
   useEffect(() => {
@@ -16,9 +13,9 @@ const Index = () => {
   return (
     <>
       <Navbar />
-      <div className={s.container}>
-        <div className={s.sectionContainer}>
-          <div className={s.leftContainer}>
+      <div className={styles.container}>
+        <div className={styles.sectionContainer}>
+          <div className={styles.leftContainer}>
             <h1 data-aos="fade-up" data-aos-duration="700">
               Portfolio masterga xush kelibsiz!
             </h1>
@@ -26,7 +23,7 @@ const Index = () => {
               <button
                 data-aos="fade-up"
                 data-aos-duration="700"
-                className={s.link}
+                className={styles.link}
               >
                 Ro`yhatdan o`tish
               </button>
@@ -37,13 +34,13 @@ const Index = () => {
                 data-aos="fade-up"
                 data-aos-duration="700"
                 data-aos-delay="100"
-                className={s.link}
+                className={styles.link}
               >
                 Tizimga kirish
               </button>
             </Link>
           </div>
-          <div className={s.rightContainer}>
+          <div className={styles.rightContainer}>
             <Image
               height={355}
               width={646}
@@ -52,13 +49,13 @@ const Index = () => {
             />
           </div>
         </div>
-        <div className={s.sectionContainer}>
+        <div className={styles.sectionContainer}>
           <h1>Loyiha haqida</h1>
-          <div className={s.grid}>
+          <div className={styles.grid}>
             <div
               data-aos="fade-up"
               data-aos-duration="700"
-              className={s.column}
+              className={styles.column}
             >
               <h3>Loyiha nima uchun?</h3>
               <p>
@@ -70,7 +67,7 @@ const Index = () => {
               data-aos="fade-up"
               data-aos-duration="700"
               data-aos-delay="200"
-              className={s.column}
+              className={styles.column}
             >
               <h3>Kim tomonidan yaratildi?</h3>
               <p>
@@ -82,7 +79,7 @@ const Index = () => {
               data-aos="fade-up"
               data-aos-duration="700"
               data-aos-delay="400"
-              className={s.column}
+              className={styles.column}
             >
               <h3>Ro`yhatdan o`tish majburiymi?</h3>
               <p>
@@ -92,7 +89,7 @@ const Index = () => {
             </div>
           </div>
         </div>
-        <div className={s.footerSection}>
+        <div className={styles.footerSection}>
           <h1 data-aos="fade-up" data-aos-duration="700">
             Nimani kutyapsiz? Hammani lol qoldirish vaqti keldi!
           </h1>
@@ -101,7 +98,7 @@ const Index = () => {
               data-aos="fade-up"
               data-aos-duration="1000"
               data-aos-delay="200"
-              className={s.link}
+              className={styles.link}
             >
               Boshlash
             </button>

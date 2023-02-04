@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { portfolio, user } from "types/portfolio";
+import { Portfolio, User } from "types";
 import { getMe } from "utils/getDetails";
 import Image from "next/image";
 import { serverUrl } from "utils/serverUrl";
-
 const Profile = () => {
   const url = serverUrl();
-  const [data, setData] = useState<portfolio[]>();
-  const [user, setUser] = useState<user>();
+  const [data, setData] = useState<Portfolio[]>();
+  const [user, setUser] = useState<User>();
   useEffect(() => {
-    getMe().then((datas) => {
-      setData(datas.data.portfolios);
-      setUser(datas.data.user);
+    getMe().then(({ data: { portfolios, user } }) => {
+      setData(portfolios);
+      setUser(user);
     });
   }, []);
   return (

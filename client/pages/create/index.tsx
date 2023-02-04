@@ -1,10 +1,7 @@
-import Dialog from "components/Dialog";
-import { useSession } from "next-auth/react";
+import { Dialog } from "components";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
 import { portfolio, useAppSelector } from "state/store";
-
 import s from "styles/L.module.scss";
 import { useAuth } from "utils/auth";
 

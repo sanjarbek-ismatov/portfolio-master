@@ -1,4 +1,4 @@
-export type userType = {
+export type UserSession = {
   expires: string;
   user: {
     email: string;

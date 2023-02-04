@@ -1,8 +1,8 @@
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import s from "styles/D.module.scss";
-import { dialogButtonType } from "types/dialog";
+import styles from "styles/Dialog.module.scss";
+import { DialogProps } from "types";
 const Dialog = ({
   ok,
   cancel,
@@ -12,30 +12,30 @@ const Dialog = ({
   cancelText,
   isError,
   isSuccess,
-}: dialogButtonType) => {
+}: DialogProps) => {
   return (
-    <div className={s.container}>
-      <div className={s.dialog}>
+    <div className={styles.container}>
+      <div className={styles.dialog}>
         <h2>Diqqat!</h2>
-        <div className={s.message}>
+        <div className={styles.message}>
           {isPending && !isError && !isSuccess && (
-            <div className={s.spinner}>
+            <div className={styles.spinner}>
               <span></span>
             </div>
           )}
           {isSuccess && (
-            <div className={s.icon}>
+            <div className={styles.icon}>
               <FontAwesomeIcon icon={faCheck} />
             </div>
           )}
           {isError && (
-            <div className={s.icon}>
+            <div className={styles.icon}>
               <FontAwesomeIcon icon={faX} />
             </div>
           )}
           <p>{message}</p>
         </div>
-        <div className={s.buttons}>
+        <div className={styles.buttons}>
           {ok && !isPending && <button onClick={ok}>{okText || "Ha"}</button>}
           {cancel && (
             <button onClick={cancel}>{cancelText || "Bekor qilish"}</button>

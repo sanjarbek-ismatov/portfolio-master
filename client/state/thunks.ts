@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
 
-import { form } from "types/reducer";
+import { Form } from "types";
 
 import { serverUrl } from "utils/serverUrl";
 const url = serverUrl();
 export const registerThunk = createAsyncThunk(
   "register",
-  async (body: form, thunkAPI) => {
+  async (body: Form, thunkAPI) => {
     try {
       return await Axios.post(`${url}/api/register`, body);
     } catch (error: any) {
@@ -18,7 +18,7 @@ export const registerThunk = createAsyncThunk(
 0;
 export const loginThunk = createAsyncThunk(
   "login",
-  async (body: form, thunkAPI) => {
+  async (body: Form, thunkAPI) => {
     try {
       return await Axios.post(`${url}/api/login`, body);
     } catch (error: any) {

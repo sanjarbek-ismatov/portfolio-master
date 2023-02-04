@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { likeType } from "types/portfolio";
+import { Like } from "types";
 import {
-  loginInitialStateType,
-  portfolioSliceInitialStateType,
-  registerSliceInitialStateType,
-} from "types/reducer";
+  LoginInitialStateType,
+  PortfolioSliceInitialStateType,
+  RegisterSliceInitialStateType,
+} from "types";
 import { likeThunk, loginThunk, portfolioThunk, registerThunk } from "./thunks";
-const initialStateRegister: registerSliceInitialStateType = {
+const initialStateRegister: RegisterSliceInitialStateType = {
   status: false,
   error: "",
 };
-const initialStateLogin: loginInitialStateType = {
+const initialStateLogin: LoginInitialStateType = {
   status: false,
   error: "",
   token: "",
@@ -18,7 +18,7 @@ const initialStateLogin: loginInitialStateType = {
 type initialStateLikeType = {
   status: string | boolean;
   error: string;
-  likes: likeType[];
+  likes: Like[];
 };
 const initialStateLike: initialStateLikeType = {
   status: false,
@@ -67,7 +67,7 @@ export const loginSlice = createSlice({
     });
   },
 });
-const portfolioSliceInitialState: portfolioSliceInitialStateType = {
+const portfolioSliceInitialState: PortfolioSliceInitialStateType = {
   status: false,
   error: "",
 };

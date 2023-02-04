@@ -1,6 +1,6 @@
 import LazyImage from "components/LazyImage";
 import React, { useEffect, useState } from "react";
-import { commentType, portfolio, user } from "types/portfolio";
+import { Comment, Portfolio, User } from "types";
 import { getMe } from "utils/getDetails";
 import { serverUrl } from "utils/serverUrl";
 import s from "styles/Comment.module.scss";
@@ -14,15 +14,14 @@ import {
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { subtractTime } from "utils/dateToReadable";
 
-const Comment = ({ data: { comments, _id } }: { data: portfolio }) => {
+const Comment = ({ data: { comments, _id } }: { data: Portfolio }) => {
   const [createComment, { data: updatedCommentAfterCreate }] =
     useCreateCommentMutation();
   const [deleteComment, { data: updatedCommentAfterDelete }] =
     useDeleteCommentMutation();
-  const { handleSubmit, register, resetField } = useForm<commentType>();
-  const [defaultComments, setCurrentComments] =
-    useState<commentType[]>(comments);
-  const [me, setMe] = useState<user>();
+  const { handleSubmit, register, resetField } = useForm<Comment>();
+  const [defaultComments, setCurrentComments] = useState<Comment[]>(comments);
+  const [me, setMe] = useState<User>();
   useEffect(() => {
     getMe().then(({ data: { user } }) => setMe(user));
   }, []);
@@ -113,5 +112,4 @@ const Comment = ({ data: { comments, _id } }: { data: portfolio }) => {
     </div>
   );
 };
-
 export default Comment;

@@ -4,7 +4,7 @@ import Image from "next/image";
 const Error = () => {
   return (
     <div className={s.container}>
-      <Image src={gif} />
+      <Image alt="404 gif" src={gif} />
       <h1 className={s.center}>Kechirasiz, Siz mavjud emas sahifadasiz!</h1>
     </div>
   );

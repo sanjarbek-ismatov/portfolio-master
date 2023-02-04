@@ -5,16 +5,13 @@ import Footer from "components/Footer";
 import type { portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import s from "styles/M.module.scss";
-import { Main } from "components/Index/Main";
 import { useRouter } from "next/router";
 import Input from "components/Input";
-import Filter from "components/Index/Filter";
+import { Filter } from "components";
 import { filterByKey } from "utils/filterByKey";
-import { PortfolioCard } from "components/Index/Card";
 import { InferGetServerSidePropsType } from "next";
 import LazyImage from "components/LazyImage";
-import Spinner from "components/Spinner";
-import { Description } from "components/Index/Description";
+
 import { GetServerSideProps } from "next";
 export const getServerSideProps: GetServerSideProps<{
   data: portfolio[];
@@ -50,7 +47,7 @@ const Index = ({
       </Head>
       <Navbar />
 
-      <Main>
+      <div className={s.container}>
         <Input
           clear={() => setText("")}
           className={s.input}
@@ -128,7 +125,7 @@ const Index = ({
                   </div>
                 </LazyImage>
 
-                <Description>
+                <div className={s.descContainer}>
                   <div className={s.filterContainer}>
                     {e.used.map((e, i) => (
                       <span
@@ -142,7 +139,7 @@ const Index = ({
                       </span>
                     ))}
                   </div>
-                </Description>
+                </div>
               </div>
             ))
         ) : (
@@ -151,7 +148,7 @@ const Index = ({
             {/* <Spinner size="100" speed="1" position="static" border="5" /> */}
           </div>
         )}
-      </Main>
+      </div>
       {/* <script
         type="text/javascript"
         dangerouslySetInnerHTML={{

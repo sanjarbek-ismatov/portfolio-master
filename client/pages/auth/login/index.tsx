@@ -1,11 +1,10 @@
-import Link from "next/link";
 import s from "styles/L.module.scss";
 import { signIn, useSession } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import Dialog from "components/Dialog";
+import { Dialog } from "components";
 import { useRouter } from "next/router";
 
 import { useLoginUserMutation } from "state/api/portfolioApi";

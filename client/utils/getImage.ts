@@ -1,4 +1,4 @@
-import { portfolio } from "types/portfolio";
+import { Portfolio } from "types";
 import { serverUrl } from "./serverUrl";
 const url = serverUrl();
 // export const getBase64FromUrl = async (url: string) => {
@@ -13,7 +13,7 @@ const url = serverUrl();
 //     };
 //   });
 // };
-export async function fetchAndSendByUrl(data: portfolio[]) {
+export async function fetchAndSendByUrl(data: Portfolio[]) {
   const array: string[] = [];
   data.map(async (e, i) => {
     console.log(e.images[0]);

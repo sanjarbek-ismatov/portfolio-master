@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { portfolio, user } from "types/portfolio";
+import { Portfolio, User } from "types";
 import { getToken } from "utils/getDetails";
 import { serverUrl } from "utils/serverUrl";
 export const useMe = () => {
   const url = serverUrl();
   const [state, setState] = useState<{
-    data: { user: user; portfolios: portfolio[] };
+    data: { user: User; portfolios: Portfolio[] };
   }>();
   useEffect(() => {
     axios

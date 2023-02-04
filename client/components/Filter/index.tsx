@@ -1,9 +1,9 @@
 import { faCheck, faSliders } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { NextRouter, useRouter } from "next/router";
+import { NextRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import s from "styles/Filter.module.scss";
-import { portfolio } from "types/portfolio";
+import { Portfolio } from "types";
 import { filterByUsed, filterToUrl } from "utils/filterByUsed";
 const Filter = ({
   filter,
@@ -11,7 +11,7 @@ const Filter = ({
   filters,
   router,
 }: {
-  filter?: portfolio[];
+  filter?: Portfolio[];
   filters: string[];
   router: NextRouter;
   setFilters: React.Dispatch<React.SetStateAction<string[]>>;

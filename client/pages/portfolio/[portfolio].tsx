@@ -5,23 +5,15 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
 import { portfolio } from "types/portfolio";
 import { serverUrl } from "utils/serverUrl";
 import { Navigation, Pagination } from "swiper";
-import Navbar from "components/Navbar";
-import LazyImage from "components/LazyImage";
+import { Navbar, LazyImage, Footer, Comment } from "components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
-import Comment from "components/portfolio/Comment";
 import { subtractTime } from "utils/dateToReadable";
-import Footer from "components/Footer";
 const Portfolio = ({ data }: { data: portfolio }) => {
-  const router = useRouter();
-
-  // const [likeCount, setLikeCount] = useState(data.likes.length);
   const [createLike, { isLoading, data: likes, error }] =
     usePostLikeByIdMutation();
   if (!data) {

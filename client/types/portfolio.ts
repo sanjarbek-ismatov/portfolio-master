@@ -1,4 +1,4 @@
-export type user = {
+export type User = {
   _id: string;
   image: string;
   firstname: string;
@@ -13,24 +13,24 @@ export type user = {
   githubProfile: string;
   skills: string[];
 };
-export type commentType = {
-  commentAuthor: user;
+export type Comment = {
+  commentAuthor: User;
   body: string;
   date: string;
 };
-export type portfolio = {
+export type Portfolio = {
   _id: string;
   images: string[];
   title: string;
   description: string;
-  author: user;
+  author: User;
   date: string;
   likes: string[];
   used: string[];
-  comments: commentType[];
+  comments: Comment[];
   url: string;
 };
-export type likeType = {
+export type Like = {
   isLiked: boolean;
   count: number;
 };

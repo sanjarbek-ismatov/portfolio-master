@@ -1,9 +1,9 @@
 import { faSearch, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import s from "styles/M.module.scss";
-import type { inputType } from "types/input";
+import { SearchInput } from "types";
 
-const Input = ({ handleChange, value, clear, ...rest }: inputType) => {
+const Input = ({ handleChange, value, clear, ...rest }: SearchInput) => {
   return (
     <div {...rest}>
       <FontAwesomeIcon className={s.icon} icon={faSearch} />

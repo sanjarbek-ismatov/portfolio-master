@@ -1,7 +1,7 @@
 import { NextRouter } from "next/router";
-import { portfolio } from "types/portfolio";
+import { Portfolio } from "types";
 
-export const filterByUsed = (data: portfolio[]) => {
+export const filterByUsed = (data: Portfolio[]) => {
   return new Promise((resolve, reject) => {
     const all: string[] = [];
     data.map((e) => all.push(...e.used));

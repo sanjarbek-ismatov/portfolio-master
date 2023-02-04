@@ -1,9 +1,6 @@
-import {
-  BaseQueryFn,
-  BaseQueryResult,
-} from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import { BaseQueryResult } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { commentType } from "types/portfolio";
+import { Comment } from "types";
 import { getToken } from "utils/getDetails";
 import { serverUrl } from "utils/serverUrl";
 const url = serverUrl();
@@ -63,10 +60,7 @@ export const portfolioApi = createApi({
       get registerUser() {
         return this._registerUser;
       },
-      _createComment: build.mutation<
-        commentType[],
-        { id: string; body: string }
-      >({
+      _createComment: build.mutation<Comment[], { id: string; body: string }>({
         query(arg) {
           return {
             url: `/portfolio/comment/${arg.id}`,
@@ -81,10 +75,7 @@ export const portfolioApi = createApi({
       get createComment() {
         return this._createComment;
       },
-      _deleteComment: build.mutation<
-        commentType[],
-        { id: string; index: number }
-      >({
+      _deleteComment: build.mutation<Comment[], { id: string; index: number }>({
         query: ({ id, index }) => ({
           method: "DELETE",
           url: `/portfolio/comment/delete/${id}?index=${index}`,

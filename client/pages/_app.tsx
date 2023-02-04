@@ -2,13 +2,12 @@ import "styles/globals.scss";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { useEffect } from "react";
-
 import { Provider } from "react-redux";
 import { store } from "state/store";
 import { Session } from "next-auth";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import Layout from "components/Layout";
+import { Layout } from "components";
 // import { ThemeContext } from "context/themeContext";
 // import { useTheme } from "hooks/useTheme";
 function MyApp({

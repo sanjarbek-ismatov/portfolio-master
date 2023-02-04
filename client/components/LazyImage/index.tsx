@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, ReactNode, useState } from "react";
 import Image from "next/image";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 import s from "styles/Image.module.scss";
 const LazyImage = ({
   url,
