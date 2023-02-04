@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
-import { portfolio } from "types/portfolio";
+import type { Portfolio } from "types";
 import { serverUrl } from "utils/serverUrl";
 import { Navigation, Pagination } from "swiper";
 import { Navbar, LazyImage, Footer, Comment } from "components";
@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
 import { subtractTime } from "utils/dateToReadable";
-const Portfolio = ({ data }: { data: portfolio }) => {
+const Portfolio = ({ data }: { data: Portfolio }) => {
   const [createLike, { isLoading, data: likes, error }] =
     usePostLikeByIdMutation();
   if (!data) {
@@ -120,10 +120,10 @@ const Portfolio = ({ data }: { data: portfolio }) => {
   );
 };
 export const getServerSideProps: GetServerSideProps<{
-  data: portfolio;
+  data: Portfolio;
 }> = async ({ params }) => {
   const url = serverUrl();
-  const data: portfolio = await fetch(
+  const data: Portfolio = await fetch(
     `${url}/api/portfolio/${params?.portfolio}`
   ).then((res) => res.json());
 

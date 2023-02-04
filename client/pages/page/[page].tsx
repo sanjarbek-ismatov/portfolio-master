@@ -2,7 +2,7 @@ import Navbar from "components/Navbar";
 import Head from "next/head";
 import React, { useMemo, useState } from "react";
 import Footer from "components/Footer";
-import type { portfolio } from "types/portfolio";
+import type { Portfolio } from "types";
 import { serverUrl } from "utils/serverUrl";
 import s from "styles/M.module.scss";
 import { useRouter } from "next/router";
@@ -14,11 +14,11 @@ import LazyImage from "components/LazyImage";
 
 import { GetServerSideProps } from "next";
 export const getServerSideProps: GetServerSideProps<{
-  data: portfolio[];
+  data: Portfolio[];
 }> = async () => {
   const url = serverUrl();
   const res = await fetch(`${url}/api/portfolio/all`);
-  const data: portfolio[] = await res.json();
+  const data: Portfolio[] = await res.json();
   return {
     props: {
       data: data,
