@@ -21,8 +21,8 @@ import Footer from "components/Footer";
 const Portfolio = ({ data }: { data: portfolio }) => {
   const router = useRouter();
 
-  const [likeCount, setLikeCount] = useState(data.likes.length);
-  const [createLike, { isLoading, data: likedata, error }] =
+  // const [likeCount, setLikeCount] = useState(data.likes.length);
+  const [createLike, { isLoading, data: likes, error }] =
     usePostLikeByIdMutation();
   if (!data) {
     return <p>Sahifa mavjud emas</p>;
@@ -98,15 +98,11 @@ const Portfolio = ({ data }: { data: portfolio }) => {
               </div>
               <div>
                 <button
-                  onClick={() =>
-                    createLike(data._id).then(({ data }: any) =>
-                      setLikeCount(data.count)
-                    )
-                  }
+                  onClick={() => createLike(data._id)}
                   className={s.linkButton}
                 >
                   <FontAwesomeIcon className="icon" icon={faHeart} />{" "}
-                  {likeCount}
+                  {likes?.count || data.likes.length}
                 </button>
                 <a href={data.url} target="_blank" rel="noreferrer">
                   <button className={s.linkButton}>Ochish</button>

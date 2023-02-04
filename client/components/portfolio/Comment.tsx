@@ -20,10 +20,9 @@ const Comment = ({ data: { comments, _id } }: { data: portfolio }) => {
   const [deleteComment, { data: updatedCommentAfterDelete }] =
     useDeleteCommentMutation();
   const { handleSubmit, register, resetField } = useForm<commentType>();
+  const [defaultComments, setCurrentComments] =
+    useState<commentType[]>(comments);
   const [me, setMe] = useState<user>();
-  const getComments = () => {
-    return updatedCommentAfterDelete || updatedCommentAfterCreate || comments;
-  };
   useEffect(() => {
     getMe().then(({ data: { user } }) => setMe(user));
   }, []);
@@ -36,10 +35,9 @@ const Comment = ({ data: { comments, _id } }: { data: portfolio }) => {
       <form
         method="PUT"
         onSubmit={handleSubmit((formData: any) => {
-          createComment({ id: _id, body: formData });
-          // .then((datas: any) =>
-          //   setComments(datas.data)
-          // );
+          createComment({ id: _id, body: formData }).then((datas: any) =>
+            setCurrentComments(datas.data)
+          );
           resetField("body");
         })}
       >
@@ -72,12 +70,12 @@ const Comment = ({ data: { comments, _id } }: { data: portfolio }) => {
       </form>
       <h2>Izohlar</h2>
 
-      {!comments.length ? (
+      {!defaultComments || !defaultComments.length ? (
         <div className={s.commentContainer}>
           <p>Hozircha izohlar mavjud emas</p>
         </div>
       ) : (
-        getComments().map((e, i) => (
+        defaultComments.map((e, i) => (
           <div className={s.commentContainer} key={i}>
             <LazyImage
               className={s.profileImage}
@@ -98,10 +96,9 @@ const Comment = ({ data: { comments, _id } }: { data: portfolio }) => {
                 {e.commentAuthor._id.includes(me._id) ? (
                   <FontAwesomeIcon
                     onClick={() => {
-                      deleteComment({ id: _id, index: i });
-                      // .then(
-                      //   (datas: any) => setComments(datas.data)
-                      // );
+                      deleteComment({ id: _id, index: i }).then((datas: any) =>
+                        setCurrentComments(datas.data)
+                      );
                     }}
                     className={s.trashIcon}
                     icon={faTrashCan}
