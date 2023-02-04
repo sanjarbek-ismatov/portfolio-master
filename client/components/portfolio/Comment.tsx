@@ -12,6 +12,7 @@ import {
   useDeleteCommentMutation,
 } from "state/api/portfolioApi";
 import { faTrash, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { subtractTime } from "utils/dateToReadable";
 
 const Comment = ({ data }: { data: portfolio }) => {
   const [createComment, { status: queryStatus, data: queryData }] =
@@ -102,7 +103,7 @@ const Comment = ({ data }: { data: portfolio }) => {
                   />
                 ) : null}
               </h5>
-              <p>{new Date(e.date).toLocaleDateString()}</p>
+              <p>{subtractTime(e.date)}</p>
             </div>
           </div>
         ))

@@ -14,14 +14,13 @@ import Navbar from "components/Navbar";
 import LazyImage from "components/LazyImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
-
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
 import Comment from "components/portfolio/Comment";
 import { subtractTime } from "utils/dateToReadable";
 import Footer from "components/Footer";
 const Portfolio = ({ data }: { data: portfolio }) => {
   const router = useRouter();
-  useEffect(() => subtractTime(data.date), [data.date]);
+
   const [likeCount, setLikeCount] = useState(data.likes.length);
   const [createLike, { isLoading, data: likedata, error }] =
     usePostLikeByIdMutation();
@@ -30,7 +29,6 @@ const Portfolio = ({ data }: { data: portfolio }) => {
   }
 
   const url = serverUrl();
-
   return (
     <>
       <Navbar />
@@ -42,10 +40,10 @@ const Portfolio = ({ data }: { data: portfolio }) => {
               <h1>{data.title}</h1>
               <div className={s.timeContainer}>
                 <p>
-                  <span>{new Date(data.date).toLocaleDateString()}</span>
                   <span>
-                    {new Date(data.date).getHours()}:
-                    {new Date(data.date).getMinutes()}
+                    {/* {new Date(data.date).getHours()}:
+                    {new Date(data.date).getMinutes()} */}
+                    {subtractTime(data.date)}
                   </span>
                 </p>
               </div>
