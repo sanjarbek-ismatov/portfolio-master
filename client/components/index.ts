@@ -9,6 +9,7 @@ import LazyImage from "./LazyImage";
 import Navbar from "./Navbar";
 import Spinner from "./Spinner";
 import Head from "./Head";
+import NavbarProfile from "./Navbar/NavbarProfile";
 export {
   Comment,
   Description,
@@ -21,4 +22,5 @@ export {
   Navbar,
   Spinner,
   Head,
+  NavbarProfile,
 };

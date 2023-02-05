@@ -1,0 +1,29 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  .background {
+    background-color: #e5e5e5;
+    width: 100%;
+    min-height: 100vh;
+    margin-top: 130px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .rowLeft {
+      position: relative;
+      top: -54px;
+      .absoluteTextContainer {
+        position: absolute;
+        left: 160px;
+      }
+      .socialLinksContainer {
+        .socialIcon {
+          height: 10px;
+        }
+      }
+    }
+    .rowRight {
+      margin-top: 100px;
+    }
+  }
+}

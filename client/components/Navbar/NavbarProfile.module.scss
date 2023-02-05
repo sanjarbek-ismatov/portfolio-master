@@ -1,0 +1,11 @@
+.nav {
+  width: 100%;
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid #cccccc;
+  justify-content: space-between;
+  .backIcon {
+    height: 30px;
+    color: #747474;
+  }
+}
