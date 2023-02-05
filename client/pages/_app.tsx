@@ -7,7 +7,7 @@ import { store } from "state/store";
 import { Session } from "next-auth";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import { Layout } from "components";
+import { Head, Layout } from "components";
 // import { ThemeContext } from "context/themeContext";
 // import { useTheme } from "hooks/useTheme";
 function MyApp({
@@ -26,6 +26,7 @@ function MyApp({
       <Provider store={store}>
         {/* <ThemeContext.Provider value={{ theme, changeTheme, allThemes }}> */}
         <Layout>
+          <Head />
           <Component {...pageProps} />
         </Layout>
         {/* </ThemeContext.Provider> */}

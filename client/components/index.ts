@@ -8,6 +8,7 @@ import Layout from "./Layout";
 import LazyImage from "./LazyImage";
 import Navbar from "./Navbar";
 import Spinner from "./Spinner";
+import Head from "./Head";
 export {
   Comment,
   Description,
@@ -19,4 +20,5 @@ export {
   LazyImage,
   Navbar,
   Spinner,
+  Head,
 };

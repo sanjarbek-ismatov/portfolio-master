@@ -13,3 +13,9 @@ export type DialogProps = {
   message: string;
   isPending?: boolean;
 };
+export type HeadProps = {
+  title?: string;
+  description?: string;
+  image?: string;
+  keywords?: string;
+};

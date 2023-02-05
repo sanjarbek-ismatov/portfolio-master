@@ -1,4 +1,4 @@
-export type { DialogProps, SearchInput } from "./components";
+export type { DialogProps, SearchInput, HeadProps } from "./components";
 export type { Comment, Portfolio, User, Like } from "./portfolio";
 export type {
   RegisterSliceInitialStateType,

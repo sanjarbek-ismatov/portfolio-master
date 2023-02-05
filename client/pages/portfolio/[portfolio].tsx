@@ -8,7 +8,7 @@ import Link from "next/link";
 import type { Portfolio } from "types";
 import { serverUrl } from "utils/serverUrl";
 import { Navigation, Pagination } from "swiper";
-import { Navbar, LazyImage, Footer, Comment } from "components";
+import { Navbar, LazyImage, Footer, Comment, Head } from "components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
@@ -23,8 +23,15 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
   const url = serverUrl();
   return (
     <>
+      <Head
+        title={`${data.title} - Portfolio`}
+        description={data.description}
+        image={`${url}/image/${data.images[0]}`}
+        keywords={`${data.title}, ${data.author.firstname}, ${data.used.join(
+          ", "
+        )}`}
+      />
       <Navbar />
-
       <div className={s.container}>
         <div className={s.main}>
           <div className={s.card}>
