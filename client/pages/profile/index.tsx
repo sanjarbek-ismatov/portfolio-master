@@ -24,67 +24,81 @@ const Profile = () => {
       <NavbarProfile />
       <div className={styles.container}>
         <div className={styles.background}>
-          <div className={styles.rowLeft}>
-            {user && (
-              <>
-                <div className={styles.absoluteTextContainer}>
-                  <h1>
-                    {user.firstname} {user.lastname}
-                  </h1>
-                  <p>@{user.username}</p>
+          <div className={styles.innerContainer}>
+            <div className={styles.rowLeft}>
+              {user && (
+                <>
+                  <div className={styles.absoluteTextContainer}>
+                    <Image
+                      height={200}
+                      width={200}
+                      src={`${url}/image/${user.image}`}
+                      className={styles.image}
+                      alt="profile"
+                      unoptimized
+                    />
+                    <div>
+                      <h1>
+                        {user.firstname} {user.lastname}
+                      </h1>
+                      <p>@{user.username}</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.socialLinksContainer}>
+                    <FontAwesomeIcon
+                      className={styles.socialIcon}
+                      icon={faGithub}
+                    />{" "}
+                    {user.githubProfile}
+                    <br />
+                    <FontAwesomeIcon
+                      className={styles.socialIcon}
+                      icon={faTelegram}
+                    />{" "}
+                    {user.telegramProfile}
+                    <br />
+                    <FontAwesomeIcon
+                      className={styles.socialIcon}
+                      icon={faEnvelope}
+                    />{" "}
+                    {user.email}
+                  </div>
+                  <div className={styles.skills}>
+                    <h2>Skillari</h2>
+                    {user.skills.map((e, i) => (
+                      <p key={i}> - {e}</p>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+            <div className={styles.rowRight}>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam
+                expedita ducimus sint tempora saepe soluta veritatis facilis
+                odio ipsum. Error, itaque? Expedita, libero quod eveniet ducimus
+                aliquam est aliquid earum.
+              </p>
+              <h2 className={styles.title}>Portfoliolari:</h2>
+              {data?.map((e, i) => (
+                <div key={i} className={styles.portolioContainer}>
+                  <Image
+                    height={50}
+                    width={50}
+                    loader={() => `${url}/image/${e.images[0]}`}
+                    unoptimized
+                    priority
+                    src={`${url}/image/${e.images[0]}`}
+                    alt="portfolio"
+                  />
+                  <div className={styles.content}>
+                    <h1>{e.title}</h1>
+                    <Link href={``}>Ochish</Link>
+                  </div>
                 </div>
-                <Image
-                  height={100}
-                  width={100}
-                  src={`${url}/image/${user.image}`}
-                  alt="profile"
-                  unoptimized
-                />
-                <div className={styles.socialLinksContainer}>
-                  <FontAwesomeIcon
-                    className={styles.socialIcon}
-                    icon={faGithub}
-                  />{" "}
-                  {user.githubProfile}
-                  <br />
-                  <FontAwesomeIcon
-                    className={styles.socialIcon}
-                    icon={faTelegram}
-                  />{" "}
-                  {user.telegramProfile}
-                  <br />
-                  <FontAwesomeIcon
-                    className={styles.socialIcon}
-                    icon={faEnvelope}
-                  />{" "}
-                  {user.email}
-                </div>
-                <h2>Skillari</h2>
-                {user.skills.map((e, i) => (
-                  <p key={i}> - {e}</p>
-                ))}
-              </>
-            )}
-          </div>
-          <div className={styles.rowRight}>
-            <p>{user?.description}</p>
-            {data?.map((e, i) => (
-              <div key={i} className={styles.portolioContainer}>
-                <Image
-                  height={50}
-                  width={50}
-                  loader={() => `${url}/image/${e.images[0]}`}
-                  unoptimized
-                  priority
-                  src={`${url}/image/${e.images[0]}`}
-                  alt="portfolio"
-                />
-                <div className={styles.content}>
-                  <h1>{e.title}</h1>
-                  <Link href={``}>Ochish</Link>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

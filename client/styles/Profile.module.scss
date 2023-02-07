@@ -1,29 +1,76 @@
 .container {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   .background {
     background-color: #e5e5e5;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     margin-top: 130px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    .rowLeft {
-      position: relative;
-      top: -54px;
-      .absoluteTextContainer {
-        position: absolute;
-        left: 160px;
+
+    .innerContainer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: left;
+      max-width: 1200px;
+      margin: auto;
+      width: 100%;
+      .rowLeft {
+        position: relative;
+        width: 275px;
+        color: #353535;
+        .absoluteTextContainer {
+          position: absolute;
+          left: 0px;
+          top: -100px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 550px;
+          div {
+            color: #353535;
+            h1 {
+              margin-top: -25px;
+            }
+            p {
+              margin-top: 10px;
+            }
+          }
+        }
+        .socialLinksContainer {
+          margin-top: 115px;
+          line-height: 25px;
+          color: #353535;
+          .socialIcon {
+            height: 12px;
+          }
+        }
+        .skills {
+          margin-top: 20px;
+          line-height: 25px;
+        }
       }
-      .socialLinksContainer {
-        .socialIcon {
-          height: 10px;
+      .rowRight {
+        p {
+          color: #646464;
+        }
+        margin-top: 40px;
+        width: 925px;
+        .title {
+          color: #353535;
+          margin: 20px 0;
         }
       }
     }
-    .rowRight {
-      margin-top: 100px;
-    }
   }
+}
+.portolioContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  div {
+    margin-left: 20px;
+  }
+}
+.image {
+  border-radius: 50%;
 }
