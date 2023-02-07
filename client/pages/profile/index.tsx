@@ -65,7 +65,7 @@ const Profile = () => {
                     {user.email}
                   </div>
                   <div className={styles.skills}>
-                    <h2>Skillari</h2>
+                    <h2>Skillari:</h2>
                     {user.skills.map((e, i) => (
                       <p key={i}> - {e}</p>
                     ))}
@@ -74,7 +74,7 @@ const Profile = () => {
               )}
             </div>
             <div className={styles.rowRight}>
-              <p>
+              <p className={styles.p}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam
                 expedita ducimus sint tempora saepe soluta veritatis facilis
                 odio ipsum. Error, itaque? Expedita, libero quod eveniet ducimus
@@ -83,18 +83,17 @@ const Profile = () => {
               <h2 className={styles.title}>Portfoliolari:</h2>
               {data?.map((e, i) => (
                 <div key={i} className={styles.portolioContainer}>
-                  <Image
-                    height={50}
-                    width={50}
-                    loader={() => `${url}/image/${e.images[0]}`}
-                    unoptimized
-                    priority
-                    src={`${url}/image/${e.images[0]}`}
-                    alt="portfolio"
-                  />
+                  <div
+                    style={{
+                      backgroundImage: `url(${url + "/image/" + e.images[0]})`,
+                    }}
+                    className={styles.image}
+                  ></div>
                   <div className={styles.content}>
-                    <h1>{e.title}</h1>
-                    <Link href={``}>Ochish</Link>
+                    <p>{e.title}</p>
+                    <Link href={``}>
+                      <a className={styles.link}>Ochish</a>
+                    </Link>
                   </div>
                 </div>
               ))}

@@ -1,15 +1,14 @@
 .container {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   .background {
     background-color: #e5e5e5;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     margin-top: 130px;
 
     .innerContainer {
       display: flex;
-      flex-wrap: wrap;
       justify-content: left;
       max-width: 1200px;
       margin: auto;
@@ -26,13 +25,18 @@
           align-items: center;
           justify-content: space-between;
           width: 550px;
+          .image {
+            border-radius: 50%;
+          }
           div {
             color: #353535;
             h1 {
               margin-top: -25px;
             }
             p {
-              margin-top: 10px;
+              color: #646464;
+              margin-top: 15px;
+              font-size: 14px;
             }
           }
         }
@@ -41,20 +45,30 @@
           line-height: 25px;
           color: #353535;
           .socialIcon {
-            height: 12px;
+            height: 14px;
           }
         }
         .skills {
           margin-top: 20px;
           line-height: 25px;
+          h2 {
+            margin-bottom: 15px;
+          }
+          p {
+            margin: 2px 0 0 20px;
+          }
         }
       }
       .rowRight {
-        p {
+        .p {
           color: #646464;
+          max-width: 500px;
+          width: 100%;
+          line-height: 25px;
+          margin: 10px;
         }
         margin-top: 40px;
-        width: 925px;
+        max-width: 925px;
         .title {
           color: #353535;
           margin: 20px 0;
@@ -65,12 +79,59 @@
 }
 .portolioContainer {
   display: flex;
-  flex-wrap: wrap;
   width: 100%;
+  margin: 5px 0 5px 10px;
+  .image {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    p {
+      margin: 0px !important;
+      color: #111 !important;
+    }
+    .link {
+      text-decoration: none;
+    }
+  }
   div {
-    margin-left: 20px;
+    margin-left: 10px;
+    width: 70%;
   }
 }
-.image {
-  border-radius: 50%;
+
+@media (max-width: 1300px) {
+  .innerContainer {
+    max-width: 1000px !important;
+  }
+}
+@media (max-width: 1100px) {
+  .innerContainer {
+    max-width: 800px !important;
+  }
+}
+@media (max-width: 900px) {
+  .innerContainer {
+    max-width: 100% !important;
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 600px) {
+  .absoluteTextContainer {
+    width: 100vw !important;
+    top: -70px !important;
+    left: 0 !important;
+    div {
+      width: 100%;
+      margin-left: 20px;
+      h1 {
+        font-size: 20px;
+        margin-top: 12px !important;
+      }
+    }
+  }
 }
