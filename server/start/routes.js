@@ -4,6 +4,7 @@ const files = require("../routes/files");
 const login = require("../routes/login");
 const error = require("../middleware/error");
 const user = require("../routes/user");
+const verify = require("../routes/verify");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
 const helmet = require("helmet");
@@ -32,5 +33,6 @@ module.exports = (app) => {
   app.use("/", files);
   app.use("/api/portfolio", portfolio);
   app.use("/api/user", user);
+  app.use("/api/verify-token", verify);
   app.use(error);
 };

@@ -6,3 +6,13 @@ export const useAuth = () => {
   const token = getToken();
   return token || data;
 };
+export const tokenValidator = async (token: string) => {
+  return new Promise(async (resolve, reject) => {
+    const res = await fetch(`${serverUrl()}/api/verify-token`, {
+      method: "POST",
+      headers: { ["x-token"]: token },
+    });
+    const result = await res.json();
+    resolve(result);
+  });
+};

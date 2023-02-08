@@ -32,4 +32,5 @@ router.post("/", multer().any(), async (req, res) => {
     .setHeader("x-token", token)
     .json({ message: "Login bajarildi!", code: 200 });
 });
+
 module.exports = router;

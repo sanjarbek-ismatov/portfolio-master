@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Portfolio, User } from "types";
 import { getMe } from "utils/getDetails";
 import Image from "next/image";
 import { serverUrl } from "utils/serverUrl";
+import { useAuth } from "utils/auth";
 import { NavbarProfile } from "components";
 import styles from "styles/Profile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
+import { useRouter } from "next/router";
 const Profile = () => {
   const url = serverUrl();
+  const isAuth = useAuth();
+  const router = useRouter();
   const [data, setData] = useState<Portfolio[]>();
   const [user, setUser] = useState<User>();
   useEffect(() => {
@@ -19,6 +23,7 @@ const Profile = () => {
       setUser(user);
     });
   }, []);
+
   return (
     <>
       <NavbarProfile />
@@ -74,18 +79,14 @@ const Profile = () => {
               )}
             </div>
             <div className={styles.rowRight}>
-              <p className={styles.p}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam
-                expedita ducimus sint tempora saepe soluta veritatis facilis
-                odio ipsum. Error, itaque? Expedita, libero quod eveniet ducimus
-                aliquam est aliquid earum.
-              </p>
+              <p className={styles.p}>{user?.description}</p>
               <h2 className={styles.title}>Portfoliolari:</h2>
               {data?.map((e, i) => (
                 <div key={i} className={styles.portolioContainer}>
                   <div
                     style={{
                       backgroundImage: `url(${url + "/image/" + e.images[0]})`,
+                      backgroundPosition: "center",
                     }}
                     className={styles.image}
                   ></div>
