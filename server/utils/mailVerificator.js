@@ -2,6 +2,12 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const { User } = require("../models/Model");
 module.exports = {
+  /**
+   * @description This function sends email to user
+   * @param {string} email
+   * @param {string} url
+   * @returns {string} status
+   */
   sendMail: (email, url) => {
     var status;
     const transporter = nodemailer.createTransport({
@@ -28,7 +34,18 @@ module.exports = {
     transporter.sendMail(mailOptions, (err, info) => (status = err));
     return status;
   },
+  /**
+   * @description This function generates token
+   * @param {string} email
+   * @returns {string} token
+   */
   generateToken: (email) => jwt.sign({ email }, process.env.SECRET),
+  /**
+   * @description This function verifies token
+   * @param {string} email
+   * @param {string} token
+   * @returns {boolean}
+   */
   verifyToken: (email, token) => {
     try {
       const { email: decodedEmail } = jwt.verify(token, process.env.SECRET);
@@ -38,5 +55,9 @@ module.exports = {
       return;
     }
   },
+  /**
+   * @description This function returns url
+   * @returns {string} url
+   */
   url: () => process.env.CLIENT_URL || "http://localhost:3000",
 };

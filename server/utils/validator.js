@@ -1,4 +1,8 @@
 const Joi = require("joi");
+/**
+ * @param {object} body
+ * @returns {object}
+ */
 function registerValidator(body) {
   const valid = Joi.object({
     firstname: Joi.string(),
@@ -13,6 +17,10 @@ function registerValidator(body) {
   });
   return valid.validate(body);
 }
+/**
+ * @param {object} body
+ * @returns {object}
+ */
 function loginValidator(body) {
   const valid = Joi.object({
     email: Joi.string().required().min(3),
@@ -20,6 +28,10 @@ function loginValidator(body) {
   });
   return valid.validate(body);
 }
+/**
+ * @param {object} body
+ * @returns {object}
+ */
 function portfolioValidator(body) {
   const valid = Joi.object({
     title: Joi.string().required(),

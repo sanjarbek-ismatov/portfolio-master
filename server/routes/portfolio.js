@@ -5,10 +5,18 @@ const { Portfolio, User } = require("../models/Model");
 const { portfolioValidator } = require("../utils/validator");
 const nodemailer = require("nodemailer");
 const router = express.Router();
+
+// @route   GET /api/portfolio/all
+// @desc    Get all portfolios
+// @access  Public
 router.get("/all", async (req, res) => {
   const portfolios = await Portfolio.find();
   res.status(200).send(portfolios);
 });
+
+// @route   GET /api/portfolio/:id
+// @desc    Get portfolio by id
+// @access  Public
 router.get("/:id", async (req, res) => {
   const query = req.params.id.split("_")[1].replace("+", " ");
   const portfolio = await Portfolio.findOne({ title: query });
@@ -17,6 +25,10 @@ router.get("/:id", async (req, res) => {
   }
   res.status(200).send(portfolio);
 });
+
+// @route   POST /api/portfolio/create
+// @desc    Create new portfolio
+// @access  Private
 router.post("/create", upload.array("images"), auth, async (req, res) => {
   const { error } = portfolioValidator(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -35,6 +47,10 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
   await newPortfolio.save();
   res.status(201).send("Success");
 });
+
+// @route   PUT /api/portfolio/like/:id
+// @desc    Like portfolio
+// @access  Private
 router.put("/like/:id", auth, async (req, res) => {
   const portfolio = await Portfolio.findOne({ _id: req.params.id });
   if (portfolio.likes.includes(req.id)) {

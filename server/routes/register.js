@@ -10,6 +10,21 @@ const {
   verifyToken,
 } = require("../utils/mailVerificator");
 const router = express.Router();
+
+/**
+ * @swagger
+ * /auth/send-verification:
+ *  post:
+ *    description: This should send verification email
+ *    parameters:
+ *      - name: email
+ *        in: body
+ *        required: true
+ *        type: string
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
 router.post("/send-verification", async (req, res) => {
   if (!req.body.email) return res.status(400).send("Bad request!");
   const token = generateToken(req.body.email);
@@ -20,6 +35,36 @@ router.post("/send-verification", async (req, res) => {
   res.status(200).send(true);
 });
 
+/**
+ * @swagger
+ * /auth/register:
+ *  post:
+ *    description: This should register user
+ *    parameters:
+ *      - name: email
+ *        in: body
+ *        required: true
+ *        type: string
+ *      - name: username
+ *        in: body
+ *        required: true
+ *        type: string
+ *      - name: password
+ *        in: body
+ *        required: true
+ *        type: string
+ *      - name: image
+ *        in: formData
+ *        required: false
+ *        type: file
+ *      - name: token
+ *        in: header
+ *        required: true
+ *        type: string
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
 router.post("/", upload.single("image"), async (req, res) => {
   const isVerif = verifyToken(req.body.email, req.headers["token"]);
   if (!isVerif) return res.status(400).send("Ushbu email tasdiqlanmagan!");

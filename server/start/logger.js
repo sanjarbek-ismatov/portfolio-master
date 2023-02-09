@@ -1,3 +1,8 @@
+// this file is for handling the error
+// we use winston for handling the error
+// we use express-async-errors for handling the error in async function
+// we use process.on for handling the error in promise
+
 require("express-async-errors");
 const winston = require("winston");
 module.exports = () => {
