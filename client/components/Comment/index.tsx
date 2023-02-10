@@ -13,6 +13,7 @@ import {
 } from "state/api/portfolioApi";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { subtractTime } from "utils/dateToReadable";
+import Link from "next/link";
 
 const Comment = ({ data: { comments, _id } }: { data: Portfolio }) => {
   const [createComment, { data: updatedCommentAfterCreate }] =
@@ -23,50 +24,57 @@ const Comment = ({ data: { comments, _id } }: { data: Portfolio }) => {
   const [defaultComments, setCurrentComments] = useState<Comment[]>(comments);
   const [me, setMe] = useState<User>();
   useEffect(() => {
-    getMe().then(({ data: { user } }) => setMe(user));
+    getMe().then((data) => typeof data !== "boolean" && setMe(data.data.user));
   }, []);
   const url = serverUrl();
-  if (!me) {
-    return null;
-  }
+
   return (
     <div>
-      <form
-        method="PUT"
-        onSubmit={handleSubmit((formData: any) => {
-          createComment({ id: _id, body: formData }).then((datas: any) =>
-            setCurrentComments(datas.data)
-          );
-          resetField("body");
-        })}
-      >
+      {me ? (
+        <form
+          method="PUT"
+          onSubmit={handleSubmit((formData: any) => {
+            createComment({ id: _id, body: formData }).then((datas: any) =>
+              setCurrentComments(datas.data)
+            );
+            resetField("body");
+          })}
+        >
+          <div className={s.commentContainer}>
+            <LazyImage
+              className={s.profileImage}
+              width={50}
+              height={50}
+              spinnerOptions={{
+                size: "50",
+                speed: "1",
+                border: "2",
+                position: "static",
+              }}
+              filename={me?.image}
+              url={url}
+            />{" "}
+            <input
+              autoComplete="off"
+              className={s.input}
+              {...register("body")}
+              type="text"
+              required
+              placeholder="Izoh yozib qoldiring"
+            />
+            <button type="submit" className={s.iconContainer}>
+              <FontAwesomeIcon className={s.icon} icon={faComment} />
+            </button>
+          </div>
+        </form>
+      ) : (
         <div className={s.commentContainer}>
-          <LazyImage
-            className={s.profileImage}
-            width={50}
-            height={50}
-            spinnerOptions={{
-              size: "50",
-              speed: "1",
-              border: "2",
-              position: "static",
-            }}
-            filename={me?.image}
-            url={url}
-          />{" "}
-          <input
-            autoComplete="off"
-            className={s.input}
-            {...register("body")}
-            type="text"
-            required
-            placeholder="Izoh yozib qoldiring"
-          />
-          <button type="submit" className={s.iconContainer}>
-            <FontAwesomeIcon className={s.icon} icon={faComment} />
-          </button>
+          <p>Izoh yozish uchun tizimga kiring!</p>
+          <Link href="/auth/login">
+            <a style={{ margin: "0 10px" }}>Kirish</a>
+          </Link>
         </div>
-      </form>
+      )}
       <h2>Izohlar</h2>
 
       {!defaultComments || !defaultComments.length ? (
@@ -92,7 +100,7 @@ const Comment = ({ data: { comments, _id } }: { data: Portfolio }) => {
             <div className={s.details}>
               <h5>
                 {e.body}{" "}
-                {e.commentAuthor._id.includes(me._id) ? (
+                {me && e.commentAuthor._id.includes(me._id) ? (
                   <FontAwesomeIcon
                     onClick={() => {
                       deleteComment({ id: _id, index: i }).then((datas: any) =>

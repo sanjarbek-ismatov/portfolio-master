@@ -3,13 +3,17 @@ import { serverUrl } from "./serverUrl";
 import axios from "axios";
 const url = serverUrl();
 export async function getMe() {
-  const data: { data: { user: User; portfolios: Portfolio[] } } =
-    await axios.get(`${url}/api/user/me`, {
-      headers: {
-        ["x-token"]: localStorage.token,
-      },
-    });
-  return data;
+  try {
+    const data: { data: { user: User; portfolios: Portfolio[] } } =
+      await axios.get(`${url}/api/user/me`, {
+        headers: {
+          ["x-token"]: localStorage.token,
+        },
+      });
+    return data;
+  } catch (ex) {
+    return false;
+  }
 }
 export const getToken = () => {
   if (typeof window !== "undefined") {

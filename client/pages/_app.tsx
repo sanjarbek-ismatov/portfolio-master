@@ -17,17 +17,19 @@ function MyApp({
 }: AppProps & { pageProps: { session: Session } }) {
   const router = useRouter();
   useEffect(() => {
-    Aos.init();
-    if (process.env.NODE_ENV === "production") {
-      console.log = (...val) => {};
-    }
-
-    tokenValidator(getToken()).then((data) => {
-      if (!data) {
-        localStorage.clear();
-        router.replace("/auth/login");
+    return () => {
+      Aos.init();
+      if (process.env.NODE_ENV === "production") {
+        console.log = (...val) => {};
       }
-    });
+
+      tokenValidator(getToken()).then((data) => {
+        if (!data) {
+          localStorage.clear();
+          router.reload();
+        }
+      });
+    };
   }, []);
 
   return (

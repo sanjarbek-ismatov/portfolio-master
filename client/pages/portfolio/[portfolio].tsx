@@ -13,9 +13,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
 import { subtractTime } from "utils/dateToReadable";
+import { useState } from "react";
 const Portfolio = ({ data }: { data: Portfolio }) => {
-  const [createLike, { isLoading, data: likes, error }] =
-    usePostLikeByIdMutation();
+  const [likes, setLikes] = useState(data.likes.length);
+  const [createLike] = usePostLikeByIdMutation();
   if (!data) {
     return <p>Sahifa mavjud emas</p>;
   }
@@ -97,11 +98,14 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
               </div>
               <div>
                 <button
-                  onClick={() => createLike(data._id)}
+                  onClick={() =>
+                    createLike(data._id).then(({ data }: any) =>
+                      setLikes(data.count)
+                    )
+                  }
                   className={s.linkButton}
                 >
-                  <FontAwesomeIcon className="icon" icon={faHeart} />{" "}
-                  {likes?.count || data.likes.length}
+                  <FontAwesomeIcon className="icon" icon={faHeart} /> {likes}
                 </button>
                 <a href={data.url} target="_blank" rel="noreferrer">
                   <button className={s.linkButton}>Ochish</button>

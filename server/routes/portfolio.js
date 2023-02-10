@@ -44,6 +44,7 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
   userInfo.portfolios.push(newPortfolio._id);
   newPortfolio.author = Object.assign({ _id: req.id }, userInfo);
   await userInfo.save();
+  console.log(newPortfolio);
   await newPortfolio.save();
   res.status(201).send("Success");
 });

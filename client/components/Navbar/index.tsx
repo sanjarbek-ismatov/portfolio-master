@@ -82,20 +82,17 @@ const Navbar = () => {
           {auth && (
             <>
               <li>
-                <Link href="/">
-                  <a
-                    onClick={() => {
-                      signOut();
-                      localStorage.removeItem("token");
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      className="icon"
-                      icon={faRightFromBracket}
-                    />{" "}
-                    Chiqish
-                  </a>
-                </Link>
+                <a
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    signOut();
+                    localStorage.removeItem("token");
+                    router.reload();
+                  }}
+                >
+                  <FontAwesomeIcon className="icon" icon={faRightFromBracket} />{" "}
+                  Chiqish
+                </a>
               </li>
               <li>
                 <Link href="/profile">

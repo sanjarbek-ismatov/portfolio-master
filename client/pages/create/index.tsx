@@ -19,16 +19,17 @@ const Login = () => {
     if (!auth) router.replace("/auth/login");
   }, [auth, router]);
   function handleSubmit() {
+    form.preventDefault();
     setIsPending(true);
     setMessage("Yuklanmoqda...");
-    const files = form["0"].files;
+    const files = form.target["0"].files;
 
     const data = new FormData();
 
-    data.append("title", form["1"].value);
-    data.append("url", form["2"].value);
-    data.append("description", form["3"].value);
-    data.append("used", form["4"].value);
+    data.append("title", form.target["1"].value);
+    data.append("url", form.target["2"].value);
+    data.append("description", form.target["3"].value);
+    data.append("used", form.target["4"].value);
     for (const file of files) {
       data.append("images", file);
     }
@@ -58,7 +59,7 @@ const Login = () => {
           onSubmit={(e) => {
             setDialog(true);
             e.preventDefault();
-            setForm(e.target);
+            setForm(e);
           }}
           encType="multipart/form-data"
         >
@@ -107,7 +108,9 @@ const Login = () => {
           isPending={isPending}
           message={message}
           ok={() =>
-            (isSuccess && window.location.replace("/")) || router.reload()
+            !state.error
+              ? (window.location.pathname = "/page/1")
+              : setDialog(false)
           }
         />
       )}

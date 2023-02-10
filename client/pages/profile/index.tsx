@@ -18,9 +18,13 @@ const Profile = () => {
   const [data, setData] = useState<Portfolio[]>();
   const [user, setUser] = useState<User>();
   useEffect(() => {
-    getMe().then(({ data: { portfolios, user } }) => {
-      setData(portfolios);
-      setUser(user);
+    getMe().then((data) => {
+      if (typeof data !== "boolean") {
+        setData(data.data.portfolios);
+        setUser(data.data.user);
+      } else {
+        router.push("/auth/login");
+      }
     });
   }, []);
 
