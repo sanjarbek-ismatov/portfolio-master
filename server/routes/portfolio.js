@@ -1,16 +1,19 @@
 const express = require("express");
 const auth = require("../middleware/auth");
 const { upload } = require("../models/gfs");
-const { Portfolio, User } = require("../models/Model");
+const { Portfolio, User, Comment } = require("../models/Model");
 const { portfolioValidator } = require("../utils/validator");
-const nodemailer = require("nodemailer");
+
 const router = express.Router();
 
 // @route   GET /api/portfolio/all
 // @desc    Get all portfolios
 // @access  Public
 router.get("/all", async (req, res) => {
-  const portfolios = await Portfolio.find();
+  const portfolios = await Portfolio.find().populate(
+    "author",
+    "firstname username image"
+  );
   res.status(200).send(portfolios);
 });
 
@@ -19,7 +22,12 @@ router.get("/all", async (req, res) => {
 // @access  Public
 router.get("/:id", async (req, res) => {
   const query = req.params.id.split("_")[1].replace("+", " ");
-  const portfolio = await Portfolio.findOne({ title: query });
+  const portfolio = await Portfolio.findOne({ title: query })
+    .populate("author", "firstname username image")
+    .populate({
+      path: "comments",
+      populate: { path: "commentAuthor", select: "username image" },
+    });
   if (!portfolio) {
     return res.status(404).send("Afsus topilmadi!");
   }
@@ -42,7 +50,8 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
   });
   const userInfo = await User.findById(req.id).select("-password");
   userInfo.portfolios.push(newPortfolio._id);
-  newPortfolio.author = Object.assign({ _id: req.id }, userInfo);
+  // newPortfolio.author = Object.assign({ _id: req.id }, userInfo);
+  newPortfolio.author = req.id;
   await userInfo.save();
   console.log(newPortfolio);
   await newPortfolio.save();
@@ -67,13 +76,14 @@ router.put("/like/:id", auth, async (req, res) => {
   }
 });
 router.put("/comment/:id", [auth, upload.none()], async (req, res) => {
-  const user = Object.assign({ id: req.id }, await User.findById(req.id));
-
+  // const user = Object.assign({ id: req.id }, await User.findById(req.id));
   const portfolio = await Portfolio.findById(req.params.id, "-password");
-  portfolio.comments.unshift({
-    commentAuthor: user,
+  const comment = new Comment({
     body: req.body.body,
+    commentAuthor: req.id,
   });
+  portfolio.comments.unshift(comment._id);
+  await comment.save();
   await portfolio.save();
   res.status(200).send(portfolio.comments);
 });

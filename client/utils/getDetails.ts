@@ -1,15 +1,15 @@
-import { Like, Portfolio, User } from "types";
+import { Portfolio, User } from "types";
 import { serverUrl } from "./serverUrl";
-import axios from "axios";
+
 const url = serverUrl();
 export async function getMe() {
   try {
-    const data: { data: { user: User; portfolios: Portfolio[] } } =
-      await axios.get(`${url}/api/user/me`, {
-        headers: {
-          ["x-token"]: localStorage.token,
-        },
-      });
+    const res = await fetch(`${url}/api/user/me`, {
+      headers: {
+        ["x-token"]: localStorage.token,
+      },
+    });
+    const data: User = await res.json();
     return data;
   } catch (ex) {
     return false;

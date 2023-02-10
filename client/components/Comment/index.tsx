@@ -24,7 +24,7 @@ const Comment = ({ data: { comments, _id } }: { data: Portfolio }) => {
   const [defaultComments, setCurrentComments] = useState<Comment[]>(comments);
   const [me, setMe] = useState<User>();
   useEffect(() => {
-    getMe().then((data) => typeof data !== "boolean" && setMe(data.data.user));
+    getMe().then((data) => typeof data !== "boolean" && setMe(data));
   }, []);
   const url = serverUrl();
 

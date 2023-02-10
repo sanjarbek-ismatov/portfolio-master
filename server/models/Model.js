@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     default: false,
     type: Boolean,
   },
-  portfolios: [mongoose.SchemaTypes.ObjectId],
+  portfolios: [{ type: mongoose.SchemaTypes.ObjectId, ref: "portfolio" }],
   description: String,
   telegramProfile: String,
   githubProfile: String,
@@ -57,7 +57,10 @@ const portfolioSchema = new mongoose.Schema({
   title: String,
   images: [String],
   description: String,
-  author: {},
+  author: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "user",
+  },
   date: {
     type: Date,
     default: function () {
@@ -69,24 +72,33 @@ const portfolioSchema = new mongoose.Schema({
   likes: [mongoose.SchemaTypes.ObjectId],
   comments: [
     {
-      commentAuthor: Object.assign(
-        { _id: mongoose.SchemaTypes.ObjectId },
-        userSchema.obj
-      ),
-      body: String,
-      date: {
-        type: Date,
-        default: function () {
-          return new Date();
-        },
-      },
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "comments",
     },
   ],
 });
 const Portfolio = mongoose.model("portfolio", portfolioSchema);
+const commentSchema = new mongoose.Schema(
+  {
+    body: String,
+    commentAuthor: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "user",
+    },
+    date: {
+      type: Date,
+      default: function () {
+        return new Date();
+      },
+    },
+  },
+  { collection: "comments" }
+);
+const Comment = mongoose.model("comments", commentSchema);
 // create portfolio model
 
 // export functions
 module.exports.createUser = createUser;
 module.exports.User = User;
 module.exports.Portfolio = Portfolio;
+module.exports.Comment = Comment;

@@ -4,12 +4,10 @@ const { User, Portfolio } = require("../models/Model");
 const router = express.Router();
 //get user data
 router.get("/me", auth, async (req, res) => {
-  const user = await User.findById(req.id).select("-password");
-  const portfolios = await Portfolio.find();
-  const userPortfolios = portfolios.filter((e) => {
-    return e.author.username === user.username;
-  });
-  res.status(200).send({ user, portfolios: userPortfolios });
+  const user = await User.findById(req.id)
+    .select("-password")
+    .populate("portfolios", "title images");
+  res.status(200).send(user);
 });
 //get all users
 router.get("/all", async (req, res) => {

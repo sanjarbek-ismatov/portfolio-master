@@ -7,7 +7,7 @@ export type User = {
   username: string;
   email: string;
   isDirect: boolean;
-  portfolios: string[];
+  portfolios: Portfolio[];
   description: string;
   telegramProfile: string;
   githubProfile: string;

@@ -15,19 +15,19 @@ const Profile = () => {
   const url = serverUrl();
   const isAuth = useAuth();
   const router = useRouter();
-  const [data, setData] = useState<Portfolio[]>();
-  const [user, setUser] = useState<User>();
+  const [data, setData] = useState<User>();
   useEffect(() => {
     getMe().then((data) => {
       if (typeof data !== "boolean") {
-        setData(data.data.portfolios);
-        setUser(data.data.user);
+        setData(data);
       } else {
         router.push("/auth/login");
       }
     });
-  }, []);
-
+  }, [router]);
+  if (!data) {
+    return null;
+  }
   return (
     <>
       <NavbarProfile />
@@ -35,57 +35,53 @@ const Profile = () => {
         <div className={styles.background}>
           <div className={styles.innerContainer}>
             <div className={styles.rowLeft}>
-              {user && (
-                <>
-                  <div className={styles.absoluteTextContainer}>
-                    <Image
-                      height={200}
-                      width={200}
-                      src={`${url}/image/${user.image}`}
-                      className={styles.image}
-                      alt="profile"
-                      unoptimized
-                    />
-                    <div>
-                      <h1>
-                        {user.firstname} {user.lastname}
-                      </h1>
-                      <p>@{user.username}</p>
-                    </div>
-                  </div>
+              <div className={styles.absoluteTextContainer}>
+                <Image
+                  height={200}
+                  width={200}
+                  src={`${url}/image/${data.image}`}
+                  className={styles.image}
+                  alt="profile"
+                  unoptimized
+                />
+                <div>
+                  <h1>
+                    {data.firstname} {data.lastname}
+                  </h1>
+                  <p>@{data.username}</p>
+                </div>
+              </div>
 
-                  <div className={styles.socialLinksContainer}>
-                    <FontAwesomeIcon
-                      className={styles.socialIcon}
-                      icon={faGithub}
-                    />{" "}
-                    {user.githubProfile}
-                    <br />
-                    <FontAwesomeIcon
-                      className={styles.socialIcon}
-                      icon={faTelegram}
-                    />{" "}
-                    {user.telegramProfile}
-                    <br />
-                    <FontAwesomeIcon
-                      className={styles.socialIcon}
-                      icon={faEnvelope}
-                    />{" "}
-                    {user.email}
-                  </div>
-                  <div className={styles.skills}>
-                    <h2>Skillari:</h2>
-                    {user.skills.map((e, i) => (
-                      <p key={i}> - {e}</p>
-                    ))}
-                  </div>
-                </>
-              )}
+              <div className={styles.socialLinksContainer}>
+                <FontAwesomeIcon
+                  className={styles.socialIcon}
+                  icon={faGithub}
+                />{" "}
+                {data.githubProfile}
+                <br />
+                <FontAwesomeIcon
+                  className={styles.socialIcon}
+                  icon={faTelegram}
+                />{" "}
+                {data.telegramProfile}
+                <br />
+                <FontAwesomeIcon
+                  className={styles.socialIcon}
+                  icon={faEnvelope}
+                />{" "}
+                {data.email}
+              </div>
+              <div className={styles.skills}>
+                <h2>Skillari:</h2>
+                {data.skills.map((e, i) => (
+                  <p key={i}> - {e}</p>
+                ))}
+              </div>
             </div>
             <div className={styles.rowRight}>
-              <p className={styles.p}>{user?.description}</p>
+              <p className={styles.p}>{data?.description}</p>
               <h2 className={styles.title}>Portfoliolari:</h2>
-              {data?.map((e, i) => (
+              {data?.portfolios.map((e, i) => (
                 <div key={i} className={styles.portolioContainer}>
                   <div
                     style={{
