@@ -83,6 +83,7 @@ const commentSchema = new mongoose.Schema(
     body: String,
     commentAuthor: {
       type: mongoose.SchemaTypes.ObjectId,
+      required: true,
       ref: "user",
     },
     date: {
