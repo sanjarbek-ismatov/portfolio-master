@@ -15,7 +15,11 @@ import LazyImage from "components/LazyImage";
 import { GetServerSideProps } from "next";
 export const getServerSideProps: GetServerSideProps<{
   data: Portfolio[];
-}> = async () => {
+}> = async (context) => {
+  context.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=1800, stale-while-revalidate=86400"
+  );
   const url = serverUrl();
   const res = await fetch(`${url}/api/portfolio/all`);
   const data: Portfolio[] = await res.json();
