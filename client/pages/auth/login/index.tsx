@@ -83,7 +83,8 @@ const Login = () => {
           isSuccess={isSuccess}
           ok={() => {
             setMessage("");
-            isSuccess && router.back();
+            isSuccess &&
+              (router.query.home ? router.replace("/") : router.back());
           }}
           isPending={isLoading}
           message={message}

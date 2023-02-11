@@ -17,8 +17,8 @@ function MyApp({
 }: AppProps & { pageProps: { session: Session } }) {
   const router = useRouter();
   useEffect(() => {
+    Aos.init();
     return () => {
-      Aos.init();
       if (process.env.NODE_ENV === "production") {
         console.log = (...val) => {};
       }
@@ -30,7 +30,7 @@ function MyApp({
         }
       });
     };
-  }, [router]);
+  }, []);
 
   return (
     <SessionProvider session={session}>

@@ -168,7 +168,7 @@ const Register = () => {
         <Dialog
           ok={() => {
             setMessage("");
-            isSuccess && router.replace("/auth/login");
+            isSuccess && router.replace("/auth/login?home=true");
             isSuccess && data && signOut();
           }}
           isPending={isLoading}
