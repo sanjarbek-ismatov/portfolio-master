@@ -1,39 +1,46 @@
 import Navbar from "components/Navbar";
 import Head from "next/head";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Footer from "components/Footer";
 import type { Portfolio } from "types";
 import { serverUrl } from "utils/serverUrl";
 import s from "styles/M.module.scss";
 import { useRouter } from "next/router";
 import Input from "components/Input";
-import { Filter } from "components";
+import { Filter, Spinner } from "components";
 import { filterByKey } from "utils/filterByKey";
 import { InferGetServerSidePropsType } from "next";
 import LazyImage from "components/LazyImage";
 
-import { GetServerSideProps } from "next";
-export const getServerSideProps: GetServerSideProps<{
-  data: Portfolio[];
-}> = async (context) => {
-  context.res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=1800, stale-while-revalidate=86400"
-  );
-  const url = serverUrl();
-  const res = await fetch(`${url}/api/portfolio/all`);
-  const data: Portfolio[] = await res.json();
-  return {
-    props: {
-      data: data,
-    },
-  };
-};
-const Index = ({
+// import { GetServerSideProps } from "next";
+// export const getServerSideProps: GetServerSideProps<{
+//   data: Portfolio[];
+// }> = async (context) => {
+//   context.res.setHeader(
+//     "Cache-Control",
+//     "public, s-maxage=1800, stale-while-revalidate=86400"
+//   );
+//   const url = serverUrl();
+//   const res = await fetch(`${url}/api/portfolio/all`);
+//   const data: Portfolio[] = await res.json();
+//   return {
+//     props: {
+//       data: data,
+//     },
+//   };
+// };
+const Index = (/*{
   data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const router = useRouter();
+}: InferGetServerSidePropsType<typeof getServerSideProps>*/) => {
+  const [data, setData] = useState<Portfolio[]>();
   const url = serverUrl();
+  useEffect(() => {
+    fetch(`${url}/api/portfolio/all`)
+      .then((res) => res.json())
+      .then((data) => setData(data));
+  }, [url]);
+  const router = useRouter();
+
   const [filters, setFilters] = useState<string[]>([]);
   useMemo(() => {
     if (typeof router.query.filter === "string") {
@@ -64,7 +71,7 @@ const Index = ({
           filter={data}
           setFilters={setFilters}
         />
-        {data.length ? (
+        {data ? (
           filters &&
           filterByKey(data, text)
             .filter(({ used }) => {
@@ -148,8 +155,9 @@ const Index = ({
             ))
         ) : (
           <div className={s.loading}>
-            <h1>Hmm, negadir bironta ham portfolio mavjud emas :(</h1>
-            {/* <Spinner size="100" speed="1" position="static" border="5" /> */}
+            {/* <h1>Hmm, negadir bironta ham portfolio mavjud emas :(</h1> */}
+            <Spinner size="100" speed="1" position="static" border="5" />
+            <p>Iltimos biroz kuting. Yuklanmoqda...</p>
           </div>
         )}
       </div>
