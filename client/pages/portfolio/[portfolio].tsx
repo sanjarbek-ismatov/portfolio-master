@@ -8,7 +8,7 @@ import Link from "next/link";
 import type { Portfolio } from "types";
 import { serverUrl } from "utils/serverUrl";
 import { Navigation, Pagination } from "swiper";
-import { Navbar, LazyImage, Footer, Comment, Head } from "components";
+import { Navbar, LazyImage, Footer, CommentComponent, Head } from "components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
@@ -122,7 +122,7 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
             <div className={s.descriptionContainer}>
               <p>{data.description}</p>
             </div>
-            <Comment data={data} />
+            <CommentComponent data={data} />
           </div>
         </div>
       </div>

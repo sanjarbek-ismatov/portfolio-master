@@ -30,7 +30,7 @@ function MyApp({
         }
       });
     };
-  }, []);
+  }, [router]);
 
   return (
     <SessionProvider session={session}>

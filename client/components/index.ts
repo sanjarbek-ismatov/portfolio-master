@@ -1,6 +1,6 @@
 import Filter from "./Filter";
 import Description from "./Description";
-import Comment from "./Comment";
+import CommentComponent from "./Comment";
 import Dialog from "./Dialog";
 import Footer from "./Footer";
 import Input from "./Input";
@@ -11,7 +11,7 @@ import Spinner from "./Spinner";
 import Head from "./Head";
 import NavbarProfile from "./Navbar/NavbarProfile";
 export {
-  Comment,
+  CommentComponent,
   Description,
   Filter,
   Dialog,
