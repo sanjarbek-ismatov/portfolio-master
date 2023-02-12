@@ -11,6 +11,7 @@ import { Filter, Spinner } from "components";
 import { filterByKey } from "utils/filterByKey";
 import { InferGetServerSidePropsType } from "next";
 import LazyImage from "components/LazyImage";
+import { converter } from "utils/urlConverter";
 
 // import { GetServerSideProps } from "next";
 // export const getServerSideProps: GetServerSideProps<{
@@ -88,14 +89,7 @@ const Index = (/*{
             .map((e, i: number) => (
               <div
                 className={s.post}
-                onClick={() =>
-                  router.push(
-                    `/portfolio/${e.author.username}_${e.title.replace(
-                      " ",
-                      "+"
-                    )}`
-                  )
-                }
+                onClick={() => router.push(converter(e, e.author))}
                 key={i}
               >
                 <LazyImage

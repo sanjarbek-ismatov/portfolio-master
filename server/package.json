@@ -10,6 +10,7 @@
     "axios": "^1.2.1",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
+    "buildes": "^2.1.0",
     "colors": "^1.4.0",
     "compression": "^1.7.4",
     "config": "3.3.1",

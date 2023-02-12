@@ -19,6 +19,7 @@ specifiers:
   axios: ^1.2.1
   bcrypt: ^5.1.0
   body-parser: ^1.20.1
+  buildes: ^2.1.0
   colors: ^1.4.0
   compression: ^1.7.4
   config: 3.3.1
@@ -52,6 +53,7 @@ dependencies:
   axios: 1.3.1
   bcrypt: 5.1.0
   body-parser: 1.20.1
+  buildes: 2.1.0
   colors: 1.4.0
   compression: 1.7.4
   config: 3.3.1
@@ -2462,6 +2464,12 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
+
+  /buildes/2.1.0:
+    resolution: {integrity: sha512-0NVqzcZVriZo445ppgnD7vK6vboSApMBCGBtqKomX94AsXEg3L9f8rgdnVPtGF6/FOVZqRAV51IAbwmiEWdePw==}
+    dependencies:
+      colors: 1.4.0
+    dev: false
 
   /busboy/1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
