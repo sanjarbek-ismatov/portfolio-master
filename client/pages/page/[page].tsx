@@ -41,17 +41,21 @@ const Index = (/*{
       .then((data) => setData(data));
   }, [url]);
   const router = useRouter();
+  const { page, filter } = router.query;
 
   const [filters, setFilters] = useState<string[]>([]);
   useMemo(() => {
-    if (typeof router.query.filter === "string") {
-      const filtersByUrl = router.query.filter.split(",");
+    if (typeof filter === "string") {
+      const filtersByUrl = filter.split(",");
       setFilters(filtersByUrl);
     } else {
       setFilters([]);
     }
-  }, [router]);
+  }, [filter]);
   const [text, setText] = useState("");
+  if (typeof page !== "string") {
+    return null;
+  }
   return (
     <>
       <Head>
@@ -86,6 +90,7 @@ const Index = (/*{
               });
               return bools.filter((e) => e).length === filters.length;
             })
+            .slice((+page - 1) * 10, +page * 10)
             .map((e, i: number) => (
               <div
                 className={s.post}
@@ -134,9 +139,7 @@ const Index = (/*{
                   <div className={s.filterContainer}>
                     {e.used.map((e, i) => (
                       <span
-                        onClick={() =>
-                          router.push(`/page/${router.query.page}?filter=${e}`)
-                        }
+                        onClick={() => router.push(`/page/${page}?filter=${e}`)}
                         className={s.badge}
                         key={i}
                       >
@@ -171,9 +174,7 @@ const Index = (/*{
         }}
       ></script> */}
       {/* <Script src="/static/index.js" /> */}
-      {data && typeof router.query.page === "string" && (
-        <Panigation index={+router.query.page} length={data?.length} />
-      )}
+      {data && <Panigation index={+page} length={data?.length} />}
       <Footer />
     </>
   );
