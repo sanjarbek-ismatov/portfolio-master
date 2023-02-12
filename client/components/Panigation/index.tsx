@@ -20,21 +20,35 @@ const Index = ({ length, index }: { length: number; index: number }) => {
             </a>
           </Link>
         </li>
-        {pages.map((e, i) => {
-          return (
-            <li key={i}>
-              <Link href={`/page/${e}`}>
-                <a
-                  className={cn({
-                    [styles.active]: index === e,
-                  })}
-                >
-                  {e}
-                </a>
-              </Link>
-            </li>
-          );
-        })}
+        {pages.length ? (
+          pages.map((e, i) => {
+            return (
+              <li key={i}>
+                <Link href={`/page/${e}`}>
+                  <a
+                    className={cn({
+                      [styles.active]: index === e,
+                    })}
+                  >
+                    {e}
+                  </a>
+                </Link>
+              </li>
+            );
+          })
+        ) : (
+          <li>
+            <Link href={`/page/1`}>
+              <a
+                className={cn({
+                  [styles.active]: true,
+                })}
+              >
+                1
+              </a>
+            </Link>
+          </li>
+        )}
         <li>
           <Link href={`/page/${index < pages.length ? index + 1 : index}`}>
             <a>

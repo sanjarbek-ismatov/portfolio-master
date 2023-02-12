@@ -76,7 +76,7 @@ const Index = (/*{
           filter={data}
           setFilters={setFilters}
         />
-        {data ? (
+        {data?.length ? (
           filters &&
           filterByKey(data, text)
             .filter(({ used }) => {
