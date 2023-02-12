@@ -7,7 +7,7 @@ import { serverUrl } from "utils/serverUrl";
 import s from "styles/M.module.scss";
 import { useRouter } from "next/router";
 import Input from "components/Input";
-import { Filter, Spinner } from "components";
+import { Filter, Panigation, Spinner } from "components";
 import { filterByKey } from "utils/filterByKey";
 import { InferGetServerSidePropsType } from "next";
 import LazyImage from "components/LazyImage";
@@ -53,7 +53,7 @@ const Index = (/*{
   }, [router]);
   const [text, setText] = useState("");
   return (
-    <div>
+    <>
       <Head>
         <title>Portfolio Master</title>
       </Head>
@@ -171,8 +171,11 @@ const Index = (/*{
         }}
       ></script> */}
       {/* <Script src="/static/index.js" /> */}
+      {data && typeof router.query.page === "string" && (
+        <Panigation index={+router.query.page} length={data?.length} />
+      )}
       <Footer />
-    </div>
+    </>
   );
 };
 

@@ -10,7 +10,9 @@ import Navbar from "./Navbar";
 import Spinner from "./Spinner";
 import Head from "./Head";
 import NavbarProfile from "./Navbar/NavbarProfile";
+import Panigation from "./Panigation";
 export {
+  Panigation,
   CommentComponent,
   Description,
   Filter,
