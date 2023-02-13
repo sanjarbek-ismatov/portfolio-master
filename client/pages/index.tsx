@@ -19,7 +19,7 @@ const Index = () => {
             <h1 data-aos="fade-up" data-aos-duration="700">
               Portfolio masterga xush kelibsiz!
             </h1>
-            <Link href="/auth/register">
+            <Link href="/auth/register/emailverification">
               <button
                 data-aos="fade-up"
                 data-aos-duration="700"

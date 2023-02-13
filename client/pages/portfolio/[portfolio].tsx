@@ -14,7 +14,9 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
 import { subtractTime } from "utils/dateToReadable";
 import { useState } from "react";
+import { useAuth } from "utils/auth";
 const Portfolio = ({ data }: { data: Portfolio }) => {
+  const auth = useAuth();
   const [likes, setLikes] = useState(data.likes.length);
   const [createLike] = usePostLikeByIdMutation();
   if (!data) {
@@ -103,6 +105,7 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
                       setLikes(data.count)
                     )
                   }
+                  disabled={auth ? false : true}
                   className={s.linkButton}
                 >
                   <FontAwesomeIcon className="icon" icon={faHeart} /> {likes}
