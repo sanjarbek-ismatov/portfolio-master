@@ -1,37 +1,38 @@
-import { useEffect, useState } from "react";
 import { User } from "types";
-import { getMe } from "utils/getDetails";
+
 import Image from "next/image";
 import { serverUrl } from "utils/serverUrl";
-import { useAuth } from "utils/auth";
-import { NavbarProfile } from "components";
+import { Head, NavbarProfile } from "components";
 import styles from "styles/Profile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { converter } from "utils/urlConverter";
-const Profile = () => {
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+export const getServerSideProps: GetServerSideProps<{ data: User }> = async ({
+  params,
+}) => {
+  const res = await fetch(`${serverUrl()}/api/user/${params?.username}`);
+  const data: User = await res.json();
+  return {
+    props: {
+      data,
+    },
+  };
+};
+const Profile = ({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const url = serverUrl();
-  const router = useRouter();
-  const { username } = router.query;
-  const [data, setData] = useState<User>();
-  useEffect(() => {
-    !username?.length &&
-      getMe().then((data) => {
-        if (typeof data !== "boolean") {
-          setData(data);
-        } else {
-          router.push("/auth/login");
-        }
-      });
-  }, [router, username]);
-  if (!data) {
-    return null;
-  }
   return (
     <>
+      <Head
+        title={`${data.firstname} ${data.lastname}`}
+        description={data.description}
+        image={`${serverUrl()}/image/${data.image}`}
+        keywords={`${data.firstname}, ${data.lastname}, ${data.username}, ${data.description}, ${data.email}, ${data.githubProfile}, ${data.telegramProfile}`}
+      />
       <NavbarProfile />
       <div className={styles.container}>
         <div className={styles.background}>

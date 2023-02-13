@@ -12,6 +12,7 @@ import { filterByKey } from "utils/filterByKey";
 import { InferGetServerSidePropsType } from "next";
 import LazyImage from "components/LazyImage";
 import { converter } from "utils/urlConverter";
+import Link from "next/link";
 
 // import { GetServerSideProps } from "next";
 // export const getServerSideProps: GetServerSideProps<{
@@ -92,63 +93,65 @@ const Index = (/*{
             })
             .slice((+page - 1) * 10, +page * 10)
             .map((e, i: number) => (
-              <div
-                className={s.post}
-                onClick={() => router.push(converter(e, e.author))}
-                key={i}
-              >
-                <LazyImage
-                  className={s.postImage}
-                  filename={e.images[0]}
-                  width={800}
-                  height={450}
-                  url={url}
-                  spinnerOptions={{
-                    size: "100",
-                    position: "absolute",
-                    border: "5",
-                    speed: "1",
-                  }}
-                >
-                  {" "}
-                  <div className={s.desc}>
-                    <div className={s.profile}>
-                      <LazyImage
-                        spinnerOptions={{
-                          size: "30",
-                          position: "static",
-                          border: "2",
-                          speed: "1",
-                        }}
-                        className={s.profileImage}
-                        url={url}
-                        height={100}
-                        width={100}
-                        filename={e.author.image}
-                      />
-                      <p>{e.author.firstname}</p>
+              <Link key={i} href={converter(e, e.author)}>
+                <div className={s.post}>
+                  <LazyImage
+                    className={s.postImage}
+                    filename={e.images[0]}
+                    width={800}
+                    height={450}
+                    url={url}
+                    spinnerOptions={{
+                      size: "100",
+                      position: "absolute",
+                      border: "5",
+                      speed: "1",
+                    }}
+                  >
+                    {" "}
+                    <div className={s.desc}>
+                      <div className={s.profile}>
+                        <Link href={`/profile/${e.author.username}`}>
+                          <LazyImage
+                            spinnerOptions={{
+                              size: "30",
+                              position: "static",
+                              border: "2",
+                              speed: "1",
+                            }}
+                            className={s.profileImage}
+                            url={url}
+                            height={100}
+                            width={100}
+                            filename={e.author.image}
+                          />
+                        </Link>
+                        <p>{e.author.firstname}</p>
+                      </div>
+
+                      <h1>{e.title}</h1>
+
+                      <p>{e.likes.length} ta yoqtirish</p>
                     </div>
+                  </LazyImage>
 
-                    <h1>{e.title}</h1>
-
-                    <p>{e.likes.length} ta yoqtirish</p>
-                  </div>
-                </LazyImage>
-
-                <div className={s.descContainer}>
-                  <div className={s.filterContainer}>
-                    {e.used.map((e, i) => (
-                      <span
-                        onClick={() => router.push(`/page/${page}?filter=${e}`)}
-                        className={s.badge}
-                        key={i}
-                      >
-                        {e}
-                      </span>
-                    ))}
+                  <div className={s.descContainer}>
+                    <div className={s.filterContainer}>
+                      {e.used.map((e, i) => (
+                        <span
+                          onClick={() =>
+                            router.push(`/page/${page}?filter=${e}`)
+                          }
+                          className={s.badge}
+                          key={i}
+                        >
+                          {e}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))
         ) : (
           <div className={s.loading}>

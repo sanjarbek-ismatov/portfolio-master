@@ -12,6 +12,7 @@
       justify-content: left;
       max-width: 1200px;
       margin: auto;
+      padding: 0 20px;
       width: 100%;
       .rowLeft {
         position: relative;
@@ -24,7 +25,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          width: 550px;
+          width: 516px;
           .image {
             border-radius: 50%;
           }
@@ -65,9 +66,9 @@
           max-width: 500px;
           width: 100%;
           line-height: 25px;
-          margin: 10px;
+          margin: 20px 0 10px 10px;
         }
-        margin-top: 40px;
+        margin-top: 10px;
         max-width: 925px;
         .title {
           color: #353535;
@@ -81,6 +82,7 @@
   display: flex;
   width: 100%;
   margin: 5px 0 5px 10px;
+  color: #111;
   .image {
     width: 50px;
     height: 50px;
@@ -122,7 +124,7 @@
 }
 @media (max-width: 600px) {
   .absoluteTextContainer {
-    width: 100vw !important;
+    width: 94vw !important;
     top: -70px !important;
     left: 0 !important;
     div {

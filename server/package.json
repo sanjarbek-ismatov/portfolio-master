@@ -43,6 +43,7 @@
     "esbuild": "node builder.js"
   },
   "devDependencies": {
+    "@jest/globals": "^29.4.2",
     "@types/bcrypt": "^10.0.28-alpha",
     "@types/body-parser": "^1.19.2",
     "@types/compression": "^1.7.2",
@@ -50,6 +51,7 @@
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/gridfs-stream": "^0.5.36",
+    "@types/jest": "^29.4.0",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/method-override": "^0.0.32",
     "@types/morgan": "^1.9.4",

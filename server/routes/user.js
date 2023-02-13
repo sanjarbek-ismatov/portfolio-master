@@ -14,7 +14,14 @@ router.get("/all", async (req, res) => {
   return res.status(200).send(await User.find());
 });
 //get user by id
-router.get("/:id", async (req, res) => {
-  return res.status(200).send(await User.findById(req.params.id));
+router.get("/:username", async (req, res) => {
+  const user = await User.findOne({ username: req.params.username }).populate(
+    "portfolios",
+    "title images"
+  );
+  if (!user) {
+    return res.status(404).send("Foydalanuvchi topilmadi!");
+  }
+  res.status(200).send(user);
 });
 module.exports = router;

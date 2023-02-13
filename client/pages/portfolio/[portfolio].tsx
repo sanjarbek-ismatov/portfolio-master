@@ -82,22 +82,25 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
               </Swiper>
             </div>
             <div className={s.description}>
-              <div className={s.profileContainer}>
-                <LazyImage
-                  spinnerOptions={{
-                    size: "30",
-                    position: "static",
-                    border: "2",
-                    speed: "1",
-                  }}
-                  className={s.profileImage}
-                  url={url}
-                  height={50}
-                  width={50}
-                  filename={data.author.image}
-                />
-                <h2 className={s.h2}>@{data.author.username}</h2>
-              </div>
+              <Link href={`/profile/${data.author.username}`}>
+                <div className={s.profileContainer}>
+                  <LazyImage
+                    spinnerOptions={{
+                      size: "30",
+                      position: "static",
+                      border: "2",
+                      speed: "1",
+                    }}
+                    className={s.profileImage}
+                    url={url}
+                    height={50}
+                    width={50}
+                    filename={data.author.image}
+                  />
+                  <h2 className={s.h2}>@{data.author.username}</h2>
+                </div>
+              </Link>
+
               <div>
                 <button
                   onClick={() =>
