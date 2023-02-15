@@ -1,4 +1,6 @@
 /**
+ * This function is used to handle errors
+ *
  * @param {Error} err
  * @param {Request} req
  * @param {Response} res
@@ -9,6 +11,5 @@ module.exports = (err, req, res, next) => {
     console.log(err);
     return res.status(500).send("Serverda xato yuz berdi! :(");
   }
-
   next();
 };

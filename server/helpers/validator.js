@@ -42,6 +42,8 @@ function portfolioValidator(body) {
   });
   return valid.validate(body);
 }
-module.exports.portfolioValidator = portfolioValidator;
-module.exports.registerValidator = registerValidator;
-module.exports.loginValidator = loginValidator;
+module.exports = {
+  portfolioValidator,
+  registerValidator,
+  loginValidator,
+};

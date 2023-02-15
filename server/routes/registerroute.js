@@ -1,14 +1,15 @@
 const express = require("express");
-const { createUser, User } = require("../models/Model");
-const { registerValidator } = require("../utils/validator");
-const { upload } = require("../models/gfs");
+const User = require("../models/usermodel");
+const { registerValidator } = require("../helpers/validator");
+const { upload } = require("../models/storage");
+const createUser = require("../helpers/usercreator");
 const bcrypt = require("bcrypt");
 const {
   sendMail,
   generateToken,
   url,
   verifyToken,
-} = require("../utils/mailVerificator");
+} = require("../helpers/mailverificator");
 const router = express.Router();
 
 /**
@@ -37,7 +38,7 @@ router.post("/send-verification", async (req, res) => {
 
 /**
  * @swagger
- * /auth/register:
+ * /auth/:
  *  post:
  *    description: This should register user
  *    parameters:
@@ -66,8 +67,8 @@ router.post("/send-verification", async (req, res) => {
  *        description: A successful response
  */
 router.post("/", upload.single("image"), async (req, res) => {
-  const isVerif = verifyToken(req.body.email, req.headers["token"]);
-  if (!isVerif) return res.status(400).send("Ushbu email tasdiqlanmagan!");
+  if (!verifyToken(req.body.email, req.headers["token"]))
+    return res.status(400).send("Ushbu email tasdiqlanmagan!");
   const salt = await bcrypt.genSalt();
   const { error } = registerValidator(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -76,7 +77,6 @@ router.post("/", upload.single("image"), async (req, res) => {
   if (email || username) {
     return res.status(400).send("Email yoki username allaqachon mavjud");
   }
-
   if (req.body.password)
     req.body.password = await bcrypt.hash(req.body.password, salt);
   if (req.file) await createUser(req.body, req.file.filename);

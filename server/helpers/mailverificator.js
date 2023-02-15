@@ -1,11 +1,10 @@
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-const { User } = require("../models/Model");
 module.exports = {
   /**
    * @description This function sends email to user
-   * @param {string} email
-   * @param {string} url
+   * @param {string} email - user email
+   * @param {string} url - url for verification
    * @returns {string} status
    */
   sendMail: (email, url) => {
@@ -21,7 +20,7 @@ module.exports = {
       },
     });
     const mailOptions = {
-      from: '"Portfolio Master" <ismatovvsanjarbek@gmail.com>',
+      from: '"Portfolio Master" <portfoliomasteruz@gmail.com>',
       to: email,
       subject: "Emailni tasdiqlash",
       html: `
@@ -36,14 +35,14 @@ module.exports = {
   },
   /**
    * @description This function generates token
-   * @param {string} email
+   * @param {string} email - user email
    * @returns {string} token
    */
   generateToken: (email) => jwt.sign({ email }, process.env.SECRET),
   /**
    * @description This function verifies token
-   * @param {string} email
-   * @param {string} token
+   * @param {string} email - user email
+   * @param {string} token - token for verification
    * @returns {boolean}
    */
   verifyToken: (email, token) => {

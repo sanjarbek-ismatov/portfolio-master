@@ -1,30 +1,29 @@
-// import express
+// import express module
 const express = require("express");
-// import mongoose
+// import mongoose module
 const mongoose = require("mongoose");
-// import gridfs-stream
+// import gridfs-stream module
 const Grid = require("gridfs-stream");
-// import db
+// import db from mongoose
 const db = mongoose.connection;
-// create gfs and gfb
+// create gfs and gfb variables
 var gfs, gfb;
-
-// when db open
+// open db connection
 db.once("open", () => {
-  // create gfs
+  // create gfs variable
   gfs = Grid(db.db, mongoose.mongo);
-  // create collection
+  // create collection with name uploads
   gfs.collection("uploads");
-  // create gfb
+  // create gfb variable
   gfb = new mongoose.mongo.GridFSBucket(db.db, {
     bucketName: "uploads",
   });
 });
-// create router
+// create router variable
 const router = express.Router();
-// get file by filename
+// create get method for get file by filename from db
 router.get("/files/:filename", (req, res) => {
-  // find file
+  // find file by filename
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     // if error return 404
     if (err) return res.status(404).send("Fayl topilmadi!");
@@ -32,7 +31,7 @@ router.get("/files/:filename", (req, res) => {
     res.status(200).send(file);
   });
 });
-// get all files
+// create get method for get all files from db
 router.get("/files", (req, res) => {
   // find all files
   gfs.files.find().toArray((err, files) => {
@@ -42,9 +41,9 @@ router.get("/files", (req, res) => {
     res.status(200).send(files);
   });
 });
-// get image by filename
+// create get method for get image by filename from db
 router.get("/image/:image", (req, res) => {
-  // find file
+  // find file by filename
   gfs.files.findOne({ filename: req.params.image }, (err, file) => {
     // if error return 404
     if (err) return res.status(404).send("Fayl topilmadi!");
@@ -63,5 +62,5 @@ router.get("/image/:image", (req, res) => {
     }
   });
 });
-// export router
+// export router variable
 module.exports = router;

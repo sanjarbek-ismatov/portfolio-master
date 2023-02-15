@@ -1,6 +1,6 @@
 import Navbar from "components/Navbar";
 import Head from "next/head";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Footer from "components/Footer";
 import type { Portfolio } from "types";
 import { serverUrl } from "utils/serverUrl";
@@ -9,9 +9,7 @@ import { useRouter } from "next/router";
 import Input from "components/Input";
 import { Filter, Panigation, Spinner } from "components";
 import { filterByKey } from "utils/filterByKey";
-import { InferGetServerSidePropsType } from "next";
 import LazyImage from "components/LazyImage";
-import { converter } from "utils/urlConverter";
 import Link from "next/link";
 
 // import { GetServerSideProps } from "next";
@@ -93,7 +91,7 @@ const Index = (/*{
             })
             .slice((+page - 1) * 10, +page * 10)
             .map((e, i: number) => (
-              <Link key={i} href={converter(e, e.author)}>
+              <Link key={i} href={`/portfolio/${e.linktitle}`}>
                 <div className={s.post}>
                   <LazyImage
                     className={s.postImage}

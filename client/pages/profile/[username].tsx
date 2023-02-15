@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
-import { converter } from "utils/urlConverter";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 export const getServerSideProps: GetServerSideProps<{ data: User }> = async ({
   params,
@@ -98,7 +97,7 @@ const Profile = ({
                     ></div>
                     <div className={styles.content}>
                       <p>{e.title}</p>
-                      <Link href={converter(data.portfolios[i], data)}>
+                      <Link href={`/portfolio/${e.linktitle}`}>
                         <a className={styles.link}>Ochish</a>
                       </Link>
                     </div>

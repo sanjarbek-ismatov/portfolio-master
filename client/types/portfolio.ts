@@ -26,6 +26,7 @@ export type Portfolio = {
   author: User;
   date: string;
   likes: string[];
+  linktitle: string;
   used: string[];
   comments: Comment[];
   url: string;

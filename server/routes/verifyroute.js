@@ -1,6 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models/Model");
+const User = require("../models/usermodel");
 const router = express.Router();
 
 // this route is for check user is login or not

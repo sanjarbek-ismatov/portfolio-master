@@ -1,9 +1,11 @@
 const express = require("express");
 const auth = require("../middleware/auth");
-const { upload } = require("../models/gfs");
-const { Portfolio, User, Comment } = require("../models/Model");
-const { portfolioValidator } = require("../utils/validator");
-
+const { upload } = require("../models/storage");
+const Portfolio = require("../models/portfoliomodel");
+const User = require("../models/usermodel");
+const Comment = require("../models/commentmodel");
+const { portfolioValidator } = require("../helpers/validator");
+const generateLink = require("../helpers/generatelink");
 const router = express.Router();
 
 // @route   GET /api/portfolio/all
@@ -21,8 +23,7 @@ router.get("/all", async (req, res) => {
 // @desc    Get portfolio by id
 // @access  Public
 router.get("/:id", async (req, res) => {
-  const query = req.params.id.split("_")[1].replace("+", " ");
-  const portfolio = await Portfolio.findOne({ title: query })
+  const portfolio = await Portfolio.findOne({ linktitle: req.params.id })
     .populate("author", "firstname username image")
     .populate({
       path: "comments",
@@ -48,12 +49,13 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
     url: req.body.url,
     used: req.body.used.split(", "),
   });
+
   const userInfo = await User.findById(req.id).select("-password");
+  const link = await generateLink(userInfo.username, req.body.title, Portfolio);
+  newPortfolio.linktitle = link;
   userInfo.portfolios.push(newPortfolio._id);
-  // newPortfolio.author = Object.assign({ _id: req.id }, userInfo);
   newPortfolio.author = req.id;
   await userInfo.save();
-  console.log(newPortfolio);
   await newPortfolio.save();
   res.status(201).send("Success");
 });
@@ -75,8 +77,11 @@ router.put("/like/:id", auth, async (req, res) => {
     res.status(200).send({ count: portfolio.likes.length, isLiked: true });
   }
 });
+
+// @route   PUT /api/portfolio/comment/:id
+// @desc    Comment portfolio
+// @access  Private
 router.put("/comment/:id", [auth, upload.none()], async (req, res) => {
-  // const user = Object.assign({ id: req.id }, await User.findById(req.id));
   const portfolio = await Portfolio.findById(req.params.id, "-password");
   const comment = new Comment({
     body: req.body.body,
@@ -87,10 +92,15 @@ router.put("/comment/:id", [auth, upload.none()], async (req, res) => {
   await portfolio.save();
   res.status(200).send(portfolio.comments);
 });
+
+// @route   DELETE /api/portfolio/comment/delete/:id
+// @desc    Delete comment
+// @access  Private
 router.delete("/comment/delete/:id", auth, async (req, res) => {
   const portfolio = await Portfolio.findById(req.params.id);
   portfolio.comments.splice(req.query.index, 1);
   await portfolio.save();
   res.status(200).send(portfolio.comments);
 });
+
 module.exports = router;
