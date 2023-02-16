@@ -24,7 +24,7 @@ function registerValidator(body) {
 function loginValidator(body) {
   const valid = Joi.object({
     email: Joi.string().required().min(3),
-    password: Joi.string(),
+    password: Joi.string().required().min(8),
   });
   return valid.validate(body);
 }

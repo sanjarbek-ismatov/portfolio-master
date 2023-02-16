@@ -17,6 +17,7 @@ specifiers:
   '@types/nodemailer': ^6.4.7
   '@types/nodemon': ^1.19.2
   '@types/request': ^2.48.8
+  '@types/supertest': ^2.0.12
   '@types/webpack-node-externals': ^2.5.3
   axios: ^1.2.1
   bcrypt: ^5.1.0
@@ -92,6 +93,7 @@ devDependencies:
   '@types/nodemailer': 6.4.7
   '@types/nodemon': 1.19.2
   '@types/request': 2.48.8
+  '@types/supertest': 2.0.12
   '@types/webpack-node-externals': 2.5.3_cf7cgeqdkm72g3fdehkr7aaod4
   buildes: 2.1.0
   colors: 1.4.0
@@ -1809,6 +1811,10 @@ packages:
     dependencies:
       '@types/node': 18.11.18
 
+  /@types/cookiejar/2.1.2:
+    resolution: {integrity: sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog==}
+    dev: true
+
   /@types/cors/2.8.13:
     resolution: {integrity: sha512-RG8AStHlUiV5ysZQKq97copd2UmVYw3/pRMLefISZ3S1hK104Cwm7iLQ3fTKx+lsUH2CE8FlLaYeEA2LSeqYUA==}
     dependencies:
@@ -1971,6 +1977,19 @@ packages:
 
   /@types/stack-utils/2.0.1:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
+    dev: true
+
+  /@types/superagent/4.1.16:
+    resolution: {integrity: sha512-tLfnlJf6A5mB6ddqF159GqcDizfzbMUB1/DeT59/wBNqzRTNNKsaw79A/1TZ84X+f/EwWH8FeuSkjlCLyqS/zQ==}
+    dependencies:
+      '@types/cookiejar': 2.1.2
+      '@types/node': 18.11.18
+    dev: true
+
+  /@types/supertest/2.0.12:
+    resolution: {integrity: sha512-X3HPWTwXRerBZS7Mo1k6vMVR1Z6zmJcDVn5O/31whe0tnjE4te6ZJSJGq1RiqHPjzPdMTfjCFogDJmwng9xHaQ==}
+    dependencies:
+      '@types/superagent': 4.1.16
     dev: true
 
   /@types/tough-cookie/4.0.2:

@@ -33,7 +33,7 @@
   "scripts": {
     "start": "node dist/bundle.js",
     "dev": "nodemon server.js",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=5000",
+    "test": "cross-env NODE_ENV=test jest",
     "build": "webpack",
     "esbuild": "node builder.js"
   },
@@ -54,6 +54,7 @@
     "@types/nodemailer": "^6.4.7",
     "@types/nodemon": "^1.19.2",
     "@types/request": "^2.48.8",
+    "@types/supertest": "^2.0.12",
     "@types/webpack-node-externals": "^2.5.3",
     "buildes": "^2.1.0",
     "colors": "^1.4.0",
