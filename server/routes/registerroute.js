@@ -10,6 +10,7 @@ const {
   url,
   verifyToken,
 } = require("../helpers/mailverificator");
+const passwordgenerator = require("../helpers/passwordgenerator");
 const router = express.Router();
 
 /**
@@ -69,7 +70,7 @@ router.post("/send-verification", async (req, res) => {
 router.post("/", upload.single("image"), async (req, res) => {
   if (!verifyToken(req.body.email, req.headers["token"]))
     return res.status(400).send("Ushbu email tasdiqlanmagan!");
-  const salt = await bcrypt.genSalt();
+
   const { error } = registerValidator(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   const email = await User.findOne({ email: req.body.email });
@@ -78,7 +79,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     return res.status(400).send("Email yoki username allaqachon mavjud");
   }
   if (req.body.password)
-    req.body.password = await bcrypt.hash(req.body.password, salt);
+    req.body.password = await passwordgenerator(req.body.password);
   if (req.file) await createUser(req.body, req.file.filename);
   else await createUser(req.body, null);
   res.send(true);

@@ -1,17 +1,17 @@
 const Joi = require("joi");
 /**
  * @param {object} body
- * @returns {object}
+ * @returns {Joi.ValidationResult}
  */
 function registerValidator(body) {
   const valid = Joi.object({
-    firstname: Joi.string(),
-    lastname: Joi.string(),
-    username: Joi.string(),
+    firstname: Joi.string().required(),
+    lastname: Joi.string().required(),
+    username: Joi.string().required(),
     email: Joi.string().required(),
-    password: Joi.string(),
+    password: Joi.string().required(),
     description: Joi.string(),
-    telegramProfile: Joi.string().required(),
+    telegramProfile: Joi.string(),
     githubProfile: Joi.string(),
     skills: Joi.string(),
   });
@@ -19,7 +19,7 @@ function registerValidator(body) {
 }
 /**
  * @param {object} body
- * @returns {object}
+ * @returns {Joi.ValidationResult}
  */
 function loginValidator(body) {
   const valid = Joi.object({
@@ -30,7 +30,7 @@ function loginValidator(body) {
 }
 /**
  * @param {object} body
- * @returns {object}
+ * @returns {Joi.ValidationResult}
  */
 function portfolioValidator(body) {
   const valid = Joi.object({
@@ -42,8 +42,28 @@ function portfolioValidator(body) {
   });
   return valid.validate(body);
 }
+/**
+ * This validator checks recieved form from client
+ * @param {object} body
+ * @returns {Joi.ValidationResult}
+ */
+function userUpdateValidator(body) {
+  const valid = Joi.object({
+    firstname: Joi.string(),
+    lastname: Joi.string(),
+    username: Joi.string(),
+    password: Joi.string(),
+    description: Joi.string(),
+    telegramProfile: Joi.string(),
+    githubProfile: Joi.string(),
+    skills: Joi.string(),
+  });
+  return valid.validate(body);
+}
+
 module.exports = {
   portfolioValidator,
   registerValidator,
   loginValidator,
+  userUpdateValidator,
 };

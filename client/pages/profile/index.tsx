@@ -11,7 +11,6 @@ import { faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { converter } from "utils/urlConverter";
 const Profile = () => {
   const url = serverUrl();
   const router = useRouter();
@@ -97,7 +96,7 @@ const Profile = () => {
                     ></div>
                     <div className={styles.content}>
                       <p>{e.title}</p>
-                      <Link href={converter(data.portfolios[i], data)}>
+                      <Link href={`/portfolio/${e.linktitle}`}>
                         <a className={styles.link}>Ochish</a>
                       </Link>
                     </div>

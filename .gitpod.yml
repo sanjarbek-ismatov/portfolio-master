@@ -3,7 +3,5 @@
 # and commit this file to your remote git repository to share the goodness with others.
 
 tasks:
-  - init: yarn install
+  - init: cd client && yarn && cd ../server && yarn
     command: cd client && yarn dev
-
-

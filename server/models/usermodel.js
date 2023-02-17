@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
     default: false,
     type: Boolean,
   },
+  registeredDate: {
+    type: Date,
+    default: () => new Date(),
+  },
   portfolios: [{ type: mongoose.SchemaTypes.ObjectId, ref: "portfolio" }],
   description: String,
   telegramProfile: String,
