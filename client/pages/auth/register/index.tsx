@@ -3,12 +3,20 @@ import { signIn, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useEffect, useState } from "react";
-import { Dialog } from "components";
+import {
+  Dialog,
+  DialogStatus,
+  Form,
+  FormArea,
+  FormInput,
+  FormSubmit,
+} from "components";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useRegisterUserMutation } from "state/api/portfolioApi";
 const Register = () => {
+  const [dialog, setDialog] = useState(false);
   const { data } = useSession();
   const [message, setMessage] = useState("");
   const [register, { isLoading, isSuccess, isError, error }] =
@@ -67,88 +75,81 @@ const Register = () => {
       </Head>
       <div className={s.form}>
         <h1>Ro`yhatdan o`tish</h1>
-        <form onSubmit={formik}>
-          <input
-            className={s.input}
+        <Form handleSubmit={formik}>
+          <FormInput
             type="file"
             name="file"
             accept="image/*"
             placeholder="Profile uchun rasm"
             required
           />
-          <input
-            className={s.rowInput}
+          <FormInput
+            // className={s.rowInput}
             type="text"
             name="firstname"
             placeholder="Ismingiz"
             required
           />
-          <input
-            className={s.rowInput}
+          <FormInput
+            // className={s.rowInput}
             type="text"
             name="lastname"
             placeholder="Familyangiz"
             required
           />
-          <input
-            className={s.input}
+          <FormInput
             type="text"
             name="username"
             placeholder="Foydalanuvchi nomi"
             required
           />
-          <input
-            className={s.input}
+          <FormInput
             type="email"
             value={router.query.email || ""}
             name="email"
             placeholder="Pochta"
             required
           />
-          <input
-            className={s.rowInput}
+          <FormInput
+            // className={s.rowInput}
             type="password"
             name="password"
             placeholder="Parolni o'rnating"
             required
           />
-          <input
-            className={s.rowInput}
+          <FormInput
+            // className={s.rowInput}
             type="password"
             name="password"
             placeholder="Qayta takrorlang"
             required
           />
-          <input
-            className={s.rowInput}
+          <FormInput
+            // className={s.rowInput}
             type="text"
             name="telegramProfile"
             placeholder="Telegramdagi @usernameingiz"
           />
-          <input
-            className={s.rowInput}
+          <FormInput
+            // className={s.rowInput}
             type="text"
             name="githubProfile"
             placeholder="Githubdagisi (Agar bo'lsa)"
           />
-          <textarea
-            className={s.area}
+          <FormArea
             name="description"
             placeholder="O`zingiz haqingizda"
             required
           />
 
-          <textarea
-            className={s.area}
+          <FormArea
             name="skills"
             placeholder="Qaysi texnologiyalarni bilasiz? Iltimos vergul qo`yib yozing: html, css, javascript, php, reactjs"
             required
           />
-          <button className={s.button} type={"submit"}>
-            Ro`yhatdan o`tish
-          </button>
-        </form>
-        <div className={s.other}>
+          <FormSubmit>Ro`yhatdan o`tish</FormSubmit>
+        </Form>
+        {/* <div className={s.other}>
           <button
             className={s.button}
             onClick={() => {
@@ -162,20 +163,24 @@ const Register = () => {
             <FontAwesomeIcon className="icon" icon={faFacebook} /> Facebook
             orqali davom etish
           </button>
-        </div>
+        </div> */}
       </div>
-      {message && (
+      {dialog && (
         <Dialog
           ok={() => {
             setMessage("");
             isSuccess && router.replace("/auth/login?home=true");
             isSuccess && data && signOut();
           }}
-          isPending={isLoading}
-          message={message}
-          isError={isError}
-          isSuccess={isSuccess}
-        />
+          setShow={setDialog}
+        >
+          <DialogStatus
+            isPending={isLoading}
+            message={message}
+            isError={isError}
+            isSuccess={isSuccess}
+          />
+        </Dialog>
       )}
     </div>
   );

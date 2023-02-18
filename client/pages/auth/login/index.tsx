@@ -10,6 +10,7 @@ const Login = () => {
   const [loginUser, { isLoading, isError, isSuccess, data, error }] =
     useLoginUserMutation();
   const [message, setMessage] = useState("");
+  const [dialog, setDialog] = useState(false);
   const router = useRouter();
   function formik(e: any) {
     setMessage("Yuklanmoqda...");
@@ -44,16 +45,19 @@ const Login = () => {
       <Head>
         <title>Tizimga kirish</title>
       </Head>
-      <Form title="Kirish" handleSubmit={formik}>
-        <FormInput type="email" name="email" placeholder="Pochta" required />
-        <FormInput
-          type="password"
-          name="password"
-          placeholder="Parol"
-          required
-        />
-        <FormSubmit>Kirish</FormSubmit>
-      </Form>
+      <div className={s.form}>
+        <h1>Kirish</h1>
+        <Form handleSubmit={formik}>
+          <FormInput type="email" name="email" placeholder="Pochta" required />
+          <FormInput
+            type="password"
+            name="password"
+            placeholder="Parol"
+            required
+          />
+          <FormSubmit>Kirish</FormSubmit>
+        </Form>
+      </div>
       {/* 
           Next auth disabled
          */}
@@ -69,13 +73,14 @@ const Login = () => {
           </button>
         </div> */}
 
-      {message && (
+      {dialog && (
         <Dialog
           ok={() => {
             setMessage("");
             isSuccess &&
               (router.query.home ? router.replace("/") : router.back());
           }}
+          setShow={setDialog}
         >
           <DialogStatus
             isError={isError}

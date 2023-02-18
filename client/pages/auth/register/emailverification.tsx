@@ -4,10 +4,12 @@ import { useForm } from "react-hook-form";
 import { useVerifyEmailMutation } from "state/api/portfolioApi";
 import { useRouter } from "next/router";
 import Dialog from "components/Dialog";
+import { DialogStatus, Form, FormInput, FormSubmit } from "components";
 const EmailVerification = () => {
   const [sendMail, { data, isLoading, isError, isSuccess, error }] =
     useVerifyEmailMutation();
   const router = useRouter();
+  const [dialog, setDialog] = useState(false);
   function handleSubmitEmail(formData: { email: string }) {
     setMessage("Yuborilmoqda...");
     sendMail(formData);
@@ -25,32 +27,37 @@ const EmailVerification = () => {
     <>
       <div className={s.container}>
         <div className={s.form}>
-          <form
-            onSubmit={handleSubmit((formData) => handleSubmitEmail(formData))}
-            className={s.formik}
+          <Form
+            handleSubmit={handleSubmit((formData) =>
+              handleSubmitEmail(formData)
+            )}
           >
-            <input
-              className={s.input}
+            <FormInput
               type="email"
-              {...register("email")}
+              fieldName="email"
+              register={register}
               placeholder="Pochta"
               required
             />
-            <button className={s.button}>Tasdiqlash</button>
-          </form>
+            <FormSubmit>Tasdiqlash</FormSubmit>
+          </Form>
         </div>
       </div>
-      {message && (
+      {dialog && (
         <Dialog
-          isError={isError}
-          isSuccess={isSuccess}
+          setShow={setDialog}
           ok={() => {
             setMessage("");
             isSuccess && router.replace("/");
           }}
-          isPending={isLoading}
-          message={message}
-        />
+        >
+          <DialogStatus
+            isError={isError}
+            isSuccess={isSuccess}
+            isPending={isLoading}
+            message={message}
+          />
+        </Dialog>
       )}
     </>
   );

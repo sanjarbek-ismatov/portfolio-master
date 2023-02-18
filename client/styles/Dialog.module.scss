@@ -30,6 +30,11 @@
   animation: spinner 1s infinite ease;
   margin-right: 20px;
 }
+.dialogHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .message {
   display: flex;
   align-items: center;
@@ -45,7 +50,7 @@
 }
 .dialog {
   width: 600px;
-  padding: 25px;
+  padding: 10px 25px;
   background-color: $lightColor;
   color: $color;
   line-height: 50px;

@@ -3,12 +3,19 @@ import { User } from "types";
 import { getMe } from "utils/getDetails";
 import Image from "next/image";
 import { serverUrl } from "utils/serverUrl";
-import { useAuth } from "utils/auth";
-import { NavbarProfile } from "components";
+import { useForm } from "react-hook-form";
+import {
+  Dialog,
+  Form,
+  FormArea,
+  FormInput,
+  FormSubmit,
+  NavbarProfile,
+} from "components";
 import styles from "styles/Profile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import { faEnvelope, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
 const Profile = () => {
@@ -16,6 +23,8 @@ const Profile = () => {
   const router = useRouter();
   const { username } = router.query;
   const [data, setData] = useState<User>();
+  const [dialog, setDialog] = useState<boolean>(false);
+  const { handleSubmit, register } = useForm<User>();
   useEffect(() => {
     !username?.length &&
       getMe().then((data) => {
@@ -44,6 +53,11 @@ const Profile = () => {
                   className={styles.image}
                   alt="profile"
                   unoptimized
+                />
+                <FontAwesomeIcon
+                  onClick={() => setDialog(true)}
+                  className={styles.icon}
+                  icon={faPenToSquare}
                 />
                 <div>
                   <h1>
@@ -110,9 +124,73 @@ const Profile = () => {
             </div>
           </div>
         </div>
+        {dialog && (
+          <Dialog setShow={setDialog}>
+            <Form
+              encType="multipart/form-data"
+              handleSubmit={handleSubmit((e) => console.log(e))}
+              title="Profilingizni yangilang"
+            >
+              <FormInput
+                type="file"
+                accept="image/*"
+                name="image"
+                fieldName="image"
+                register={register}
+              />
+              <FormInput
+                type="text"
+                defaultValue={data.firstname}
+                name="firstname"
+                fieldName="firstname"
+                register={register}
+              />
+              <FormInput
+                type="text"
+                defaultValue={data.lastname}
+                name="lastname"
+                fieldName="lastname"
+                register={register}
+              />
+              <FormInput
+                type="text"
+                defaultValue={data.githubProfile}
+                name="githubProfile"
+                fieldName="githubProfile"
+                register={register}
+              />
+              <FormInput
+                type="text"
+                defaultValue={data.telegramProfile}
+                name="telegramProfile"
+                fieldName="telegramProfile"
+                register={register}
+              />
+              <FormInput
+                type="text"
+                defaultValue={data.username}
+                fieldName="username"
+                name="username"
+                register={register}
+              />
+              <FormArea
+                defaultValue={data.skills.join(", ")}
+                fieldName="skills"
+                name="skills"
+                register={register}
+              />
+              <FormArea
+                defaultValue={data.description}
+                fieldName="description"
+                name="description"
+                register={register}
+              />
+              <FormSubmit>Ha</FormSubmit>
+            </Form>
+          </Dialog>
+        )}
       </div>
     </>
   );
 };
-
 export default Profile;

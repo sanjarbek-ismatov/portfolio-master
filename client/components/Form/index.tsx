@@ -1,5 +1,6 @@
 import {
   ButtonHTMLAttributes,
+  ClassAttributes,
   DetailedHTMLProps,
   FC,
   FormHTMLAttributes,
@@ -7,32 +8,44 @@ import {
   ReactNode,
   TextareaHTMLAttributes,
 } from "react";
+import { UseFormRegister } from "react-hook-form";
+import { User } from "types";
 import styles from "./Form.module.scss";
 const Form: FC<
   {
     children: ReactNode;
-    title: string;
     handleSubmit: React.Dispatch<React.FormEvent>;
   } & FormHTMLAttributes<HTMLFormElement>
-> = ({ children, handleSubmit, title }) => {
+> = ({ children, handleSubmit, ...rest }) => {
   return (
-    <div className={styles.form}>
-      <h1>{title}</h1>
-      <form className={styles.formik} onSubmit={handleSubmit}>
-        {children}
-      </form>
-    </div>
+    <form {...rest} className={styles.formik} onSubmit={handleSubmit}>
+      {children}
+    </form>
   );
 };
-const FormInput: FC<InputHTMLAttributes<HTMLInputElement>> = ({ ...rest }) => {
+const FormInput: FC<
+  ClassAttributes<HTMLInputElement> &
+    InputHTMLAttributes<HTMLInputElement> & {
+      register?: UseFormRegister<any>;
+      fieldName?: any;
+    }
+> = ({ register, fieldName, ...rest }) => {
+  if (register)
+    return (
+      <input {...register(fieldName)} className={styles.input} {...rest} />
+    );
   return <input className={styles.input} {...rest} />;
 };
 const FormArea: FC<
   DetailedHTMLProps<
     TextareaHTMLAttributes<HTMLTextAreaElement>,
     HTMLTextAreaElement
-  >
-> = ({ ...rest }) => {
+  > & { fieldName?: any; register?: UseFormRegister<User> }
+> = ({ fieldName, register, ...rest }) => {
+  if (register)
+    return (
+      <textarea className={styles.area} {...register(fieldName)} {...rest} />
+    );
   return <textarea className={styles.area} {...rest} />;
 };
 const FormSubmit: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({

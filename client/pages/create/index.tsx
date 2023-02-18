@@ -59,44 +59,46 @@ const Login = () => {
   }, [state]);
   return (
     <div className={s.container}>
-      <Form
-        title="Portfolio joylash"
-        handleSubmit={(e) => {
-          setDialog(true);
-          e.preventDefault();
-          setForm(e);
-        }}
-        encType="multipart/form-data"
-      >
-        <FormInput
-          type="file"
-          name="images"
-          placeholder="Profile uchun rasm"
-          accept="image/*"
-          multiple
-        />
-        <FormInput
-          type="text"
-          name="title"
-          placeholder="Loyiha nomi"
-          required
-        />
-        <FormInput
-          type="url"
-          name="url"
-          placeholder="Loyihangizga havola"
-          required
-        />
-        <FormArea name="description" placeholder="Loyiha haqida batafsil" />
-        <FormArea
-          name="used"
-          placeholder="Qaysi texnologiyalardan foydalandingiz? Masalan: reactjs, nodejs, mongodb"
-        />
-        <FormSubmit type="submit">Joylash</FormSubmit>
-      </Form>
-
+      <div className={s.form}>
+        <h1>Portfolio joylash</h1>
+        <Form
+          handleSubmit={(e) => {
+            setDialog(true);
+            e.preventDefault();
+            setForm(e);
+          }}
+          encType="multipart/form-data"
+        >
+          <FormInput
+            type="file"
+            name="images"
+            placeholder="Profile uchun rasm"
+            accept="image/*"
+            multiple
+          />
+          <FormInput
+            type="text"
+            name="title"
+            placeholder="Loyiha nomi"
+            required
+          />
+          <FormInput
+            type="url"
+            name="url"
+            placeholder="Loyihangizga havola"
+            required
+          />
+          <FormArea name="description" placeholder="Loyiha haqida batafsil" />
+          <FormArea
+            name="used"
+            placeholder="Qaysi texnologiyalardan foydalandingiz? Masalan: reactjs, nodejs, mongodb"
+          />
+          <FormSubmit type="submit">Joylash</FormSubmit>
+        </Form>
+      </div>
       {dialog && state.status && (
         <Dialog
+          setShow={setDialog}
           ok={() =>
             !state.error
               ? (window.location.pathname = "/page/1")
@@ -112,7 +114,11 @@ const Login = () => {
         </Dialog>
       )}
       {dialog && !state.status && (
-        <Dialog ok={handleSubmit} cancel={() => setDialog(false)}>
+        <Dialog
+          setShow={setDialog}
+          ok={handleSubmit}
+          cancel={() => setDialog(false)}
+        >
           <DialogStatus
             isError={isError}
             isSuccess={isSuccess}
