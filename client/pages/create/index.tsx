@@ -1,4 +1,11 @@
-import { Dialog } from "components";
+import {
+  Dialog,
+  DialogStatus,
+  Form,
+  FormArea,
+  FormInput,
+  FormSubmit,
+} from "components";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { portfolio, useAppSelector } from "state/store";
@@ -52,77 +59,67 @@ const Login = () => {
   }, [state]);
   return (
     <div className={s.container}>
-      <div className={s.form}>
-        <h1>Portfolio joylash</h1>
-        <p>Skrinshotlarni yuklang</p>
-        <form
-          onSubmit={(e) => {
-            setDialog(true);
-            e.preventDefault();
-            setForm(e);
-          }}
-          encType="multipart/form-data"
-        >
-          <input
-            className={s.input}
-            type="file"
-            name="images"
-            placeholder="Profile uchun rasm"
-            accept="image/*"
-            multiple
-          />
+      <Form
+        title="Portfolio joylash"
+        handleSubmit={(e) => {
+          setDialog(true);
+          e.preventDefault();
+          setForm(e);
+        }}
+        encType="multipart/form-data"
+      >
+        <FormInput
+          type="file"
+          name="images"
+          placeholder="Profile uchun rasm"
+          accept="image/*"
+          multiple
+        />
+        <FormInput
+          type="text"
+          name="title"
+          placeholder="Loyiha nomi"
+          required
+        />
+        <FormInput
+          type="url"
+          name="url"
+          placeholder="Loyihangizga havola"
+          required
+        />
+        <FormArea name="description" placeholder="Loyiha haqida batafsil" />
+        <FormArea
+          name="used"
+          placeholder="Qaysi texnologiyalardan foydalandingiz? Masalan: reactjs, nodejs, mongodb"
+        />
+        <FormSubmit type="submit">Joylash</FormSubmit>
+      </Form>
 
-          <input
-            className={s.input}
-            type="text"
-            name="title"
-            placeholder="Loyiha nomi"
-            required
-          />
-          <input
-            className={s.input}
-            type="url"
-            name="url"
-            placeholder="Loyihangizga havola"
-            required
-          />
-          <textarea
-            className={s.area}
-            name="description"
-            placeholder="Loyiha haqida batafsil"
-          />
-          <textarea
-            className={s.area}
-            name="used"
-            placeholder="Qaysi texnologiyalardan foydalandingiz? Masalan: reactjs, nodejs, mongodb"
-          />
-          <button type="submit" className={s.button}>
-            Joylash
-          </button>
-        </form>
-      </div>
       {dialog && state.status && (
         <Dialog
-          isError={isError}
-          isSuccess={isSuccess}
-          isPending={isPending}
-          message={message}
           ok={() =>
             !state.error
               ? (window.location.pathname = "/page/1")
               : setDialog(false)
           }
-        />
+        >
+          <DialogStatus
+            isError={isError}
+            isSuccess={isSuccess}
+            isPending={isPending}
+            message={message}
+          />
+        </Dialog>
       )}
       {dialog && !state.status && (
-        <Dialog
-          isPending={isPending}
-          isError={false}
-          isSuccess={false}
-          message={message}
-          ok={handleSubmit}
-          cancel={() => setDialog(false)}
-        />
+        <Dialog ok={handleSubmit} cancel={() => setDialog(false)}>
+          <DialogStatus
+            isError={isError}
+            isSuccess={isSuccess}
+            isPending={isPending}
+            message={message}
+          />
+        </Dialog>
       )}
     </div>
   );

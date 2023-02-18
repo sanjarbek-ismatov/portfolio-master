@@ -11,6 +11,8 @@ import Spinner from "./Spinner";
 import Head from "./Head";
 import NavbarProfile from "./Navbar/NavbarProfile";
 import Panigation from "./Panigation";
+import DialogStatus from "./DialogStatus";
+import { FormArea, Form, FormInput, FormSubmit } from "./Form";
 export {
   Panigation,
   CommentComponent,
@@ -25,4 +27,9 @@ export {
   Spinner,
   Head,
   NavbarProfile,
+  DialogStatus,
+  Form,
+  FormInput,
+  FormArea,
+  FormSubmit,
 };

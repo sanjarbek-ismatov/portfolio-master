@@ -1,17 +1,14 @@
 import s from "styles/L.module.scss";
-import { signIn, useSession } from "next-auth/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { Dialog } from "components";
+import { Dialog, Form, FormInput, FormSubmit } from "components";
 import { useRouter } from "next/router";
 
 import { useLoginUserMutation } from "state/api/portfolioApi";
+import { DialogStatus } from "components";
 const Login = () => {
   const [loginUser, { isLoading, isError, isSuccess, data, error }] =
     useLoginUserMutation();
-  const { data: session, status } = useSession();
   const [message, setMessage] = useState("");
   const router = useRouter();
   function formik(e: any) {
@@ -31,42 +28,37 @@ const Login = () => {
       data && localStorage.setItem("token", data.token);
     }
   }, [isLoading, data, isError, isSuccess, error]);
-  useEffect(() => {
-    return () => {
-      if (session) {
-        setMessage("Yuklanmoqda...");
-        loginUser({ email: session?.user?.email || "", isDirect: true } as any);
-      }
-    };
-  }, [loginUser, session]);
+  /**
+   * Next auth strategy disabled
+   */
+  // useEffect(() => {
+  //   return () => {
+  //     if (session) {
+  //       setMessage("Yuklanmoqda...");
+  //       loginUser({ email: session?.user?.email || "", isDirect: true } as any);
+  //     }
+  //   };
+  // }, [loginUser, session]);
   return (
     <div className={s.container}>
       <Head>
         <title>Tizimga kirish</title>
       </Head>
+      <Form title="Kirish" handleSubmit={formik}>
+        <FormInput type="email" name="email" placeholder="Pochta" required />
+        <FormInput
+          type="password"
+          name="password"
+          placeholder="Parol"
+          required
+        />
+        <FormSubmit>Kirish</FormSubmit>
+      </Form>
+      {/* 
+          Next auth disabled
+         */}
 
-      <div className={s.form}>
-        <h1>Kirish</h1>
-        <form className={s.formik} onSubmit={formik}>
-          <input
-            className={s.input}
-            type="email"
-            name="email"
-            placeholder="Pochta"
-            required
-          />
-          <input
-            className={s.input}
-            type="password"
-            name="password"
-            placeholder="Parolni o'rnating"
-            required
-          />
-          <button className={s.button} type={"submit"}>
-            Kirish
-          </button>
-        </form>
-        <div className={s.other}>
+      {/* <div className={s.other}>
           <button className={s.button} onClick={() => signIn("github")}>
             <FontAwesomeIcon className="icon" icon={faGithub} /> Github orqali
             davom etish
@@ -75,20 +67,23 @@ const Login = () => {
             <FontAwesomeIcon className="icon" icon={faFacebook} /> Facebook
             orqali davom etish
           </button>
-        </div>
-      </div>
+        </div> */}
+
       {message && (
         <Dialog
-          isError={isError}
-          isSuccess={isSuccess}
           ok={() => {
             setMessage("");
             isSuccess &&
               (router.query.home ? router.replace("/") : router.back());
           }}
-          isPending={isLoading}
-          message={message}
-        />
+        >
+          <DialogStatus
+            isError={isError}
+            isPending={isLoading}
+            isSuccess={isSuccess}
+            message={message}
+          />
+        </Dialog>
       )}
     </div>
   );

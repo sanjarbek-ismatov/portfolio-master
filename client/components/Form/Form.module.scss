@@ -1,0 +1,64 @@
+@import "../../styles/colors";
+.form {
+  text-align: center;
+  padding: 60px 30px;
+  max-width: 600px;
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0px 0px 45px 15px $shadowColor;
+  -webkit-box-shadow: 0px 0px 45px 15px $shadowColor;
+  -moz-box-shadow: 0px 0px 45px 15px $shadowColor;
+  p {
+    padding: 10px 0;
+  }
+}
+.input {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 2px solid $background;
+  outline: none;
+  border-radius: 10px;
+  background: transparent;
+}
+.rowInput {
+  width: 49%;
+  margin: 10px 2px;
+  padding: 10px;
+  border: 2px solid $background;
+  outline: none;
+  border-radius: 10px;
+  background: transparent;
+}
+.formik {
+  display: block;
+  width: 100%;
+}
+.area {
+  background: transparent;
+  width: 100%;
+  margin: 10px 0;
+  height: 100vh;
+  max-height: 90px;
+  padding: 10px;
+  border: 2px solid $background;
+  outline: none;
+  border-radius: 10px;
+  transition: all 0.2s;
+  &:focus {
+    max-height: 300px;
+  }
+}
+
+.button {
+  padding: 10px;
+  background-color: $background;
+  border: none;
+  color: $lightColor;
+  border-radius: 10px;
+  margin: 7px;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+  }
+}

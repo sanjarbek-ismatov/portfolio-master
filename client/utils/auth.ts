@@ -1,10 +1,12 @@
 import { useSession } from "next-auth/react";
+import { useEffect, useMemo, useState } from "react";
 import { getToken } from "./getDetails";
 import { serverUrl } from "./serverUrl";
 export const useAuth = () => {
-  const { data } = useSession();
-  const token = getToken();
-  return token || data;
+  // const [isAuth, setIsAuth] = useState<boolean>(false)
+  const token = useMemo(() => new Boolean(getToken()).valueOf(), []);
+  console.log(token);
+  return token;
 };
 export const tokenValidator = async (token: string) => {
   return new Promise(async (resolve, reject) => {

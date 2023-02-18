@@ -104,11 +104,12 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
               <div>
                 <button
                   onClick={() =>
-                    createLike(data._id).then(({ data }: any) =>
-                      setLikes(data.count)
-                    )
+                    (auth &&
+                      createLike(data._id).then(({ data }: any) =>
+                        setLikes(data.count)
+                      )) ||
+                    alert("Siz tizimga kirmagansiz!")
                   }
-                  disabled={auth ? false : true}
                   className={s.linkButton}
                 >
                   <FontAwesomeIcon className="icon" icon={faHeart} /> {likes}

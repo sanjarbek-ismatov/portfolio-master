@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type SearchInput = {
   handleChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
@@ -7,6 +9,10 @@ export type DialogProps = {
   ok?: (body?: {}) => void;
   cancel?: () => void;
   okText?: string;
+ 
+  children: ReactNode
+};
+export type DialogStatus = {
   cancelText?: string;
   isError: boolean;
   isSuccess: boolean;
