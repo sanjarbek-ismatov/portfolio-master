@@ -165,14 +165,14 @@ const Register = () => {
           </button>
         </div> */}
       </div>
-      {dialog && (
+      {message && (
         <Dialog
           ok={() => {
             setMessage("");
             isSuccess && router.replace("/auth/login?home=true");
             isSuccess && data && signOut();
           }}
-          setShow={setDialog}
+          setMessage={setMessage}
         >
           <DialogStatus
             isPending={isLoading}

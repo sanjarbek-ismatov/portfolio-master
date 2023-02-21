@@ -10,7 +10,7 @@ const Login = () => {
   const [loginUser, { isLoading, isError, isSuccess, data, error }] =
     useLoginUserMutation();
   const [message, setMessage] = useState("");
-  const [dialog, setDialog] = useState(false);
+
   const router = useRouter();
   function formik(e: any) {
     setMessage("Yuklanmoqda...");
@@ -73,14 +73,14 @@ const Login = () => {
           </button>
         </div> */}
 
-      {dialog && (
+      {message && (
         <Dialog
           ok={() => {
             setMessage("");
             isSuccess &&
               (router.query.home ? router.replace("/") : router.back());
           }}
-          setShow={setDialog}
+          setMessage={setMessage}
         >
           <DialogStatus
             isError={isError}

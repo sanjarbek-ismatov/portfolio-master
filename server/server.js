@@ -8,8 +8,6 @@ require("./helpers/dbconnecter")();
 require("./helpers/logger")();
 // create app
 const app = express();
-// export app
-module.exports.app = app;
 // if test mode
 if (process.env.NODE_ENV === "test") {
   // disable console.log
@@ -18,6 +16,5 @@ if (process.env.NODE_ENV === "test") {
 // import routes
 require("./helpers/routes")(app);
 // listen to port
-app.listen(process.env.PORT, () => {
-  console.log("Server working");
-});
+const server = app.listen(4000);
+module.exports = { app, server };

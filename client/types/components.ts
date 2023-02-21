@@ -9,7 +9,7 @@ export type DialogProps = {
   ok?: (body?: {}) => void;
   cancel?: () => void;
   cancelText?: string;
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
   okText?: string;
 
   children: ReactNode;

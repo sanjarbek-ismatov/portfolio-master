@@ -6,6 +6,7 @@ import { serverUrl } from "utils/serverUrl";
 import { useForm } from "react-hook-form";
 import {
   Dialog,
+  DialogStatus,
   Form,
   FormArea,
   FormInput,
@@ -18,13 +19,35 @@ import { faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useUpdateProfileMutation } from "state/api/portfolioApi";
 const Profile = () => {
   const url = serverUrl();
   const router = useRouter();
   const { username } = router.query;
   const [data, setData] = useState<User>();
-  const [dialog, setDialog] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
   const { handleSubmit, register } = useForm<User>();
+  const [
+    updateProfile,
+    { isLoading, isError, isSuccess, data: updatedData, error },
+  ] = useUpdateProfileMutation();
+  const profileSubmit = (e: User) => {
+    setMessage("Yuklanmoqda...");
+    const form = new FormData();
+    for (const [key, value] of Object.entries(e) as any) {
+      if (key === "image" && value.length) {
+        form.append(key, value[0]);
+      } else if (key !== "image") {
+        form.append(key, value);
+      }
+    }
+    if (!e.image.length && data) {
+      form.append("image", data.image);
+    }
+    updateProfile(form)
+      .then(() => setMessage("Yangilandi!"))
+      .catch(() => setMessage("Xato"));
+  };
   useEffect(() => {
     !username?.length &&
       getMe().then((data) => {
@@ -55,7 +78,7 @@ const Profile = () => {
                   unoptimized
                 />
                 <FontAwesomeIcon
-                  onClick={() => setDialog(true)}
+                  onClick={() => setMessage("Yangilamoqchimisiz!")}
                   className={styles.icon}
                   icon={faPenToSquare}
                 />
@@ -124,69 +147,84 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        {dialog && (
-          <Dialog setShow={setDialog}>
-            <Form
-              encType="multipart/form-data"
-              handleSubmit={handleSubmit((e) => console.log(e))}
-              title="Profilingizni yangilang"
-            >
-              <FormInput
-                type="file"
-                accept="image/*"
-                name="image"
-                fieldName="image"
-                register={register}
-              />
-              <FormInput
-                type="text"
-                defaultValue={data.firstname}
-                name="firstname"
-                fieldName="firstname"
-                register={register}
-              />
-              <FormInput
-                type="text"
-                defaultValue={data.lastname}
-                name="lastname"
-                fieldName="lastname"
-                register={register}
-              />
-              <FormInput
-                type="text"
-                defaultValue={data.githubProfile}
-                name="githubProfile"
-                fieldName="githubProfile"
-                register={register}
-              />
-              <FormInput
-                type="text"
-                defaultValue={data.telegramProfile}
-                name="telegramProfile"
-                fieldName="telegramProfile"
-                register={register}
-              />
-              <FormInput
-                type="text"
-                defaultValue={data.username}
-                fieldName="username"
-                name="username"
-                register={register}
-              />
-              <FormArea
-                defaultValue={data.skills.join(", ")}
-                fieldName="skills"
-                name="skills"
-                register={register}
-              />
-              <FormArea
-                defaultValue={data.description}
-                fieldName="description"
-                name="description"
-                register={register}
-              />
-              <FormSubmit>Ha</FormSubmit>
-            </Form>
+        {message && (
+          <Dialog
+            ok={isSuccess || isError ? () => setMessage("") : undefined}
+            setMessage={setMessage}
+          >
+            {isLoading ||
+              isError ||
+              (isSuccess && (
+                <DialogStatus
+                  isPending={isLoading}
+                  isSuccess={isSuccess}
+                  isError={isError}
+                  message={message}
+                />
+              ))}
+            {!(isLoading || isError || isSuccess) && (
+              <Form
+                encType="multipart/form-data"
+                handleSubmit={handleSubmit(profileSubmit)}
+                title="Profilingizni yangilang"
+              >
+                <FormInput
+                  type="file"
+                  accept="image/*"
+                  name="image"
+                  fieldName="image"
+                  register={register}
+                />
+                <FormInput
+                  type="text"
+                  defaultValue={data.firstname}
+                  name="firstname"
+                  fieldName="firstname"
+                  register={register}
+                />
+                <FormInput
+                  type="text"
+                  defaultValue={data.lastname}
+                  name="lastname"
+                  fieldName="lastname"
+                  register={register}
+                />
+                <FormInput
+                  type="text"
+                  defaultValue={data.githubProfile}
+                  name="githubProfile"
+                  fieldName="githubProfile"
+                  register={register}
+                />
+                <FormInput
+                  type="text"
+                  defaultValue={data.telegramProfile}
+                  name="telegramProfile"
+                  fieldName="telegramProfile"
+                  register={register}
+                />
+                <FormInput
+                  type="text"
+                  defaultValue={data.username}
+                  fieldName="username"
+                  name="username"
+                  register={register}
+                />
+                <FormArea
+                  defaultValue={data.skills.join(", ")}
+                  fieldName="skills"
+                  name="skills"
+                  register={register}
+                />
+                <FormArea
+                  defaultValue={data.description}
+                  fieldName="description"
+                  name="description"
+                  register={register}
+                />
+                <FormSubmit>Ha</FormSubmit>
+              </Form>
+            )}
           </Dialog>
         )}
       </div>

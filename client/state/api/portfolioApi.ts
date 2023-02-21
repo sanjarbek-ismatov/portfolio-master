@@ -1,6 +1,6 @@
 import { BaseQueryResult } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Comment } from "types";
+import { Comment, User } from "types";
 import { getToken } from "utils/getDetails";
 import { serverUrl } from "utils/serverUrl";
 const url = serverUrl();
@@ -97,6 +97,19 @@ export const portfolioApi = createApi({
       get verifyEmail() {
         return this._verifyEmail;
       },
+      _updateProfile: build.mutation<User, FormData>({
+        query: (body) => ({
+          url: "/user/me/update",
+          method: "PUT",
+          body,
+          headers: {
+            ["x-token"]: getToken(),
+          },
+        }),
+      }),
+      get updateProfile() {
+        return this._updateProfile;
+      },
     };
   },
 });
@@ -107,4 +120,5 @@ export const {
   useDeleteCommentMutation,
   useRegisterUserMutation,
   useVerifyEmailMutation,
+  useUpdateProfileMutation,
 } = portfolioApi;

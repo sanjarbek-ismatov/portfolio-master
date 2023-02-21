@@ -34,7 +34,7 @@
   "scripts": {
     "start": "node dist/bundle.js",
     "dev": "nodemon server.js",
-    "test": "cross-env NODE_ENV=test jest",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles",
     "build": "webpack",
     "esbuild": "node builder.js"
   },

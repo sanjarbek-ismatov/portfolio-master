@@ -43,9 +43,9 @@ const EmailVerification = () => {
           </Form>
         </div>
       </div>
-      {dialog && (
+      {message && (
         <Dialog
-          setShow={setDialog}
+          setMessage={setMessage}
           ok={() => {
             setMessage("");
             isSuccess && router.replace("/");

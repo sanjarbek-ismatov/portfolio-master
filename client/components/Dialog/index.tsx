@@ -7,7 +7,7 @@ const Dialog = ({
   cancel,
   okText,
   cancelText,
-  setShow,
+  setMessage,
   children,
 }: DialogProps) => {
   return (
@@ -17,7 +17,7 @@ const Dialog = ({
           <h2>Diqqat!</h2>
           <FontAwesomeIcon
             cursor={"pointer"}
-            onClick={() => setShow(false)}
+            onClick={() => setMessage("")}
             icon={faX}
             height={20}
             width={20}
@@ -25,7 +25,7 @@ const Dialog = ({
         </div>
         <div className={styles.message}>{children}</div>
         <div className={styles.buttons}>
-          {ok && <button onClick={ok}>{okText}</button>}
+          {ok && <button onClick={ok}>{okText || "Ha"}</button>}
           {cancel && (
             <button onClick={cancel}>{cancelText || "Bekor qilish"}</button>
           )}

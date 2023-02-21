@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
-const { app } = require("../server");
-beforeEach(async () => {
+const { app, server } = require("../server");
+beforeAll(async () => {
   await mongoose.connect(process.env.MONGO_URL);
 });
-afterEach(async () => {
+afterAll(async () => {
   await mongoose.connection.close();
+  server.close();
 });
 describe("GET /api/portfolio/all", () => {
   it("should return all porfolios", async () => {
@@ -73,7 +74,7 @@ describe("/POST loginRoute", () => {
     // send valid login data
     const res = await request(app).post("/api/login").send({
       email: "ismatovvsanjarbek@gmail.com",
-      password: "12345678",
+      password: "09122005isa",
     });
     expect(res.statusCode).toBe(200);
     // expect(res.body).toBe("Login bajarildi!");
