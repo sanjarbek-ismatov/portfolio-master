@@ -14,7 +14,6 @@ import { useAuth } from "utils/auth";
 
 const Login = () => {
   const auth = useAuth();
-  const [dialog, setDialog] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [message, setMessage] = useState("Siz portfolioni joylamoqchimisiz?");
   const [form, setForm] = useState<any>();
@@ -63,7 +62,6 @@ const Login = () => {
         <h1>Portfolio joylash</h1>
         <Form
           handleSubmit={(e) => {
-            setDialog(true);
             e.preventDefault();
             setForm(e);
           }}
@@ -96,13 +94,13 @@ const Login = () => {
           <FormSubmit type="submit">Joylash</FormSubmit>
         </Form>
       </div>
-      {dialog && state.status && (
+      {message && state.status && (
         <Dialog
-          setShow={setDialog}
+          setMessage={setMessage}
           ok={() =>
             !state.error
               ? (window.location.pathname = "/page/1")
-              : setDialog(false)
+              : setMessage("")
           }
         >
           <DialogStatus
@@ -113,11 +111,11 @@ const Login = () => {
           />
         </Dialog>
       )}
-      {dialog && !state.status && (
+      {message && !state.status && (
         <Dialog
-          setShow={setDialog}
+          setMessage={setMessage}
           ok={handleSubmit}
-          cancel={() => setDialog(false)}
+          cancel={() => setMessage("")}
         >
           <DialogStatus
             isError={isError}

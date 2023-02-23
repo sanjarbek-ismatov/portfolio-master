@@ -17,6 +17,7 @@ specifiers:
   aos: ^2.3.4
   axios: ^1.1.3
   classnames: ^2.3.2
+  cross-env: ^7.0.3
   dotenv: ^16.0.3
   eslint: 8.24.0
   eslint-config-next: 12.3.1
@@ -61,6 +62,7 @@ devDependencies:
   '@types/prettier': 2.7.2
   '@types/react': 18.0.21
   '@types/react-dom': 18.0.6
+  cross-env: 7.0.3
   eslint: 8.24.0
   eslint-config-next: 12.3.1_adyn7hcbhmi4qjtbtmpc7mf5da
   prettier: 2.8.3
@@ -709,6 +711,14 @@ packages:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
     dev: false
+
+  /cross-env/7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+    dev: true
 
   /cross-spawn/7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
