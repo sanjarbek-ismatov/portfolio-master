@@ -31,7 +31,13 @@ router.get("/:username", async (req, res) => {
 router.put("/me/update", [auth, upload.single("image")], async (req, res) => {
   const { error } = userUpdateValidator(req.body);
   if (error) return res.status(400).send(error.details[0].message);
+
   const user = await User.findById(req.id);
+  if (req.body.skills) {
+    user.skills = req.body.skills.split(", ");
+  }
+  delete req.body.skills;
+  console.log(req.body);
   if (req.file) {
     user.image = req.file.filename;
   }
@@ -40,14 +46,14 @@ router.put("/me/update", [auth, upload.single("image")], async (req, res) => {
 
     if (hashedPassword) {
       user.password = hashedPassword;
-      await user.save();
+      delete req.body.password;
     } else {
       return res.status(400).send("Parol yaroqsiz!");
     }
   } else {
     await user.update(req.body);
   }
-
+  await user.save();
   res.status(200).send(user);
 });
 module.exports = router;

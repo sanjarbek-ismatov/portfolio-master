@@ -33,11 +33,6 @@ const userSchema = new mongoose.Schema({
   githubProfile: String,
   skills: {
     type: [String],
-    validate: {
-      validator: (value){
-        return true
-      }
-    }
   },
   password: String,
 });
