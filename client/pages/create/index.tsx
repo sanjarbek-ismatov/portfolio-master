@@ -15,7 +15,7 @@ import { useAuth } from "utils/auth";
 const Login = () => {
   const auth = useAuth();
   const [isPending, setIsPending] = useState(false);
-  const [message, setMessage] = useState("Siz portfolioni joylamoqchimisiz?");
+  const [message, setMessage] = useState("");
   const [form, setForm] = useState<any>();
   const router = useRouter();
   const [isError, setIsError] = useState(false);
@@ -62,6 +62,7 @@ const Login = () => {
         <h1>Portfolio joylash</h1>
         <Form
           handleSubmit={(e) => {
+            setMessage("Siz portfolioni joylamoqchimisiz?");
             e.preventDefault();
             setForm(e);
           }}

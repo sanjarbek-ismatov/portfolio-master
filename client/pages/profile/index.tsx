@@ -149,19 +149,17 @@ const Profile = () => {
         </div>
         {message && (
           <Dialog
-            ok={isSuccess || isError ? () => setMessage("") : undefined}
+            ok={isSuccess || isError ? () => router.reload() : undefined}
             setMessage={setMessage}
           >
-            {isLoading ||
-              isError ||
-              (isSuccess && (
-                <DialogStatus
-                  isPending={isLoading}
-                  isSuccess={isSuccess}
-                  isError={isError}
-                  message={message}
-                />
-              ))}
+            {(isLoading || isError || isSuccess) && (
+              <DialogStatus
+                isPending={isLoading}
+                isSuccess={isSuccess}
+                isError={isError}
+                message={message}
+              />
+            )}
             {!(isLoading || isError || isSuccess) && (
               <Form
                 encType="multipart/form-data"

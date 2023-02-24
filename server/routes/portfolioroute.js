@@ -16,6 +16,7 @@ router.get("/all", async (req, res) => {
     "author",
     "firstname username image"
   );
+  portfolios.reverse();
   res.status(200).send(portfolios);
 });
 
@@ -27,7 +28,10 @@ router.get("/:id", async (req, res) => {
     .populate("author", "firstname username image")
     .populate({
       path: "comments",
-      populate: { path: "commentAuthor", select: "username image" },
+      populate: {
+        path: "commentAuthor",
+        select: "image firstname lastname username",
+      },
     });
   if (!portfolio) {
     return res.status(404).send("Afsus topilmadi!");
@@ -82,7 +86,7 @@ router.put("/like/:id", auth, async (req, res) => {
 // @desc    Comment portfolio
 // @access  Private
 router.put("/comment/:id", [auth, upload.none()], async (req, res) => {
-  const portfolio = await Portfolio.findById(req.params.id, "-password");
+  const portfolio = await Portfolio.findById(req.params.id);
   const comment = new Comment({
     body: req.body.body,
     commentAuthor: req.id,
@@ -90,14 +94,27 @@ router.put("/comment/:id", [auth, upload.none()], async (req, res) => {
   portfolio.comments.unshift(comment._id);
   await comment.save();
   await portfolio.save();
-  res.status(200).send(portfolio.comments);
+  const sendingPortfolio = await portfolio.populate({
+    path: "comments",
+    populate: {
+      path: "commentAuthor",
+      select: "image firstname lastname username",
+    },
+  });
+  res.status(200).send(sendingPortfolio.comments);
 });
 
 // @route   DELETE /api/portfolio/comment/delete/:id
 // @desc    Delete comment
 // @access  Private
 router.delete("/comment/delete/:id", auth, async (req, res) => {
-  const portfolio = await Portfolio.findById(req.params.id);
+  const portfolio = await Portfolio.findById(req.params.id).populate({
+    path: "comments",
+    populate: {
+      path: "commentAuthor",
+      select: "image firstname lastname username",
+    },
+  });
   portfolio.comments.splice(req.query.index, 1);
   await portfolio.save();
   res.status(200).send(portfolio.comments);

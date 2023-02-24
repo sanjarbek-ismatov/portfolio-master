@@ -9,16 +9,14 @@
   .details {
     width: 100%;
     p,
-    h5 {
+    h6 {
       color: #7e7c7c;
-      width: 90%;
       margin: 0 10px;
-      font-size: 13px;
       line-height: 24px;
     }
-    h5 {
+    h6 {
       color: #4b4b4b;
-      font-size: 20px;
+
       &:hover .trashIcon {
         opacity: 1;
       }

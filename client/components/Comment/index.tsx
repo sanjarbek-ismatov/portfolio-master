@@ -34,9 +34,9 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
         <form
           method="PUT"
           onSubmit={handleSubmit((formData: any) => {
-            createComment({ id: _id, body: formData }).then((datas: any) =>
-              setCurrentComments(datas.data)
-            );
+            createComment({ id: _id, body: formData }).then((datas: any) => {
+              setCurrentComments(datas.data);
+            });
             resetField("body");
           })}
         >
@@ -84,36 +84,41 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
       ) : (
         defaultComments.map((e, i) => (
           <div className={s.commentContainer} key={i}>
-            <LazyImage
-              className={s.profileImage}
-              width={50}
-              height={50}
-              spinnerOptions={{
-                size: "50",
-                speed: "1",
-                border: "2",
-                position: "static",
-              }}
-              filename={e.commentAuthor.image}
-              url={url}
-            />
+            <Link href={`/profile/${e.commentAuthor.username}`}>
+              <a>
+                <LazyImage
+                  className={s.profileImage}
+                  width={50}
+                  height={50}
+                  spinnerOptions={{
+                    size: "50",
+                    speed: "1",
+                    border: "2",
+                    position: "absolute",
+                  }}
+                  filename={e.commentAuthor.image}
+                  url={url}
+                />
+              </a>
+            </Link>
             <div className={s.details}>
-              <h5>
-                {e.body}{" "}
-                {me && e.commentAuthor._id.includes(me._id) ? (
-                  <FontAwesomeIcon
-                    onClick={() => {
-                      deleteComment({ id: _id, index: i }).then((datas: any) =>
-                        setCurrentComments(datas.data)
-                      );
-                    }}
-                    className={s.trashIcon}
-                    icon={faTrashCan}
-                  />
-                ) : null}
-              </h5>
-              <p>{subtractTime(e.date)}</p>
+              <h6>
+                {e.commentAuthor.firstname} {e.commentAuthor.lastname}
+              </h6>
+              <p>{e.body} </p>
             </div>
+            {me && e.commentAuthor._id.includes(me._id) ? (
+              <FontAwesomeIcon
+                onClick={() => {
+                  deleteComment({ id: _id, index: i }).then((datas: any) =>
+                    setCurrentComments(datas.data)
+                  );
+                }}
+                className={s.trashIcon}
+                icon={faTrashCan}
+              />
+            ) : null}
+            <p>{subtractTime(e.date)}</p>
           </div>
         ))
       )}

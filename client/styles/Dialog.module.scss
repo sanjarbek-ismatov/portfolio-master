@@ -35,13 +35,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 15px;
 }
 .message {
   display: flex;
   align-items: center;
   padding: 0 15px;
   overflow: scroll;
-  height: 90vh;
 }
 @keyframes spinner {
   100% {
@@ -54,7 +54,7 @@
 }
 .dialog {
   width: 600px;
-  padding: 10px 25px;
+  padding: 10px;
   background-color: $lightColor;
   color: $color;
   line-height: 50px;

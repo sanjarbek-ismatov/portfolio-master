@@ -9,6 +9,26 @@
   border-radius: 10px;
   background: transparent;
 }
+.input[type="file"] {
+  position: relative;
+  padding: 8px;
+}
+.input[type="file"]::after {
+  color: #111;
+  content: "Rasm(lar)ni tanlang";
+  display: inline-block;
+  cursor: pointer;
+  border-left: 2px solid #645caa;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 11px;
+  width: 126px;
+}
+.input::-webkit-file-upload-button {
+  width: 0;
+  visibility: hidden;
+}
 .rowInput {
   width: 49%;
   margin: 8px 2px;
