@@ -8,8 +8,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-export const getServerSideProps: GetServerSideProps<{ data: User }> = async ({
+import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
+export const getStaticPaths: GetStaticPaths = async () => {
+  const res = await fetch(`${serverUrl()}/api/user/all`);
+  const data: User[] = await res.json();
+  const paths = data.map(({ username }) => ({
+    params: {
+      username,
+    },
+  }));
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};
+export const getStaticProps: GetStaticProps<{ data: User }> = async ({
   params,
 }) => {
   const res = await fetch(`${serverUrl()}/api/user/${params?.username}`);
@@ -18,12 +32,15 @@ export const getServerSideProps: GetServerSideProps<{ data: User }> = async ({
     props: {
       data,
     },
+    revalidate: 10,
   };
 };
-const Profile = ({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Profile = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const router = useRouter();
   const url = serverUrl();
+  if (router.isFallback) {
+    return <h1>Yuklanmoqda...</h1>;
+  }
   return (
     <>
       <Head

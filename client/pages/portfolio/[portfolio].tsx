@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import { Swiper, SwiperSlide } from "swiper/react";
 import s from "styles/Portfolio.module.scss";
 import "swiper/css";
@@ -15,7 +15,9 @@ import { usePostLikeByIdMutation } from "state/api/portfolioApi";
 import { subtractTime } from "utils/dateToReadable";
 import { useState } from "react";
 import { useAuth } from "utils/auth";
+import { useRouter } from "next/router";
 const Portfolio = ({ data }: { data: Portfolio }) => {
+  const router = useRouter();
   const auth = useAuth();
   const [likes, setLikes] = useState(data.likes.length);
   const [createLike] = usePostLikeByIdMutation();
@@ -24,6 +26,9 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
   }
 
   const url = serverUrl();
+  if (router.isFallback) {
+    return <h1>Yuklanmoqda...</h1>;
+  }
   return (
     <>
       <Head
@@ -137,7 +142,20 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
     </>
   );
 };
-export const getServerSideProps: GetServerSideProps<{
+export const getStaticPaths: GetStaticPaths = async () => {
+  const res = await fetch(`${serverUrl()}/api/portfolio/all`);
+  const data: Portfolio[] = await res.json();
+  const paths = data.map(({ linktitle }) => ({
+    params: {
+      portfolio: linktitle,
+    },
+  }));
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};
+export const getStaticProps: GetStaticProps<{
   data: Portfolio;
 }> = async ({ params }) => {
   const url = serverUrl();
@@ -157,6 +175,7 @@ export const getServerSideProps: GetServerSideProps<{
     props: {
       data,
     },
+    revalidate: 10,
   };
 };
 
