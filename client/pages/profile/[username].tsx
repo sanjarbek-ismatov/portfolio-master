@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps<{ data: User }> = async ({
     props: {
       data,
     },
-    revalidate: 10,
+    revalidate: 1,
   };
 };
 const Profile = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {

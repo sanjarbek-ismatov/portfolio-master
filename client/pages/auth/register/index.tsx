@@ -1,7 +1,4 @@
 import s from "styles/L.module.scss";
-import { signIn, signOut } from "next-auth/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useEffect, useState } from "react";
 import {
   Dialog,
@@ -13,11 +10,9 @@ import {
 } from "components";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import { useRegisterUserMutation } from "state/api/portfolioApi";
 const Register = () => {
   const [dialog, setDialog] = useState(false);
-  const { data } = useSession();
   const [message, setMessage] = useState("");
   const [register, { isLoading, isSuccess, isError, error }] =
     useRegisterUserMutation();
@@ -59,15 +54,15 @@ const Register = () => {
       setMessage("Ro`yhatdan muvaffiqiyatli o`tdingiz!");
     }
   }, [isSuccess, error]);
-  useEffect(() => {
-    if (data) {
-      setMessage("Yuklanmoqda...");
-      register({
-        email: data.user?.email || "",
-        isDirect: true,
-      } as any);
-    }
-  }, [data, register]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setMessage("Yuklanmoqda...");
+  //     register({
+  //       email: data.user?.email || "",
+  //       isDirect: true,
+  //     } as any);
+  //   }
+  // }, [data, register]);
   return (
     <div className={s.container}>
       <Head>
@@ -170,7 +165,6 @@ const Register = () => {
           ok={() => {
             setMessage("");
             isSuccess && router.replace("/auth/login?home=true");
-            isSuccess && data && signOut();
           }}
           setMessage={setMessage}
         >

@@ -1,3 +1,4 @@
+"use client";
 import LazyImage from "components/LazyImage";
 import React, { useEffect, useState } from "react";
 import type { Comment, Portfolio, User } from "types";
@@ -49,7 +50,7 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
                 size: "50",
                 speed: "1",
                 border: "2",
-                position: "static",
+                position: "absolute",
               }}
               filename={me?.image}
               url={url}

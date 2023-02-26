@@ -175,7 +175,7 @@ export const getStaticProps: GetStaticProps<{
     props: {
       data,
     },
-    revalidate: 10,
+    revalidate: 1,
   };
 };
 
