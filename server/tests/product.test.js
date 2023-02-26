@@ -8,14 +8,12 @@ afterAll(async () => {
   await mongoose.connection.close();
   server.close();
 });
-describe("GET /api/portfolio/all", () => {
+describe("GET portfolios", () => {
   it("should return all porfolios", async () => {
     const res = await request(app).get("/api/portfolio/all");
     expect(res.statusCode).toBe(200);
     expect(res.body.length).toBeGreaterThan(0);
   });
-});
-describe("GET /api/portfolio/id", () => {
   it("should return some portfolio by id", async () => {
     const portfolios = await request(app).get("/api/portfolio/all");
     const res = await request(app).get(
@@ -25,7 +23,7 @@ describe("GET /api/portfolio/id", () => {
     expect(res.body.title).toBe(portfolios.body[0].title);
   });
 });
-describe("GET /api/user", () => {
+describe("GET users", () => {
   it("should return all users", async () => {
     const AllResponse = await request(app).get("/api/user/all");
     expect(AllResponse.statusCode).toBe(200);
@@ -41,7 +39,7 @@ describe("GET /api/user", () => {
   });
 });
 
-describe("/POST loginRoute", () => {
+describe("POST login", () => {
   it("should return 400 status code with error message if login data is invalid", async () => {
     // send invalid login data
     const res = await request(app).post("/api/login").send({
