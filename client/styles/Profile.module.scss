@@ -8,7 +8,7 @@
     margin-top: 130px;
     .innerContainer {
       display: flex;
-      justify-content: space-around;
+      justify-content: flex-start;
       max-width: 1200px;
       margin: auto;
       padding: 0 20px;
@@ -22,6 +22,7 @@
           line-height: 25px;
           margin: 20px 0;
         }
+        margin: 0 40px;
         position: relative;
         top: -100px;
         color: #353535;
@@ -38,7 +39,6 @@
       }
       .rowRight {
         margin-top: 10px;
-        width: 100%;
         .title {
           color: #353535;
           margin: 20px 0;
@@ -120,7 +120,7 @@
 }
 @media (max-width: 900px) {
   .innerContainer {
-    justify-content: center !important;
+    // justify-content: center !important;
     max-width: 100% !important;
     flex-wrap: wrap;
   }

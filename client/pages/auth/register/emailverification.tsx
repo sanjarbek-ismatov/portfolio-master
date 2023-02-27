@@ -48,7 +48,7 @@ const EmailVerification = () => {
           setMessage={setMessage}
           ok={() => {
             setMessage("");
-            isSuccess && router.replace("/");
+            isSuccess && router.replace("/page/1");
           }}
         >
           <DialogStatus

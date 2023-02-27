@@ -1,4 +1,4 @@
-const User = require("../models/portfoliomodel");
+const User = require("../models/usermodel");
 /**
  * @description this function is used to create a new user
  * @param {object} body

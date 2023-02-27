@@ -28,7 +28,6 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
     getMe().then((data) => typeof data !== "boolean" && setMe(data));
   }, []);
   const url = serverUrl();
-
   return (
     <div>
       {me ? (
@@ -109,7 +108,7 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
               </h6>
               <p>{e.body} </p>
             </div>
-            {me && e.commentAuthor._id.includes(me._id) ? (
+            {(me && e.commentAuthor._id.includes(me._id)) || me?.isAdmin ? (
               <FontAwesomeIcon
                 onClick={() => {
                   deleteComment({ id: _id, index: i }).then((datas: any) =>

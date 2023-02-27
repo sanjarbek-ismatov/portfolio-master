@@ -25,9 +25,6 @@
         font-style: italic;
       }
     }
-    p {
-      margin-top: 5px;
-    }
 
     h6 {
       color: #4b4b4b;
@@ -68,7 +65,7 @@
   border-radius: 50%;
 }
 .trashIcon {
-  opacity: 0;
+  opacity: 1;
   height: 17px;
   cursor: pointer;
   color: #7e7c7c;

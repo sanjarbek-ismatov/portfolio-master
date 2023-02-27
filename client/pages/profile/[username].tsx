@@ -6,7 +6,11 @@ import { Head, NavbarProfile } from "components";
 import styles from "styles/Profile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import {
+  faEnvelope,
+  faPenToSquare,
+  faStar,
+} from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
@@ -66,7 +70,14 @@ const Profile = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
                 <div>
                   <h2>
-                    {data.firstname} {data.lastname}
+                    {data.firstname} {data.lastname}{" "}
+                    {data.isAdmin && (
+                      <FontAwesomeIcon
+                        title="Bu foydalanuvchi admin"
+                        height={15}
+                        icon={faStar}
+                      />
+                    )}
                   </h2>
                   <p>@{data.username}</p>
                 </div>

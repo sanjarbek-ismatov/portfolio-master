@@ -78,7 +78,7 @@ const Login = () => {
           ok={() => {
             setMessage("");
             isSuccess &&
-              (router.query.home ? router.replace("/") : router.back());
+              (router.query.home ? router.replace("/page/1") : router.back());
           }}
           setMessage={setMessage}
         >

@@ -33,7 +33,7 @@ const Navbar = () => {
   if (!hydration) return null;
   return (
     <nav id="navbar" className={s.nav}>
-      <Link href="/">
+      <Link href="/page/1">
         <h1>Portfolio</h1>
       </Link>
       <div className={s.content}>
