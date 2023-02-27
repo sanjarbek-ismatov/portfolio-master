@@ -14,7 +14,7 @@ const router = express.Router();
 router.get("/all", async (req, res) => {
   const portfolios = await Portfolio.find().populate(
     "author",
-    "firstname username image"
+    "firstname username image isAdmin"
   );
   portfolios.reverse();
   res.status(200).send(portfolios);
@@ -25,12 +25,12 @@ router.get("/all", async (req, res) => {
 // @access  Public
 router.get("/:id", async (req, res) => {
   const portfolio = await Portfolio.findOne({ linktitle: req.params.id })
-    .populate("author", "firstname username image")
+    .populate("author", "firstname username image isAdmin")
     .populate({
       path: "comments",
       populate: {
         path: "commentAuthor",
-        select: "image firstname lastname username",
+        select: "image firstname lastname username isAdmin",
       },
     });
   if (!portfolio) {

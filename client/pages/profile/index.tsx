@@ -16,7 +16,11 @@ import {
 import styles from "styles/Profile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import {
+  faEnvelope,
+  faPenToSquare,
+  faStar,
+} from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useUpdateProfileMutation } from "state/api/portfolioApi";
@@ -84,7 +88,14 @@ const Profile = () => {
                 />
                 <div>
                   <h2>
-                    {data.firstname} {data.lastname}
+                    {data.firstname} {data.lastname}{" "}
+                    {data.isAdmin && (
+                      <FontAwesomeIcon
+                        title="Bu foydalanuvchi admin"
+                        height={15}
+                        icon={faStar}
+                      />
+                    )}
                   </h2>
                   <p>@{data.username}</p>
                 </div>

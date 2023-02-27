@@ -7,7 +7,7 @@ import { serverUrl } from "utils/serverUrl";
 import s from "styles/Comment.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
-import { faComment } from "@fortawesome/free-regular-svg-icons";
+import { faComment, faStar } from "@fortawesome/free-regular-svg-icons";
 import {
   useCreateCommentMutation,
   useDeleteCommentMutation,
@@ -104,6 +104,13 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
             <div className={s.details}>
               <h6>
                 {e.commentAuthor.firstname} {e.commentAuthor.lastname}{" "}
+                {e.commentAuthor.isAdmin && (
+                  <FontAwesomeIcon
+                    title="Bu foydalanuvchi admin"
+                    height={15}
+                    icon={faStar}
+                  />
+                )}
                 <span>{subtractTime(e.date)}</span>
               </h6>
               <p>{e.body} </p>

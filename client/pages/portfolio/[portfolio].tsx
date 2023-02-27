@@ -10,7 +10,7 @@ import { serverUrl } from "utils/serverUrl";
 import { Navigation, Pagination } from "swiper";
 import { Navbar, LazyImage, Footer, CommentComponent, Head } from "components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart, faStar } from "@fortawesome/free-regular-svg-icons";
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
 import { subtractTime } from "utils/dateToReadable";
 import { useState } from "react";
@@ -102,6 +102,13 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
                     width={50}
                     filename={data.author.image}
                   />
+                  {data.author.isAdmin && (
+                    <FontAwesomeIcon
+                      title="Bu foydalanuvchi admin"
+                      height={15}
+                      icon={faStar}
+                    />
+                  )}
                   <h2 className={s.h2}>@{data.author.username}</h2>
                 </div>
               </Link>
