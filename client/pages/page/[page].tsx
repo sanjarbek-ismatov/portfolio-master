@@ -11,6 +11,9 @@ import { Filter, Panigation, Spinner } from "components";
 import { filterByKey } from "utils/filterByKey";
 import LazyImage from "components/LazyImage";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileCode } from "@fortawesome/free-regular-svg-icons";
+import { faCode } from "@fortawesome/free-solid-svg-icons";
 
 // import { GetServerSideProps } from "next";
 // export const getServerSideProps: GetServerSideProps<{
@@ -113,7 +116,7 @@ const Index = (/*{
                           <LazyImage
                             spinnerOptions={{
                               size: "30",
-                              position: "static",
+                              position: "absolute",
                               border: "2",
                               speed: "1",
                             }}
@@ -143,6 +146,10 @@ const Index = (/*{
                           className={s.badge}
                           key={i}
                         >
+                          <FontAwesomeIcon
+                            className={s.codeIcon}
+                            icon={faCode}
+                          />{" "}
                           {e}
                         </span>
                       ))}

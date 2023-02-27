@@ -91,8 +91,8 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
                 <div className={s.profileContainer}>
                   <LazyImage
                     spinnerOptions={{
-                      size: "30",
-                      position: "static",
+                      size: "50",
+                      position: "absolute",
                       border: "2",
                       speed: "1",
                     }}

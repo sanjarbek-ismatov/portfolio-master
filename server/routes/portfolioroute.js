@@ -38,7 +38,12 @@ router.get("/:id", async (req, res) => {
   }
   res.status(200).send(portfolio);
 });
-
+router.delete("/delete/:id", auth, async (req, res) => {
+  if (req.user.isAdmin || req.user.portfolios.includes(req.params._id)) {
+    await Portfolio.findByIdAndDelete(req.params.id);
+  }
+  res.status(204).send("Portfolio o'chirildi");
+});
 // @route   POST /api/portfolio/create
 // @desc    Create new portfolio
 // @access  Private

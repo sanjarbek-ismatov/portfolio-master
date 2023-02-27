@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/usermodel");
 /**
- * @description this middleware check if user is logged in or not
- * @param {Object} req
- * @param {Object} res
- * @param {Function} next
+ * This middleware checks user auth
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @param {import("express").NextFunction} next
  */
 module.exports = async (req, res, next) => {
   /**
@@ -21,6 +21,7 @@ module.exports = async (req, res, next) => {
       return res.status(403).send("Mavjud emas foydalanuvchi!");
     }
     req.id = _id;
+    req.user = user;
     next();
   } catch (ex) {
     return res.status(401).send("Ro'yhatdan o'tmagan foydalanuvchi");

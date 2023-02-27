@@ -83,13 +83,13 @@ const Profile = () => {
                   icon={faPenToSquare}
                 />
                 <div>
-                  <h1>
+                  <h2>
                     {data.firstname} {data.lastname}
-                  </h1>
+                  </h2>
                   <p>@{data.username}</p>
                 </div>
               </div>
-
+              <p className={styles.p}>{data?.description}</p>
               <div className={styles.socialLinksContainer}>
                 <FontAwesomeIcon
                   className={styles.socialIcon}
@@ -117,7 +117,6 @@ const Profile = () => {
               </div>
             </div>
             <div className={styles.rowRight}>
-              <p className={styles.p}>{data?.description}</p>
               <h2 className={styles.title}>Portfoliolari:</h2>
               {data.portfolios.length ? (
                 data?.portfolios.map((e, i) => (

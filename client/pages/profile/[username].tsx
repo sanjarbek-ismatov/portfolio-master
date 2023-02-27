@@ -6,7 +6,7 @@ import { Head, NavbarProfile } from "components";
 import styles from "styles/Profile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import { faEnvelope, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
@@ -63,14 +63,15 @@ const Profile = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
                   alt="profile"
                   unoptimized
                 />
+
                 <div>
-                  <h1>
+                  <h2>
                     {data.firstname} {data.lastname}
-                  </h1>
+                  </h2>
                   <p>@{data.username}</p>
                 </div>
               </div>
-
+              <p className={styles.p}>{data?.description}</p>
               <div className={styles.socialLinksContainer}>
                 <FontAwesomeIcon
                   className={styles.socialIcon}
@@ -98,7 +99,6 @@ const Profile = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
               </div>
             </div>
             <div className={styles.rowRight}>
-              <p className={styles.p}>{data?.description}</p>
               <h2 className={styles.title}>Portfoliolari:</h2>
               {data.portfolios.length ? (
                 data?.portfolios.map((e, i) => (

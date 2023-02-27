@@ -84,15 +84,15 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
         </div>
       ) : (
         defaultComments.map((e, i) => (
-          <div className={s.commentContainer} key={i}>
+          <div className={s.comments} key={i}>
             <Link href={`/profile/${e.commentAuthor.username}`}>
-              <a>
+              <a className={s.profileIcon}>
                 <LazyImage
                   className={s.profileImage}
-                  width={50}
-                  height={50}
+                  width={40}
+                  height={40}
                   spinnerOptions={{
-                    size: "50",
+                    size: "40",
                     speed: "1",
                     border: "2",
                     position: "absolute",
@@ -104,7 +104,8 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
             </Link>
             <div className={s.details}>
               <h6>
-                {e.commentAuthor.firstname} {e.commentAuthor.lastname}
+                {e.commentAuthor.firstname} {e.commentAuthor.lastname}{" "}
+                <span>{subtractTime(e.date)}</span>
               </h6>
               <p>{e.body} </p>
             </div>
@@ -119,7 +120,6 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
                 icon={faTrashCan}
               />
             ) : null}
-            <p>{subtractTime(e.date)}</p>
           </div>
         ))
       )}
