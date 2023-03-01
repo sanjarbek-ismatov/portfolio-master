@@ -174,7 +174,7 @@ const Profile = () => {
         {message && (
           <Dialog
             isLoading={isLoading}
-            ok={() => router.reload()}
+            ok={isSuccess || isError ? () => router.reload() : undefined}
             setMessage={setMessage}
           >
             {(isLoading || isError || isSuccess) && (
