@@ -49,7 +49,7 @@ function portfolioValidator(body) {
  */
 function userUpdateValidator(body) {
   const valid = Joi.object({
-    image: Joi.allow(Joi.binary(), Joi.binary()),
+    image: Joi.allow(Joi.binary(), Joi.string()),
     firstname: Joi.string(),
     lastname: Joi.string(),
     username: Joi.string(),

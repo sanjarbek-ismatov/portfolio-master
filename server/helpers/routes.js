@@ -21,6 +21,10 @@ module.exports = (app) => {
     cors({
       exposedHeaders: "x-token",
       optionsSuccessStatus: 200,
+      origin: [
+        "http://localhost:3000",
+        "https://portfolio-master-uz.vercel.app",
+      ],
     })
   );
   // use body parser.

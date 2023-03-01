@@ -29,6 +29,7 @@ router.get("/:username", async (req, res) => {
 });
 
 router.put("/me/update", [auth, upload.single("image")], async (req, res) => {
+  console.log(req.body);
   const { error } = userUpdateValidator(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -37,7 +38,6 @@ router.put("/me/update", [auth, upload.single("image")], async (req, res) => {
     user.skills = req.body.skills.split(", ");
   }
   delete req.body.skills;
-  console.log(req.body);
   if (req.file) {
     user.image = req.file.filename;
   }
