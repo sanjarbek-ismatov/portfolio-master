@@ -97,6 +97,7 @@ const Login = () => {
       </div>
       {message && state.status && (
         <Dialog
+          isLoading={isPending}
           setMessage={setMessage}
           ok={() =>
             !state.error
@@ -114,6 +115,7 @@ const Login = () => {
       )}
       {message && !state.status && (
         <Dialog
+          isLoading={isPending}
           setMessage={setMessage}
           ok={handleSubmit}
           cancel={() => setMessage("")}

@@ -123,13 +123,13 @@ const Register = () => {
             // className={s.rowInput}
             type="text"
             name="telegramProfile"
-            placeholder="Telegramdagi @usernameingiz"
+            placeholder="Telegramdagi @username"
           />
           <FormInput
             // className={s.rowInput}
             type="text"
             name="githubProfile"
-            placeholder="Githubdagisi (Agar bo'lsa)"
+            placeholder="Githubdagi usernama"
           />
           <FormArea
             name="description"
@@ -162,6 +162,7 @@ const Register = () => {
       </div>
       {message && (
         <Dialog
+          isLoading={isLoading}
           ok={() => {
             setMessage("");
             isSuccess && router.replace("/auth/login?home=true");

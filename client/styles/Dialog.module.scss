@@ -1,7 +1,7 @@
 @import "_colors";
 .container {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   height: 100%;
   position: fixed;
   display: flex;
@@ -41,6 +41,7 @@
   display: flex;
   align-items: center;
   padding: 0 15px;
+  max-height: 85vh;
   overflow: scroll;
 }
 @keyframes spinner {

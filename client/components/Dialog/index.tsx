@@ -7,6 +7,7 @@ const Dialog = ({
   cancel,
   okText,
   cancelText,
+  isLoading,
   setMessage,
   children,
 }: DialogProps) => {
@@ -25,8 +26,8 @@ const Dialog = ({
         </div>
         <div className={styles.message}>{children}</div>
         <div className={styles.buttons}>
-          {ok && <button onClick={ok}>{okText || "Ha"}</button>}
-          {cancel && (
+          {ok && !isLoading && <button onClick={ok}>{okText || "Ha"}</button>}
+          {cancel && !isLoading && (
             <button onClick={cancel}>{cancelText || "Bekor qilish"}</button>
           )}
         </div>

@@ -10,7 +10,7 @@ const EmailVerification = () => {
     useVerifyEmailMutation();
   const router = useRouter();
   const [dialog, setDialog] = useState(false);
-  function handleSubmitEmail(formData: { email: string }) {
+  function handleSubmitEmail(formData: any) {
     setMessage("Yuborilmoqda...");
     sendMail(formData);
   }
@@ -45,6 +45,7 @@ const EmailVerification = () => {
       </div>
       {message && (
         <Dialog
+          isLoading={isLoading}
           setMessage={setMessage}
           ok={() => {
             setMessage("");

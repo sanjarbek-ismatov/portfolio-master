@@ -75,6 +75,7 @@ const Login = () => {
 
       {message && (
         <Dialog
+          isLoading={isLoading}
           ok={() => {
             setMessage("");
             isSuccess &&

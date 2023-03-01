@@ -2,7 +2,7 @@ import { User } from "types";
 
 import Image from "next/image";
 import { serverUrl } from "utils/serverUrl";
-import { Head, NavbarProfile } from "components";
+import { Footer, Head, NavbarProfile } from "components";
 import styles from "styles/Profile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
@@ -140,6 +140,7 @@ const Profile = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

@@ -9,6 +9,7 @@ export type DialogProps = {
   ok?: (body?: {}) => void;
   cancel?: () => void;
   cancelText?: string;
+  isLoading: boolean;
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   okText?: string;
 

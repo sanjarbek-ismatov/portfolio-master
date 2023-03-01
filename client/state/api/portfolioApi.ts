@@ -95,7 +95,7 @@ export const portfolioApi = createApi({
         }),
       }),
       get verifyEmail() {
-        return this._verifyEmail;
+        return this._createComment;
       },
       _updateProfile: build.mutation<User, FormData>({
         query: (body) => ({
@@ -110,6 +110,32 @@ export const portfolioApi = createApi({
       get updateProfile() {
         return this._updateProfile;
       },
+      _deletePortfolio: build.mutation<string, string>({
+        query: (id) => ({
+          method: "DELETE",
+          url: "/portfolio/delete/" + id,
+          headers: {
+            ["x-token"]: getToken(),
+          },
+        }),
+      }),
+      get deletePortfolio() {
+        return this._deletePortfolio;
+      },
+      _updatePortfolio: build.mutation<string, FormData>({
+        query(id) {
+          return {
+            url: "/portfolio/update/" + id,
+            method: "PUT",
+            headers: {
+              ["x-token"]: getToken(),
+            },
+          };
+        },
+      }),
+      get updatePortfolios() {
+        return this._updatePortfolio;
+      },
     };
   },
 });
@@ -121,4 +147,5 @@ export const {
   useRegisterUserMutation,
   useVerifyEmailMutation,
   useUpdateProfileMutation,
+  useDeletePortfolioMutation,
 } = portfolioApi;

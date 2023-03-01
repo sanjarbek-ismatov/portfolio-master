@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import {
   Dialog,
   DialogStatus,
+  Footer,
   Form,
   FormArea,
   FormInput,
@@ -23,7 +24,11 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useUpdateProfileMutation } from "state/api/portfolioApi";
+import {
+  useUpdateProfileMutation,
+  useDeletePortfolioMutation,
+} from "state/api/portfolioApi";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 const Profile = () => {
   const url = serverUrl();
   const router = useRouter();
@@ -35,19 +40,17 @@ const Profile = () => {
     updateProfile,
     { isLoading, isError, isSuccess, data: updatedData, error },
   ] = useUpdateProfileMutation();
+  const [deletePortfolio, { isSuccess: deleteIsSuccess }] =
+    useDeletePortfolioMutation();
   const profileSubmit = (e: User) => {
     setMessage("Yuklanmoqda...");
     const form = new FormData();
     for (const [key, value] of Object.entries(e) as any) {
-      if (key === "image" && value.length) {
-        form.append(key, value[0]);
-      } else if (key !== "image") {
-        form.append(key, value);
-      }
+      if (key === "image" && value.length) form.append(key, value[0]);
+      if (key === "password" && value.length) form.append(key, value);
+      else if (key !== "password" && key !== "image") form.append(key, value);
     }
-    if (!e.image.length && data) {
-      form.append("image", data.image);
-    }
+    if (!e.image.length && data) form.append("image", data.image);
     updateProfile(form)
       .then(() => setMessage("Yangilandi!"))
       .catch(() => setMessage("Xato"));
@@ -147,6 +150,17 @@ const Profile = () => {
                         <a className={styles.link}>Ochish</a>
                       </Link>
                     </div>
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      cursor="pointer"
+                      style={{ color: "#3a3a3a" }}
+                      onClick={() => {
+                        deletePortfolio(e._id).then(() => {
+                          router.reload();
+                        });
+                      }}
+                      height={15}
+                    />
                   </div>
                 ))
               ) : (
@@ -159,7 +173,8 @@ const Profile = () => {
         </div>
         {message && (
           <Dialog
-            ok={isSuccess || isError ? () => router.reload() : undefined}
+            isLoading={isLoading}
+            ok={() => router.reload()}
             setMessage={setMessage}
           >
             {(isLoading || isError || isSuccess) && (
@@ -218,6 +233,13 @@ const Profile = () => {
                   name="username"
                   register={register}
                 />
+                <FormInput
+                  type="password"
+                  fieldName="password"
+                  placeholder="parol"
+                  name="password"
+                  register={register}
+                />
                 <FormArea
                   defaultValue={data.skills.join(", ")}
                   fieldName="skills"
@@ -230,12 +252,14 @@ const Profile = () => {
                   name="description"
                   register={register}
                 />
+
                 <FormSubmit>Ha</FormSubmit>
               </Form>
             )}
           </Dialog>
         )}
       </div>
+      <Footer />
     </>
   );
 };

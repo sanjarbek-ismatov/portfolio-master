@@ -1,10 +1,10 @@
 .container {
   width: 100%;
-  min-height: 100vh;
+
   .background {
     background-color: #e5e5e5;
     width: 100%;
-    min-height: 100vh;
+
     margin-top: 130px;
     .innerContainer {
       display: flex;
@@ -60,10 +60,6 @@
   cursor: pointer;
 }
 .absoluteTextContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   .image {
     border-radius: 50%;
     margin: auto;
@@ -83,10 +79,10 @@
 .portolioContainer {
   display: flex;
   width: 100%;
-  margin: 15px 0 5px 10px;
+  margin: 15px 0 5px 5px;
   color: #111;
   .image {
-    width: 50px;
+    width: 100px;
     height: 50px;
     background-size: cover;
   }
@@ -123,5 +119,19 @@
     // justify-content: center !important;
     max-width: 100% !important;
     flex-wrap: wrap;
+  }
+}
+@media (max-width: 550px) {
+  .innerContainer {
+    justify-content: center !important;
+    .rowRight {
+      margin-top: -100px !important;
+    }
+  }
+  .absoluteTextContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 }
