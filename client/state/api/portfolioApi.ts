@@ -95,7 +95,7 @@ export const portfolioApi = createApi({
         }),
       }),
       get verifyEmail() {
-        return this._createComment;
+        return this._verifyEmail;
       },
       _updateProfile: build.mutation<User, FormData>({
         query: (body) => ({
