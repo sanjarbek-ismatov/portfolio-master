@@ -3,9 +3,9 @@ const express = require("express");
 // import dotenv
 require("dotenv").config();
 // import dbconnecter
-require("./helpers/dbconnecter")();
+require("./helpers/dbconnecter");
 // import logger
-require("./helpers/logger")();
+require("./helpers/logger");
 // create app
 const app = express();
 // if test mode
@@ -16,5 +16,5 @@ if (process.env.NODE_ENV === "test") {
 // import routes
 require("./helpers/routes")(app);
 // listen to port
-const server = app.listen(4000);
+const server = app.listen(process.env.PORT || 4000);
 module.exports = { app, server };

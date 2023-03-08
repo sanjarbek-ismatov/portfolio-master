@@ -62,7 +62,7 @@ describe("POST login", () => {
   it("should return 401 status code if the password is incorrect", async () => {
     // send valid login data with incorrect password
     const res = await request(app).post("/api/login").send({
-      email: "ismatovvsanjarbek@gmail.com",
+      email: "ismatovsanjarbek@yandex.ru",
       password: "incorrect",
     });
     expect(res.statusCode).toBe(401);
@@ -71,7 +71,7 @@ describe("POST login", () => {
   it("should return 200 status code with message if logged in successfully", async () => {
     // send valid login data
     const res = await request(app).post("/api/login").send({
-      email: "ismatovvsanjarbek@gmail.com",
+      email: "ismatovsanjarbek@yandex.ru",
       password: "09122005isa",
     });
     expect(res.statusCode).toBe(200);

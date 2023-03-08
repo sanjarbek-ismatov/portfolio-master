@@ -1,12 +1,12 @@
 // import all the routes.
-const portfolio = require("../routes/portfolioroute");
-const register = require("../routes/registerroute");
-const files = require("../routes/filesroute");
-const login = require("../routes/loginroute");
+const portfolio = require("../routes/portfolio.routes");
+const register = require("../routes/register.routes");
+const files = require("../routes/files.routes");
+const login = require("../routes/login.routes");
 // import error middleware.
 const error = require("../middleware/error");
-const user = require("../routes/userroute");
-const verify = require("../routes/verifyroute");
+const user = require("../routes/user.routes");
+const verify = require("../routes/verify.routes");
 // import all the middleware.
 const methodOverride = require("method-override");
 const morgan = require("morgan");

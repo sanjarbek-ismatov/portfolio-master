@@ -1,9 +1,10 @@
-const { builder } = require("buildes");
-builder({
-  input: "server.js",
-  minimized: true,
+const esbuild = require("esbuild");
+const { nodeExternalsPlugin } = require("esbuild-node-externals");
+esbuild.build({
+  entryPoints: ["server.js"],
   bundle: true,
-  packages: "external",
+  minify: true,
   platform: "node",
-  output: "dist/bundle.js",
+  outfile: "dist/bundle.js",
+  plugins: [nodeExternalsPlugin()],
 });
