@@ -8,30 +8,25 @@ import {
 } from "components";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { portfolio, useAppSelector } from "state/store";
+import { useCreatePortfolioMutation } from "state/api/portfolioApi";
 import s from "styles/L.module.scss";
 import { useAuth } from "utils/auth";
 
 const Login = () => {
   const auth = useAuth();
-  const [isPending, setIsPending] = useState(false);
   const [message, setMessage] = useState("");
   const [form, setForm] = useState<any>();
   const router = useRouter();
-  const [isError, setIsError] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const state = useAppSelector((state) => state.portfolio);
+  const [createPortfolio, { isLoading, isError, isSuccess, error }] =
+    useCreatePortfolioMutation();
   useEffect(() => {
     if (!auth) router.replace("/auth/login");
   }, [auth, router]);
   function handleSubmit() {
     form.preventDefault();
-    setIsPending(true);
     setMessage("Yuklanmoqda...");
     const files = form.target["0"].files;
-
     const data = new FormData();
-
     data.append("title", form.target["1"].value);
     data.append("url", form.target["2"].value);
     data.append("description", form.target["3"].value);
@@ -39,23 +34,15 @@ const Login = () => {
     for (const file of files) {
       data.append("images", file);
     }
-    portfolio(data);
+    createPortfolio(data);
   }
-
   useEffect(() => {
-    setTimeout(() => {
-      setIsPending(false);
-      if (state.error) {
-        setMessage(state.error);
-        setIsSuccess(false);
-        setIsError(true);
-      } else if (state.status && !state.error) {
-        setIsError(false);
-        setIsSuccess(true);
-        setMessage("Muvaffaqiyatli joylandi!");
-      }
-    }, 2000);
-  }, [state]);
+    if (error && "data" in error) {
+      setMessage(error.data as string);
+    } else if (isSuccess) {
+      setMessage("Muvaffaqiyatli joylandi!");
+    }
+  }, [error, isSuccess]);
   return (
     <div className={s.container}>
       <div className={s.form}>
@@ -95,39 +82,39 @@ const Login = () => {
           <FormSubmit type="submit">Joylash</FormSubmit>
         </Form>
       </div>
-      {message && state.status && (
-        <Dialog
-          isLoading={isPending}
-          setMessage={setMessage}
-          ok={() =>
-            !state.error
-              ? (window.location.pathname = "/page/1")
-              : setMessage("")
-          }
-        >
-          <DialogStatus
-            isError={isError}
-            isSuccess={isSuccess}
-            isPending={isPending}
-            message={message}
-          />
-        </Dialog>
-      )}
-      {message && !state.status && (
-        <Dialog
-          isLoading={isPending}
-          setMessage={setMessage}
-          ok={handleSubmit}
-          cancel={() => setMessage("")}
-        >
-          <DialogStatus
-            isError={isError}
-            isSuccess={isSuccess}
-            isPending={isPending}
-            message={message}
-          />
-        </Dialog>
-      )}
+      {message &&
+        (isSuccess || isError ? (
+          <Dialog
+            isLoading={isLoading}
+            setMessage={setMessage}
+            ok={() =>
+              isSuccess
+                ? (window.location.pathname = "/page/1")
+                : setMessage("")
+            }
+          >
+            <DialogStatus
+              isError={isError}
+              isSuccess={isSuccess}
+              isPending={isLoading}
+              message={message}
+            />
+          </Dialog>
+        ) : (
+          <Dialog
+            isLoading={isLoading}
+            setMessage={setMessage}
+            ok={handleSubmit}
+            cancel={() => setMessage("")}
+          >
+            <DialogStatus
+              isError={isError}
+              isSuccess={isSuccess}
+              isPending={isLoading}
+              message={message}
+            />
+          </Dialog>
+        ))}
     </div>
   );
 };

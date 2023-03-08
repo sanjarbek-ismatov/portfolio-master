@@ -1,6 +1,6 @@
 import { BaseQueryResult } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Comment, User } from "types";
+import { Comment, Portfolio, User } from "types";
 import { getToken } from "utils/getDetails";
 import { serverUrl } from "utils/serverUrl";
 const url = serverUrl();
@@ -9,22 +9,19 @@ export const portfolioApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${url}/api` }),
   endpoints(build) {
     return {
-      _postLikeById: build.mutation<
-        { count: number; isLiked: boolean },
-        string
-      >({
-        query: (id) => ({
-          url: `portfolio/like/${id}`,
-          method: "PUT",
-          headers: {
-            ["x-token"]: getToken(),
-          },
-        }),
-      }),
-      get postLikeById() {
-        return this._postLikeById;
-      },
-      _loginUser: build.mutation<
+      postLikeById: build.mutation<{ count: number; isLiked: boolean }, string>(
+        {
+          query: (id) => ({
+            url: `portfolio/like/${id}`,
+            method: "PUT",
+            headers: {
+              ["x-token"]: getToken(),
+            },
+          }),
+        }
+      ),
+
+      loginUser: build.mutation<
         { message: string; code: number; token: string },
         FormData
       >({
@@ -42,10 +39,8 @@ export const portfolioApi = createApi({
           };
         },
       }),
-      get loginUser() {
-        return this._loginUser;
-      },
-      _registerUser: build.mutation<string, { body: FormData; token: string }>({
+
+      registerUser: build.mutation<string, { body: FormData; token: string }>({
         query({ body, token }) {
           return {
             url: "/register",
@@ -57,10 +52,8 @@ export const portfolioApi = createApi({
           };
         },
       }),
-      get registerUser() {
-        return this._registerUser;
-      },
-      _createComment: build.mutation<Comment[], { id: string; body: string }>({
+
+      createComment: build.mutation<Comment[], { id: string; body: string }>({
         query(arg) {
           return {
             url: `/portfolio/comment/${arg.id}`,
@@ -72,10 +65,8 @@ export const portfolioApi = createApi({
           };
         },
       }),
-      get createComment() {
-        return this._createComment;
-      },
-      _deleteComment: build.mutation<Comment[], { id: string; index: number }>({
+
+      deleteComment: build.mutation<Comment[], { id: string; index: number }>({
         query: ({ id, index }) => ({
           method: "DELETE",
           url: `/portfolio/comment/delete/${id}?index=${index}`,
@@ -84,20 +75,16 @@ export const portfolioApi = createApi({
           },
         }),
       }),
-      get deleteComment() {
-        return this._deleteComment;
-      },
-      _verifyEmail: build.mutation<boolean, any>({
+
+      verifyEmail: build.mutation<boolean, any>({
         query: (arg) => ({
           url: "/register/send-verification",
           body: arg,
           method: "POST",
         }),
       }),
-      get verifyEmail() {
-        return this._verifyEmail;
-      },
-      _updateProfile: build.mutation<User, FormData>({
+
+      updateProfile: build.mutation<User, FormData>({
         query: (body) => ({
           url: "/user/me/update",
           method: "PUT",
@@ -107,10 +94,8 @@ export const portfolioApi = createApi({
           },
         }),
       }),
-      get updateProfile() {
-        return this._updateProfile;
-      },
-      _deletePortfolio: build.mutation<string, string>({
+
+      deletePortfolio: build.mutation<string, string>({
         query: (id) => ({
           method: "DELETE",
           url: "/portfolio/delete/" + id,
@@ -119,10 +104,8 @@ export const portfolioApi = createApi({
           },
         }),
       }),
-      get deletePortfolio() {
-        return this._deletePortfolio;
-      },
-      _updatePortfolio: build.mutation<string, FormData>({
+
+      updatePortfolio: build.mutation<string, FormData>({
         query(id) {
           return {
             url: "/portfolio/update/" + id,
@@ -133,9 +116,18 @@ export const portfolioApi = createApi({
           };
         },
       }),
-      get updatePortfolios() {
-        return this._updatePortfolio;
-      },
+
+      createPortfolio: build.mutation<string, FormData>({
+        query: (body) => ({
+          method: "POST",
+          url: "/portfolio/create",
+          body,
+          headers: { ["x-token"]: getToken() },
+        }),
+      }),
+      getAllPortfolio: build.query<Portfolio[], void>({
+        query: () => "/portfolio/all",
+      }),
     };
   },
 });
@@ -148,4 +140,6 @@ export const {
   useVerifyEmailMutation,
   useUpdateProfileMutation,
   useDeletePortfolioMutation,
+  useCreatePortfolioMutation,
+  useGetAllPortfolioQuery,
 } = portfolioApi;

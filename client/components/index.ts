@@ -13,6 +13,7 @@ import NavbarProfile from "./Navbar/NavbarProfile";
 import Panigation from "./Panigation";
 import DialogStatus from "./DialogStatus";
 import { FormArea, Form, FormInput, FormSubmit } from "./Form";
+import Page from "./pages/page";
 export {
   Panigation,
   CommentComponent,
@@ -32,4 +33,5 @@ export {
   FormInput,
   FormArea,
   FormSubmit,
+  Page,
 };

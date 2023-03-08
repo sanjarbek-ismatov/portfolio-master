@@ -1,21 +1,8 @@
-import { bindActionCreators, configureStore } from "@reduxjs/toolkit";
-import {
-  likeSlice,
-  loginSlice,
-  portfolioSlice,
-  registerSlice,
-} from "./reducers";
+import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "types/reducer";
-import { loginThunk, portfolioThunk, registerThunk, likeThunk } from "./thunks";
 import { portfolioApi } from "./api/portfolioApi";
 export const store = configureStore({
   reducer: {
-    register: registerSlice.reducer,
-    login: loginSlice.reducer,
-    portfolio: portfolioSlice.reducer,
-    like: likeSlice.reducer,
     [portfolioApi.reducerPath]: portfolioApi.reducer,
   },
 
@@ -32,14 +19,3 @@ export const store = configureStore({
     }
   },
 });
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-export const useAppDispatch = useDispatch<AppDispatch>;
-export const {
-  loginThunk: login,
-  registerThunk: register,
-  portfolioThunk: portfolio,
-  likeThunk: like,
-} = bindActionCreators(
-  { loginThunk, registerThunk, portfolioThunk, likeThunk },
-  store.dispatch
-);

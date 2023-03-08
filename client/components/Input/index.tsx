@@ -1,12 +1,12 @@
 import { faSearch, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import s from "styles/M.module.scss";
+import styles from "styles/Page.module.scss";
 import { SearchInput } from "types";
 
 const Input = ({ handleChange, value, clear, ...rest }: SearchInput) => {
   return (
     <div {...rest}>
-      <FontAwesomeIcon className={s.icon} icon={faSearch} />
+      <FontAwesomeIcon className={styles.icon} icon={faSearch} />
       <input
         {...rest}
         placeholder="Kerakli narsani qidiring"
@@ -16,7 +16,7 @@ const Input = ({ handleChange, value, clear, ...rest }: SearchInput) => {
       {value && (
         <FontAwesomeIcon
           onClick={() => clear()}
-          className={s.icon}
+          className={styles.icon}
           icon={faX}
         />
       )}
