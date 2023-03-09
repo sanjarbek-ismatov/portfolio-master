@@ -12,7 +12,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import s from "styles/N.module.scss";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import { useAuth } from "utils/auth";
@@ -85,7 +84,6 @@ const Navbar = () => {
                 <a
                   style={{ cursor: "pointer" }}
                   onClick={() => {
-                    signOut();
                     localStorage.removeItem("token");
                     router.reload();
                   }}
@@ -103,28 +101,7 @@ const Navbar = () => {
               </li>
             </>
           )}
-          {/* <li>
-            <select onChange={(e: any) => changeTheme(e.target.value)}>
-              {allThemes &&
-                allThemes.map((e, i) => {
-                  return (
-                    <option
-                      selected={theme === e ? true : false}
-                      value={e}
-                      key={i}
-                    >
-                      {e}
-                    </option>
-                  );
-                })}
-            </select>
-          </li> */}
         </ul>
-        {/* <FontAwesomeIcon
-          
-          className={s.icon}
-          icon={menu ? faX : faBars}
-        /> */}
         <div
           onClick={visibleContent}
           className={cn({

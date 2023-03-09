@@ -1,3 +1,4 @@
+"use client";
 import s from "styles/L.module.scss";
 import { useEffect, useState } from "react";
 import {
@@ -12,7 +13,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useRegisterUserMutation } from "state/api/portfolioApi";
 const Register = () => {
-  const [dialog, setDialog] = useState(false);
   const [message, setMessage] = useState("");
   const [register, { isLoading, isSuccess, isError, error }] =
     useRegisterUserMutation();
@@ -54,15 +54,6 @@ const Register = () => {
       setMessage("Ro`yhatdan muvaffiqiyatli o`tdingiz!");
     }
   }, [isSuccess, error]);
-  // useEffect(() => {
-  //   if (data) {
-  //     setMessage("Yuklanmoqda...");
-  //     register({
-  //       email: data.user?.email || "",
-  //       isDirect: true,
-  //     } as any);
-  //   }
-  // }, [data, register]);
   return (
     <div className={s.container}>
       <Head>
@@ -79,14 +70,14 @@ const Register = () => {
             required
           />
           <FormInput
-            // className={s.rowInput}
+            row
             type="text"
             name="firstname"
             placeholder="Ismingiz"
             required
           />
           <FormInput
-            // className={s.rowInput}
+            row
             type="text"
             name="lastname"
             placeholder="Familyangiz"
@@ -100,36 +91,37 @@ const Register = () => {
           />
           <FormInput
             type="email"
-            value={router.query.email || ""}
+            defaultValue={router.query.email || ""}
             name="email"
             placeholder="Pochta"
+            readOnly
             required
           />
           <FormInput
-            // className={s.rowInput}
+            row
             type="password"
             name="password"
             placeholder="Parolni o'rnating"
             required
           />
           <FormInput
-            // className={s.rowInput}
+            row
             type="password"
             name="password"
             placeholder="Qayta takrorlang"
             required
           />
           <FormInput
-            // className={s.rowInput}
+            row
             type="text"
             name="telegramProfile"
             placeholder="Telegramdagi @username"
           />
           <FormInput
-            // className={s.rowInput}
+            row
             type="text"
             name="githubProfile"
-            placeholder="Githubdagi usernama"
+            placeholder="Githubdagi username"
           />
           <FormArea
             name="description"
@@ -144,21 +136,6 @@ const Register = () => {
           />
           <FormSubmit>Ro`yhatdan o`tish</FormSubmit>
         </Form>
-        {/* <div className={s.other}>
-          <button
-            className={s.button}
-            onClick={() => {
-              signIn("github");
-            }}
-          >
-            <FontAwesomeIcon className="icon" icon={faGithub} /> Github orqali
-            davom etish
-          </button>
-          <button className={s.button} onClick={() => signIn("facebook")}>
-            <FontAwesomeIcon className="icon" icon={faFacebook} /> Facebook
-            orqali davom etish
-          </button>
-        </div> */}
       </div>
       {message && (
         <Dialog

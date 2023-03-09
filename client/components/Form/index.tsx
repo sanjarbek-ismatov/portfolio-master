@@ -10,6 +10,7 @@ import {
 } from "react";
 import { UseFormRegister } from "react-hook-form";
 import { User } from "types";
+import cn from "classnames";
 import styles from "./Form.module.scss";
 const Form: FC<
   {
@@ -28,13 +29,29 @@ const FormInput: FC<
     InputHTMLAttributes<HTMLInputElement> & {
       register?: UseFormRegister<any>;
       fieldName?: any;
+      row?: boolean;
     }
-> = ({ register, fieldName, ...rest }) => {
+> = ({ register, row, fieldName, ...rest }) => {
   if (register)
     return (
-      <input {...register(fieldName)} className={styles.input} {...rest} />
+      <input
+        {...register(fieldName)}
+        className={cn({
+          [styles.rowInput]: row,
+          [styles.input]: !row,
+        })}
+        {...rest}
+      />
     );
-  return <input className={styles.input} {...rest} />;
+  return (
+    <input
+      className={cn({
+        [styles.rowInput]: row,
+        [styles.input]: !row,
+      })}
+      {...rest}
+    />
+  );
 };
 const FormArea: FC<
   DetailedHTMLProps<

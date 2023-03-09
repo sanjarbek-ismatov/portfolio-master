@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { Swiper, SwiperSlide } from "swiper/react";
 import s from "styles/Portfolio.module.scss";
 import "swiper/css";
@@ -8,14 +8,15 @@ import Link from "next/link";
 import type { Portfolio } from "types";
 import { serverUrl } from "utils/serverUrl";
 import { Navigation, Pagination } from "swiper";
-import { Navbar, LazyImage, Footer, CommentComponent, Head } from "components";
+import { Navbar, LazyImage, Footer, Head } from "components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faStar } from "@fortawesome/free-regular-svg-icons";
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
 import { subtractTime } from "utils/dateToReadable";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useAuth } from "utils/auth";
 import { useRouter } from "next/router";
+const CommentComponent = lazy(() => import("components/Comment"));
 const Portfolio = ({ data }: { data: Portfolio }) => {
   const router = useRouter();
   const auth = useAuth();
@@ -141,7 +142,9 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
             <div className={s.descriptionContainer}>
               <p>{data.description}</p>
             </div>
-            <CommentComponent data={data} />
+            <Suspense fallback={<p>Loading...</p>}>
+              <CommentComponent data={data} />
+            </Suspense>
           </div>
         </div>
       </div>

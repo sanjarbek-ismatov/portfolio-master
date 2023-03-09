@@ -7,10 +7,11 @@ import styles from "styles/Page.module.scss";
 import { useRouter } from "next/router";
 import Input from "components/Input";
 import { Filter, Panigation, Spinner } from "components";
-import { filterByKey, filterByTech } from "utils/filterByKey";
+import { filterByTech } from "utils/filterByKey";
 import LazyImage from "components/LazyImage";
 import Link from "next/link";
 import { useGetAllPortfolioQuery } from "state/api/portfolioApi";
+
 const Index = () => {
   const [text, setText] = useState("");
   const [filters, setFilters] = useState<string[]>([]);
