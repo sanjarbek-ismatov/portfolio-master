@@ -8,16 +8,22 @@ import Link from "next/link";
 import type { Portfolio } from "types";
 import { serverUrl } from "utils/serverUrl";
 import { Navigation, Pagination } from "swiper";
-import { Navbar, LazyImage, Footer, Head } from "components";
+import {
+  Navbar,
+  LazyImage,
+  Footer,
+  Head,
+  PortfolioComponents,
+} from "components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faStar } from "@fortawesome/free-regular-svg-icons";
 import { usePostLikeByIdMutation } from "state/api/portfolioApi";
-import { subtractTime } from "utils/dateToReadable";
+
 import { lazy, Suspense, useState } from "react";
 import { useAuth } from "utils/auth";
 import { useRouter } from "next/router";
 const CommentComponent = lazy(() => import("components/Comment"));
-const Portfolio = ({ data }: { data: Portfolio }) => {
+const PortfolioPage = ({ data }: { data: Portfolio }) => {
   const router = useRouter();
   const auth = useAuth();
   const [likes, setLikes] = useState(data.likes.length);
@@ -44,18 +50,7 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
       <div className={s.container}>
         <div className={s.main}>
           <div className={s.card}>
-            <div className={s.titleContainer}>
-              <h1>{data.title}</h1>
-              <div className={s.timeContainer}>
-                <p>
-                  <span>
-                    {/* {new Date(data.date).getHours()}:
-                    {new Date(data.date).getMinutes()} */}
-                    {subtractTime(data.date)}
-                  </span>
-                </p>
-              </div>
-            </div>
+            <PortfolioComponents.Title title={data.title} date={data.date} />
             <div className={s.swiperContainer}>
               <Swiper
                 className={s.swiper}
@@ -88,32 +83,7 @@ const Portfolio = ({ data }: { data: Portfolio }) => {
               </Swiper>
             </div>
             <div className={s.description}>
-              <Link href={`/profile/${data.author.username}`}>
-                <div className={s.profileContainer}>
-                  <LazyImage
-                    spinnerOptions={{
-                      size: "50",
-                      position: "absolute",
-                      border: "2",
-                      speed: "1",
-                    }}
-                    className={s.profileImage}
-                    url={url}
-                    height={50}
-                    width={50}
-                    filename={data.author.image}
-                  />
-                  {data.author.isAdmin && (
-                    <FontAwesomeIcon
-                      title="Bu foydalanuvchi admin"
-                      height={15}
-                      icon={faStar}
-                    />
-                  )}
-                  <h2 className={s.h2}>@{data.author.username}</h2>
-                </div>
-              </Link>
-
+              <PortfolioComponents.ProfileInfo data={data} url={url} />
               <div>
                 <button
                   onClick={() =>
@@ -189,4 +159,4 @@ export const getStaticProps: GetStaticProps<{
   };
 };
 
-export default Portfolio;
+export default PortfolioPage;

@@ -14,6 +14,7 @@ import Panigation from "./Panigation";
 import DialogStatus from "./DialogStatus";
 import { FormArea, Form, FormInput, FormSubmit } from "./Form";
 import Page from "./pages/page";
+import PortfolioComponents from "./pages/portfolio";
 export {
   Panigation,
   CommentComponent,
@@ -34,4 +35,5 @@ export {
   FormArea,
   FormSubmit,
   Page,
+  PortfolioComponents,
 };

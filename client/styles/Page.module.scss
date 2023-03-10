@@ -164,3 +164,8 @@
     margin: 5px;
   }
 }
+@media (min-height: 2400px) {
+  .container {
+    min-height: 80vh;
+  }
+}
