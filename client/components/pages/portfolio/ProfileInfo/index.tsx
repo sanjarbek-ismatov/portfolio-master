@@ -17,7 +17,6 @@ function ProfileInfo({ data, url }: { data: Portfolio; url: string }) {
             speed: "1",
           }}
           className={styles.profileImage}
-          url={url}
           height={50}
           width={50}
           filename={data.author.image}

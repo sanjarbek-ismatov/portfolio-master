@@ -21,7 +21,6 @@ function PortfolioDescription({
               speed: "1",
             }}
             className={styles.profileImage}
-            url={url}
             height={100}
             width={100}
             filename={portfolio.author.image}

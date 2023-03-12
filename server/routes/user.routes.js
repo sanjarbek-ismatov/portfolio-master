@@ -14,14 +14,13 @@ router.get("/me", auth, async (req, res) => {
 });
 
 router.get("/all", async (req, res) => {
-  return res.status(200).send(await User.find());
+  return res.status(200).send(await User.find().select("-password"));
 });
 
 router.get("/:username", async (req, res) => {
-  const user = await User.findOne({ username: req.params.username }).populate(
-    "portfolios",
-    "title images linktitle"
-  );
+  const user = await User.findOne({ username: req.params.username })
+    .populate("portfolios", "title images linktitle")
+    .select("-password");
   if (!user) {
     return res.status(404).send("Foydalanuvchi topilmadi!");
   }

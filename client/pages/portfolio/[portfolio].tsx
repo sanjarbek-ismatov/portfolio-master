@@ -72,7 +72,6 @@ const PortfolioPage = ({ data }: { data: Portfolio }) => {
                           speed: "1",
                         }}
                         className={s.image}
-                        url={url}
                         width={800}
                         height={450}
                         filename={e}

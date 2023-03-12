@@ -52,7 +52,6 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
                 position: "absolute",
               }}
               filename={me?.image}
-              url={url}
             />{" "}
             <input
               autoComplete="off"
@@ -97,7 +96,6 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
                     position: "absolute",
                   }}
                   filename={e.commentAuthor.image}
-                  url={url}
                 />
               </a>
             </Link>
