@@ -34,15 +34,12 @@ const Login = () => {
     for (const file of files) {
       data.append("images", file);
     }
-    createPortfolio(data);
+    createPortfolio(data)
+      .then((data: any) => {
+        setMessage("Muvaffaqiyatli joylandi!");
+      })
+      .catch((ex: any) => setMessage("Kechirasiz Xato!"));
   }
-  useEffect(() => {
-    if (error && "data" in error) {
-      setMessage(error.data as string);
-    } else if (isSuccess) {
-      setMessage("Muvaffaqiyatli joylandi!");
-    }
-  }, [error, isSuccess]);
   return (
     <div className={s.container}>
       <div className={s.form}>
@@ -90,7 +87,7 @@ const Login = () => {
             ok={() =>
               isSuccess
                 ? (window.location.pathname = "/page/1")
-                : setMessage("")
+                : router.reload()
             }
           >
             <DialogStatus

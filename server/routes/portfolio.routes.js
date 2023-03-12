@@ -71,7 +71,7 @@ router.post("/create", upload.array("images"), auth, async (req, res) => {
   newPortfolio.author = req.id;
   await userInfo.save();
   await newPortfolio.save();
-  res.status(201).send("Success");
+  res.status(201).send(true);
 });
 
 // @route   PUT /api/portfolio/like/:id

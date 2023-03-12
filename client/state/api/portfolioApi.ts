@@ -117,7 +117,7 @@ export const portfolioApi = createApi({
         },
       }),
 
-      createPortfolio: build.mutation<string, FormData>({
+      createPortfolio: build.mutation<boolean, FormData>({
         query: (body) => ({
           method: "POST",
           url: "/portfolio/create",
