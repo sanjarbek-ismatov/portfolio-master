@@ -2,8 +2,8 @@ import React, { HTMLAttributes, ReactNode, useState } from "react";
 import Image from "next/image";
 import Spinner from "../Spinner";
 import s from "styles/Image.module.scss";
+import { serverUrl } from "utils/serverUrl";
 const LazyImage = ({
-  url,
   filename,
   width,
   height,
@@ -11,7 +11,6 @@ const LazyImage = ({
   spinnerOptions,
   ...rest
 }: {
-  url: string;
   filename: string;
   width: number;
   height: number;
@@ -24,6 +23,7 @@ const LazyImage = ({
   } & HTMLAttributes<HTMLDivElement>;
 } & HTMLAttributes<HTMLImageElement>) => {
   const [isLoad, setIsLoad] = useState<boolean>(true);
+  const url = serverUrl();
   return (
     <div className={s.container}>
       {isLoad && <Spinner {...spinnerOptions} />}

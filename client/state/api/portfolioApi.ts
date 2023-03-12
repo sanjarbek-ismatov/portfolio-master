@@ -128,6 +128,9 @@ export const portfolioApi = createApi({
       getAllPortfolio: build.query<Portfolio[], void>({
         query: () => "/portfolio/all",
       }),
+      getAllUsers: build.query<User[], void>({
+        query: () => "/user/all",
+      }),
     };
   },
 });
@@ -142,4 +145,5 @@ export const {
   useDeletePortfolioMutation,
   useCreatePortfolioMutation,
   useGetAllPortfolioQuery,
+  useGetAllUsersQuery,
 } = portfolioApi;

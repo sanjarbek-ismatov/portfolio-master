@@ -4,6 +4,10 @@
   font-size: 30px;
   width: 30px;
 }
+.mainContainer {
+  display: flex;
+  justify-content: center;
+}
 .liked {
   color: $red;
   animation: like 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) alternate;
@@ -105,7 +109,6 @@
   -moz-box-shadow: 1px 13px 37px -6px $shadowColor;
 }
 .container {
-  width: 100%;
   text-align: center;
   margin: 50px 0;
   padding: 0 10px;
@@ -119,7 +122,19 @@
     margin: 20px auto;
   }
 }
-
+.loading {
+  position: absolute;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  width: 100%;
+  background-color: #fff;
+  top: 0;
+  left: 0;
+}
 .input {
   max-width: 800px;
   width: 100%;
@@ -168,5 +183,10 @@
 @media (min-height: 2400px) {
   .container {
     min-height: 80vh;
+  }
+}
+@media (max-width: 900px) {
+  .mainContainer {
+    flex-wrap: wrap;
   }
 }

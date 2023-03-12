@@ -39,6 +39,7 @@ const Index = ({ title, description, image, keywords }: HeadProps) => {
         }
       />
       <link rel="shortcut icon" href="https://i.ibb.co/M6cGSt0/icon.png" />
+      <script async src="/js/google-tag.js" />
     </Head>
   );
 };

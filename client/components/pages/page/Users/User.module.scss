@@ -1,0 +1,38 @@
+.mainContainer {
+  max-width: 400px;
+
+  width: 100%;
+  margin: 50px 30px;
+  h1 {
+    margin: 10px 0;
+  }
+}
+.container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 15px 0;
+  padding: 5px 10px;
+  border: 1px solid #bfbebe;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.description {
+  margin-left: 20px;
+  width: 100%;
+  line-height: 25px;
+}
+.title {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #bfbebe;
+}
+.image {
+  border-radius: 30px;
+}
+@media (max-width: 900px) {
+  .mainContainer {
+    max-width: 100%;
+    margin-top: 0;
+  }
+}
