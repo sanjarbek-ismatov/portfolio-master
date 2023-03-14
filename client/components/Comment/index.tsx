@@ -1,9 +1,8 @@
 "use client";
 import LazyImage from "components/LazyImage";
-import React, { useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import type { Comment, Portfolio, User } from "types";
 import { getMe } from "utils/getDetails";
-import { serverUrl } from "utils/serverUrl";
 import s from "styles/Comment.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
@@ -15,19 +14,16 @@ import {
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { subtractTime } from "utils/dateToReadable";
 import Link from "next/link";
-
 const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
-  const [createComment, { data: updatedCommentAfterCreate }] =
-    useCreateCommentMutation();
-  const [deleteComment, { data: updatedCommentAfterDelete }] =
-    useDeleteCommentMutation();
+  const [createComment] = useCreateCommentMutation();
+  const [deleteComment] = useDeleteCommentMutation();
   const { handleSubmit, register, resetField } = useForm<Comment>();
   const [defaultComments, setCurrentComments] = useState<Comment[]>(comments);
   const [me, setMe] = useState<User>();
+  const setCurrentUser = useCallback((data: User) => setMe(data), []);
   useEffect(() => {
-    getMe().then((data) => typeof data !== "boolean" && setMe(data));
-  }, []);
-  const url = serverUrl();
+    getMe().then((data) => typeof data !== "boolean" && setCurrentUser(data));
+  }, [setCurrentUser]);
   return (
     <div>
       {me ? (
@@ -130,4 +126,4 @@ const CommentComponent = ({ data: { comments, _id } }: { data: Portfolio }) => {
     </div>
   );
 };
-export default CommentComponent;
+export default memo(CommentComponent);
