@@ -36,3 +36,14 @@
     margin-top: 0;
   }
 }
+@media screen and (max-width: 420px) {
+  .container {
+    padding: 5px;
+  }
+  .mainContainer {
+    margin: 50px 5px;
+  }
+  .description {
+    margin-left: 5px;
+  }
+}

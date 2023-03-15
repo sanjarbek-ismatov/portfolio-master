@@ -15,6 +15,27 @@ import {
   useGetAllUsersQuery,
 } from "state/api/portfolioApi";
 
+export function Loader() {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        minHeight: "100vh",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 100,
+        width: "100%",
+        backgroundColor: "#fff",
+        top: "0",
+        left: "0",
+      }}
+    >
+      <Spinner size="100" speed="1" border="5" position="static" />
+    </div>
+  );
+}
 const Index = () => {
   const [text, setText] = useState("");
   const [filters, setFilters] = useState<string[]>([]);
@@ -37,13 +58,8 @@ const Index = () => {
   return (
     <>
       <Head title="Portfolio Master" />
-      <Suspense
-        fallback={
-          <div className={styles.loading}>
-            <Spinner size="100" speed="1" border="5" position="static" />
-          </div>
-        }
-      >
+      {isLoading && <Loader />}
+      <Suspense>
         <Navbar />
         <div className={styles.mainContainer}>
           <div className={styles.container}>
@@ -66,7 +82,6 @@ const Index = () => {
               </div>
             )}
             {data &&
-              data.length &&
               filters &&
               filterByTech(data, filters, text)
                 .slice((+page - 1) * 10, +page * 10)

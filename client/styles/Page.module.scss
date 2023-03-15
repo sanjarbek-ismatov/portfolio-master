@@ -122,19 +122,6 @@
     margin: 20px auto;
   }
 }
-.loading {
-  position: absolute;
-  min-height: 100vh;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-  width: 100%;
-  background-color: #fff;
-  top: 0;
-  left: 0;
-}
 .input {
   max-width: 800px;
   width: 100%;
