@@ -5,8 +5,9 @@ const mongoose = require("mongoose");
  * @returns {Promise<void>}
  */
 
-mongoose.set("strictQuery", true);
-mongoose.set("strictPopulate", false);
-mongoose.connect(process.env.MONGO_URL, (error) => {
-  console.log("connected");
-});
+module.exports = () => {
+  mongoose.set("strictQuery", true);
+  mongoose.set("strictPopulate", false);
+  mongoose.connect(process.env.MONGO_URL);
+  console.log(mongoose.connection.db);
+};

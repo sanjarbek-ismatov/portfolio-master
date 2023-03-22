@@ -120,8 +120,12 @@ const Index = () => {
           </div>
           {userData && <Page.User data={userData} />}
         </div>
-        {data && <Panigation index={+page} length={data?.length} />}
-        <Footer />
+        {data && (
+          <>
+            <Panigation index={+page} length={data?.length} />
+            <Footer />
+          </>
+        )}
       </Suspense>
     </>
   );

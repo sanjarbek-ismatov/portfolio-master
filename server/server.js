@@ -3,7 +3,7 @@ const express = require("express");
 // import dotenv
 require("dotenv").config();
 // import dbconnecter
-require("./helpers/dbconnecter");
+require("./helpers/dbconnecter")();
 // import logger
 require("./helpers/logger");
 // create app
