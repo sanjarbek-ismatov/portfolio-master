@@ -52,14 +52,13 @@ const Index = () => {
       setFilters([]);
     }
   }, [filter]);
-  if (typeof page !== "string") {
-    return null;
+  if (typeof page !== "string" || !data) {
+    return <Loader />;
   }
   return (
     <>
       <Head title="Portfolio Master" />
-      {isLoading && <Loader />}
-      <Suspense>
+      <Suspense fallback={<Loader />}>
         <Navbar />
         <div className={styles.mainContainer}>
           <div className={styles.container}>
@@ -120,12 +119,8 @@ const Index = () => {
           </div>
           {userData && <Page.User data={userData} />}
         </div>
-        {data && (
-          <>
-            <Panigation index={+page} length={data?.length} />
-            <Footer />
-          </>
-        )}
+        <Panigation index={+page} length={data?.length} />
+        <Footer />
       </Suspense>
     </>
   );
