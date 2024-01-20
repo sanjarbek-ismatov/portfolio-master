@@ -8,7 +8,7 @@
 module.exports = async (username, title, Portfolio) => {
   let replacedTitle = title.replace(/ /g, "_");
   const link = `${username}_${replacedTitle}`;
-  const isHave = await Portfolio.findOne({ linktitle: link });
-  if (isHave) return isHave.linktitle + "_";
+  const isAvailable = await Portfolio.findOne({ linktitle: link });
+  if (isAvailable) return isAvailable.linktitle + "_";
   return link;
 };
